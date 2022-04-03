@@ -1,0 +1,152 @@
+<mat-stepper orientation="vertical" [linear]="true" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Podstawowe Dane</ng-template>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="my-2" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="Email" formControlName="email">
+              <!-- <mat-error *ngIf="firstFormGroup.invalid">{{getErrorMessage()}}</mat-error> -->
+  
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="my-2" appearance="fill">
+              <mat-label>Hasło</mat-label>
+              <input matInput placeholder="Hasło" formControlName="password" required>
+            </mat-form-field>
+          </div>
+        </div>
+        <div>
+          <button mat-button matStepperNext>Przejdź dalej</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Rozszerzenie użytkownika</ng-template>
+        <div class="row my-2">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Imię</mat-label>
+              <input matInput placeholder="Imię" formControlName="name" required>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Nazwisko</mat-label>
+              <input matInput placeholder="Hasło" formControlName="lastname" required>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row my-2">
+          <div class="col ">
+            <mat-form-field appearance="fill">
+              <mat-label>Adres</mat-label>
+              <input matInput placeholder="Adres" formControlName="address" required>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Kod Pocztowy</mat-label>
+              <input matInput placeholder="Kod Pocztowy" formControlName="postcode" required>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row my-2">
+          <div class="col ">
+            <mat-form-field appearance="fill">
+              <mat-label>Miasto</mat-label>
+              <input matInput placeholder="Miasto" formControlName="city">
+            </mat-form-field>
+          </div>
+  
+          <div class="col ">
+            <mat-form-field appearance="fill">
+              <mat-label>Telefon Kontaktowy</mat-label>
+              <input matInput placeholder="Telefon Kontaktowy" formControlName="phone">
+            </mat-form-field>
+          </div>
+  
+        </div>
+  
+        <div class="row my-2">
+          <div class="col ">
+            <mat-form-field appearance="fill">
+              <mat-label>Rachunek Bankowy</mat-label>
+              <input matInput placeholder="Rachunek Bankowy" formControlName="bankaccount" placeholder="61 1090 1014 0000 0712 1981 2874"/>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        
+  
+  
+  
+  
+        <div>
+          <button mat-button matStepperPrevious>Cofnij</button>
+          <button mat-button matStepperNext>Przejdź Dalej</button>
+        </div>
+  
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="threeFormGroup">
+      <form [formGroup]="threeFormGroup">
+        <ng-template matStepLabel>Uprawnienia Moderatora</ng-template>
+        <div class="row my-4">
+          <div class="col">
+            <mat-slide-toggle formControlName="moderator">Uprawnienia Moderatora</mat-slide-toggle>
+          </div>
+        </div>
+  
+        <div>
+          <button mat-button matStepperPrevious>Cofnij</button>
+          <button mat-button matStepperNext>Przejdź Dalej</button>
+        </div>
+      </form>
+    </mat-step>
+  
+    <mat-step>
+      <ng-template matStepLabel>Weryfikacja Danych</ng-template>
+  
+      <div class="row">
+        <mat-list>
+          <div class="col">
+            <mat-list-item>Email: {{firstFormGroup.value.email}} </mat-list-item>
+            <mat-list-item>Hasło: {{firstFormGroup.value.password}} </mat-list-item>
+          </div>
+          <div class="col">
+            <mat-list-item>Imię: {{secondFormGroup.value.name}} </mat-list-item>
+            <mat-list-item>Nazwisko: {{secondFormGroup.value.lastname}} </mat-list-item>
+            <mat-list-item>Adres: {{secondFormGroup.value.address}} </mat-list-item>
+            <mat-list-item>Kod Pocztowy: {{secondFormGroup.value.postcode}} </mat-list-item>
+          </div>
+          <div class="col">
+            <mat-list-item *ngIf="threeFormGroup.value.moderator; else NoMod">Uprawnienia Moderatora: Tak</mat-list-item>
+            <ng-template #NoMod>Uprawnienia Moderatora: Nie</ng-template>
+          </div>
+        </mat-list>
+  
+      </div>
+  
+      <div>
+        <button mat-button matStepperPrevious>Cofnij</button>
+        <button mat-button matStepperNext>Przejdź Dalej</button>
+      </div>
+    </mat-step>
+  
+    <mat-step>
+      <ng-template matStepLabel>Finalizacja</ng-template>
+      <div class="row my-4">
+        <p>Czy utworzyć konto dla użytkownika {{secondFormGroup.value.name}} {{secondFormGroup.value.lastname}} ?</p>
+      </div>
+      <div>
+        <button mat-button matStepperPrevious>Cofnij</button>
+        <button mat-button color="warn" (click)="createUser()">Utwórz Konto</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+  

@@ -1,0 +1,106 @@
+<!-- {{form.value | json}} -->
+
+<mat-card class="example-card">
+  
+  <div class="example-container mt-3">
+    <form [formGroup]="form" (ngSubmit)="save()" autocomplete="on">
+      <mat-card-content>
+        <div class="row mt-4">
+
+          <div class="col-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Użytkownik</mat-label>
+              <mat-select formControlName="owner" placeholder="Wybierz użytkownika" required>
+                <mat-option *ngFor="let user of users" [value]="user.uid">{{user.name}} {{user.lastname}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+        </div>
+        <div class="row">
+
+          <div class="col-6">
+            <mat-form-field appearance="legacy">
+              <mat-label>Ulica:</mat-label>
+              <input matInput type="text" [(ngModel)]="data.street" formControlName="street" placeholder="Ulica" />
+              <mat-icon matSuffix>edit_road</mat-icon>
+              <mat-hint>Ulica</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6">
+            <mat-form-field appearance="legacy">
+              <mat-label>Numer Budynku:</mat-label>
+              <input matInput type="text" [(ngModel)]="data.buildingnumber" formControlName="buildingnumber" placeholder="Numer Budynku" />
+              <mat-icon matSuffix>format_list_numbered</mat-icon>
+              <mat-hint>Numer Budynku</mat-hint>
+
+            </mat-form-field>
+          </div>
+
+
+        </div>
+        <div class="row mt-3">
+
+          <div class="col-6">
+            <mat-form-field appearance="legacy">
+              <mat-label>Numer Lokalu:</mat-label>
+              <input matInput type="text" [(ngModel)]="data.apartmentnumber" formControlName="apartmentnumber" placeholder="Numer Lokalu" />
+              <mat-icon matSuffix>format_list_numbered</mat-icon>
+              <mat-hint>Numer Lokalu</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6">
+            <mat-form-field appearance="legacy">
+              <mat-label>Kod Pocztowy</mat-label>
+              <input matInput type="text" [(ngModel)]="data.postcode" formControlName="postcode" placeholder="Kod Pocztowy" />
+              <mat-icon matSuffix>signpost</mat-icon>
+              <mat-hint>Kod Pocztowy</mat-hint>
+            </mat-form-field>
+          </div>
+
+          
+
+        </div>
+
+        
+
+        <div class="row my-3">
+
+          <div class="col-6">
+            <mat-form-field appearance="legacy">
+              <mat-label>Powierzchnia:</mat-label>
+              <input matInput type="text" [(ngModel)]="data.area" formControlName="area" placeholder="Powierzchnia" />
+              <mat-icon matSuffix>height</mat-icon>
+              <mat-hint>Powierzchnia</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6">
+            <mat-form-field appearance="legacy">
+              <mat-label>Stawka</mat-label>
+              <input matInput type="text" [(ngModel)]="data.rate" formControlName="rate" placeholder="Stawka" />
+              <mat-icon matSuffix>price_check</mat-icon>
+              <mat-hint>Stawka</mat-hint>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-12 text-right">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+              Zaakceptuj zmiany
+            </button>
+          </div>
+        </div>
+       
+      </mat-card-content>
+
+    </form>
+  </div>
+  <mat-card-footer>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>

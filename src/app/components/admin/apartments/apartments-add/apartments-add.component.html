@@ -1,0 +1,95 @@
+<mat-stepper orientation="vertical" [linear]="true" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Podstawowe Dane</ng-template>
+        <div class="row my-3">
+          <div class="col-3">
+
+              <mat-form-field appearance="fill">
+                <mat-label>Użytkownik</mat-label>
+                <mat-select formControlName="owner" (selectionChange)="selectUser($event)" placeholder="Wybierz użytkownika" required>
+                  <mat-option *ngFor="let user of users" [value]="user.uid">{{user.name}} {{user.lastname}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="my-2" appearance="fill">
+              <mat-label>Ulica</mat-label>
+              <input matInput placeholder="Ulica" formControlName="street" required>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="my-2" appearance="fill">
+              <mat-label>Numer Budynku</mat-label>
+              <input matInput placeholder="Numer Budynku" formControlName="buildingnumber" required>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="my-2" appearance="fill">
+              <mat-label>Numer Mieszkania</mat-label>
+              <input matInput placeholder="Numer Mieszkania" formControlName="apartmentnumber" required>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="my-2" appearance="fill">
+              <mat-label>Kod Pocztowy</mat-label>
+              <input matInput placeholder="Kod Pocztowy" formControlName="postcode" required>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="my-2" appearance="fill">
+              <mat-label>Powierzchnia (m2)</mat-label>
+              <input matInput placeholder="Np. 2.05" formControlName="area" required>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="my-2" appearance="fill">
+              <mat-label>Stawka (za m2)</mat-label>
+              <input matInput placeholder="Np. 1.39" formControlName="rate" required>
+            </mat-form-field>
+          </div>
+        </div>
+  
+  
+        <div>
+          <button mat-button matStepperNext>Przejdź dalej</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Weryfikacja Danych</ng-template>
+  
+      <div class="row">
+        <mat-list>
+          <div class="col">
+            <mat-list-item>Ulica: {{firstFormGroup.value.street}} </mat-list-item>
+            <mat-list-item>Number Budynku: {{firstFormGroup.value.buildingnumber}} </mat-list-item>
+            <mat-list-item>Numer Mieszkania: {{firstFormGroup.value.apartmentnumber}} </mat-list-item>
+            <mat-list-item>Kod Pocztowy: {{firstFormGroup.value.postcode}} </mat-list-item>
+          </div>
+        </mat-list>
+  
+      </div>
+  
+      <div>
+        <button mat-button matStepperPrevious>Cofnij</button>
+        <button mat-button matStepperNext>Przejdź Dalej</button>
+      </div>
+    </mat-step>
+  
+    <mat-step>
+      <ng-template matStepLabel>Finalizacja</ng-template>
+      <div class="row my-4">
+        <p>Czy utworzyć nowy bydunek ?</p>
+      </div>
+      <div>
+        <button mat-button matStepperPrevious>Cofnij</button>
+        <button mat-button color="warn" (click)="createBuilding();stepper.reset();">Utwórz Budynek</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+  

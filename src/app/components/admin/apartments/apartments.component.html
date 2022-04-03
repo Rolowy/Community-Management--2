@@ -1,0 +1,88 @@
+<div class="container-fluid mt-5">
+
+
+    <div class="row">
+  <div class="col-6 justify-content-md-center">
+      <mat-form-field fxFlex="60%" [style.margin-bottom]="'1em'">
+        <input #box matInput type="text" (keyup)="doFilter(box.value)" placeholder="Wyszukaj..">
+      </mat-form-field>
+  
+    </div>
+  
+    <div class="col-6 text-center">
+      <a mat-raised-button color="primary" (click)="addApartment()"><mat-icon aria-hidden="false" aria-label="person_add">meeting_room</mat-icon> Dodaj Mieszkanie</a>
+  </div>
+  
+  
+  </div>
+  
+    <div class="col-12">
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+   
+          <ng-container matColumnDef="owner">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Właściciel </th>
+            <td mat-cell *matCellDef="let element"> {{element.ownername}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="street">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Ulica </th>
+            <td mat-cell *matCellDef="let element"> {{element.street}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="buildingnumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer Budynku </th>
+            <td mat-cell *matCellDef="let element"> {{element.buildingnumber}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="area">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Powierzchnia (m2)</th>
+            <td mat-cell *matCellDef="let element"> {{element.area}}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="rate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Stawka</th>
+            <td mat-cell *matCellDef="let element"> {{element.rate}}</td>
+          </ng-container>
+  
+          
+  
+          <ng-container matColumnDef="apartmentnumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer Mieszkania </th>
+            <td mat-cell *matCellDef="let element"> {{element.apartmentnumber}}</td>
+          </ng-container>
+  
+          
+          <ng-container matColumnDef="postcode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Kod Pocztowy </th>
+            <td mat-cell *matCellDef="let element"> {{element.postcode}} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef> Edytuj </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" (click)="redirectToEdit(element)">
+                <mat-icon class="mat-18">mode_edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> Usuń </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="warn" (click)="redirectToDelete(element)">
+                <mat-icon class="mat-18">delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+  
+    </div>

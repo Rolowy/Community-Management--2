@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "projekt-124e3": {
+      "hosting": {
+        "apk": [
+          "projekt-124e3"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "projekt-124e3"
+  }
+}

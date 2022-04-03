@@ -1,0 +1,84 @@
+<mat-card class="example-card">
+    <mat-card-title>Konto Moderatora - Rejestracja</mat-card-title>
+    <p>Uwaga, upewnij się, że twoje dane takie jak 'email' i 'hasło' są wpisane poprawnie.</p>
+
+  
+    <div class="example-container">
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <mat-card-content>
+          <mat-form-field appearance="legacy">
+            <mat-label>Email:</mat-label>
+            <input matInput type="email" formControlName="email" placeholder="Twój email" />
+            <mat-icon matSuffix>mail_outline</mat-icon>
+            <mat-hint>Adres Email</mat-hint>
+  
+            <mat-error *ngIf="(form.get('email'))?.errors?.['required']">Email jest wymagany</mat-error>
+            <mat-error *ngIf="(form.get('email'))?.errors?.['pattern']">Nieprawidłowo wpisany adres email</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="standard">
+            <mat-label>Hasło:</mat-label>
+            <input matInput type="password" placeholder="Twoje hasło" formControlName="password" />
+            <mat-error>Hasło jest wymagane</mat-error>
+  
+            <mat-error *ngIf="(form.get('password')?.errors?.['minLength'])">
+              Hasło ma 6 znaków lub więcej
+            </mat-error>
+          </mat-form-field>
+  
+  
+  
+          <mat-form-field appearance="standard">
+            <mat-label>Imię:</mat-label>
+            <input matInput type="text" placeholder="Twoje hasło" formControlName="name" />
+            <mat-error>Imię jest wymagane.</mat-error>
+  
+            <mat-error *ngIf="(form.get('password')?.errors?.['minLength'])">
+              Hasło ma 6 znaków lub więcej
+            </mat-error>
+          </mat-form-field>
+  
+     
+        <mat-form-field appearance="standard">
+            <mat-label>Nazwisko:</mat-label>
+            <input matInput type="text" placeholder="Nazwisko" formControlName="lastname" />
+            <mat-error>Nazwisko jest wymagane.</mat-error>
+  
+          </mat-form-field>
+  
+  
+          <mat-form-field appearance="standard">
+            <mat-label>Adres:</mat-label>
+            <input matInput type="text" placeholder="Adres" formControlName="address" />
+            <mat-error>Adres jest wymagany.</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="standard">
+            <mat-label>Miasto:</mat-label>
+            <input matInput type="text" placeholder="Miasto" formControlName="city" />
+          </mat-form-field>
+  
+  
+          <mat-form-field appearance="standard">
+            <mat-label>Kod Pocztowy:</mat-label>
+            <input matInput type="text" placeholder="Kod Pocztowy" formControlName="postcode" />
+            <mat-error>Kod Pocztowy jest wymagany.</mat-error>
+          </mat-form-field>
+          
+  
+          <mat-form-field appearance="standard">
+            <mat-label>Telefon::</mat-label>
+            <input matInput type="text" placeholder="Telefon" formControlName="phone" />
+  
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Zarejestruj się
+          </button>
+        </mat-card-content>
+      </form>
+    </div>
+    <mat-card-footer>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-card-footer>
+  </mat-card>
+  

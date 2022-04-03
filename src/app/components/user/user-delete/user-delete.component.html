@@ -1,0 +1,6 @@
+<h1 mat-dialog-title>Czy jesteś pewny ?</h1>
+<div mat-dialog-content>Twoje wszystkie dane zostaną utracone i nie będziesz mógł powrócić.<br />Upewnij się, że twoja decyzja jest w pełni świadoma.</div>
+<div mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true">Oh nie!</button>
+  <button mat-raised-button color="primary" (click)="deleteAccount()" [mat-dialog-close]="true">Tak, proszę</button>
+</div>

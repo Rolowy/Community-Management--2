@@ -1,0 +1,42 @@
+.menu-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .image-logo {
+    margin:0 5px 0 0;
+    width: 50px;
+  }
+  
+  .active {
+    background: #dddddd1f;
+    border-radius: 60px 60px 20px 20px;
+  }
+  
+  .logo {
+    color: #fff !important;
+    font-family: 'Luckiest Guy', cursive;
+    letter-spacing: 3px;
+  }
+  
+  .online_status {
+    color: #ffffff;
+    margin-right: 10px;
+  }
+
+  mat-toolbar {
+    height: 75px;
+    background-image: linear-gradient(169deg, #5983fc 16%, #1e50c8 89%) !important;
+
+    a:hover {
+      text-decoration: none;
+      background: rgb(255 255 255 / 12%);
+      border-radius: 60px 60px 20px 20px;
+      color: #fff;
+    }
+  }
+  
+  
+  mat-sidenav-container {
+    background-color: #fff;
+    height: calc(100% - 75px);
+  }

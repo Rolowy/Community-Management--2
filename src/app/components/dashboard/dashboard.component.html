@@ -1,0 +1,20 @@
+<p>dashboard works!</p>
+
+
+
+<span *ngIf="authService.userInfo.getValue() as user">
+    {{user.uid}}
+</span>
+
+
+<div *ngIf="authService.userInfo.getValue().moderator; else NOADMIN">
+  </div>
+  <ng-template #NOADMIN>
+    <div fxLayout="row" class="mt-5" fxLayoutAlign="center" fxLayoutGap="10">
+  
+      <nz-card fxFlex="50" *ngIf="authService.userInfo | async" nzTitle="Indywidualny Numer Rachunku">
+        <span>Prosimy wysyłać przelewy tylko na indywidualny numer rachunku</span>
+        <p>{{authService.userInfo.getValue().bankaccount}}</p>
+      </nz-card>
+    </div>
+  </ng-template>

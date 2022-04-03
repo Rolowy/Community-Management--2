@@ -1,0 +1,32 @@
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    align-content: center;
+    gap: 20px;
+  }
+
+  .fullwidth {
+    width: 100%;
+  }
+  
+  mat-card-title {
+    display: flex !important;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px !important;
+  }
+  
+  .mat-card-content {
+    display: flex !important;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: stretch;
+    gap: 10px;
+  }
+  

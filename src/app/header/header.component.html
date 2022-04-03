@@ -1,0 +1,55 @@
+<mat-toolbar *ngIf="logged" color="primary" class="p-2">
+    <mat-toolbar-row>
+      <button mat-icon-button fxShow="true" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <img src="assets/images/home.png" alt="Logo" class="image-logo">
+      <a class="logo" [routerLink]="['/dashboard']">{{appname}}</a>
+      <span class="menu-spacer"></span>
+      <div fxShow="true" fxHide.lt-md>
+
+        <a routerLinkActive="active"mat-button [matMenuTriggerFor]="user" class="online_status"><mat-icon class="online_status mr-1" aria-hidden="false" aria-label="sensor_occupied">sensor_occupied</mat-icon> {{authService.userInfo.getValue().name}} {{authService.userInfo.getValue().lastname}}</a>
+        <mat-menu #user="matMenu">
+          <a mat-menu-item><mat-icon aria-hidden="false" aria-label="sync_lock">sync_lock</mat-icon> Zmiana Hasła</a>
+        </mat-menu>
+
+
+        <span *ngIf="(authService.userInfo.getValue().moderator); else NoMod">
+
+          <a routerLinkActive="active"mat-button [matMenuTriggerFor]="raports"><mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Raporty</a>
+          <mat-menu #raports="matMenu">
+            <a [routerLink]="['raports']" mat-menu-item>Raporty</a>
+            <a  mat-menu-item><mat-icon aria-hidden="false" aria-label="post_add">post_add</mat-icon> Dodaj Raport</a>
+          </mat-menu>
+
+          <a routerLinkActive="active" [routerLink]="['buildings']" mat-button><mat-icon aria-hidden="false" aria-label="domain">domain</mat-icon> Mieszkania</a>
+          <a routerLinkActive="active" [routerLink]="['users']" mat-button><mat-icon aria-hidden="false" aria-label="supervisor_account">supervisor_account</mat-icon> Użytkownicy</a>
+        </span>
+
+        <a routerLinkActive="active" [routerLink]="['user/chat']" mat-button><mat-icon aria-hidden="false" aria-label="chat">chat</mat-icon> Czat</a>
+        
+        <ng-template #NoMod>
+          <a routerLinkActive="active" [routerLink]="['user/raport']" mat-button><mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Moje Raporty</a>
+        </ng-template>
+
+        <a [routerLink]="['/']" mat-button><mat-icon aria-hidden="false" aria-label="bento">bento</mat-icon> Panel</a>
+        <a (click)="authService.logout()" mat-button><mat-icon aria-hidden="false" aria-label="logout">logout</mat-icon> Wyloguj</a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  
+
+
+<mat-sidenav-container fxFlexFill>
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+
+      <a href="/" mat-list-item>Panel</a>
+      <a (click)="sidenav.toggle()" href="" mat-list-item>Zamknij</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content fxFlexFill>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
