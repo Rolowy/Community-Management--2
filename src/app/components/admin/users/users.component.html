@@ -1,19 +1,17 @@
 
 <div class="container-fluid mt-5">
 
-    <div class="row">
-      <div class="col-6 justify-content-md-center">
-          <mat-form-field fxFlex="60%" [style.margin-bottom]="'1em'">
+    <div class="row my-4" fxFlexLayout="row" fxFlexLayout.xs="column" fxLayoutGap.xs="20">
+      <div fxFlex="60" fxLayoutAlign="center">
+          <mat-form-field class="search-panel" fxFlex="50" fxFlex.xs>
             <input #box matInput type="text" (keyup)="doFilter(box.value)" placeholder="Wyszukaj..">
           </mat-form-field>
-      
         </div>
-      
-        <div class="col-6 text-center">
+        <div fxFlex fxLayoutAlign="center center">
               <a mat-raised-button color="primary" (click)="addUser()"><mat-icon aria-hidden="false" aria-label="person_add">person_add</mat-icon> Dodaj Mieszkańca</a>
         </div>
       
-      </div>
+    </div>
     
     <div class="row">
       <div class="col">

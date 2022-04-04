@@ -11,6 +11,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { AuthServiceService } from './shared/auth-service.service';
 
 import { MaterialModule } from './material/material.module';
+import { NgzorroModule } from './material/ngzorro.module';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
@@ -33,6 +35,13 @@ import { RaportsAddComponent } from './components/admin/raports/raports-add/rapo
 import { RaportsDeleteComponent } from './components/admin/raports/raports-delete/raports-delete.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { UserRaportsComponent } from './components/user/user-raports/user-raports.component';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { pl_PL } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import pl from '@angular/common/locales/pl';
+import { HttpClientModule } from '@angular/common/http';
+
+registerLocaleData(pl);
 
 @NgModule({
   declarations: [
@@ -62,16 +71,18 @@ import { UserRaportsComponent } from './components/user/user-raports/user-raport
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
+    NgzorroModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   exports: [
   ],
-  providers: [AuthServiceService],
+  providers: [AuthServiceService, { provide: NZ_I18N, useValue: pl_PL }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -14,7 +14,7 @@
         <a mat-menu-item (click)="changePasswordUserComp()"><mat-icon aria-hidden="false" aria-label="sync_lock">sync_lock</mat-icon> Zmiana Hasła</a>
       </mat-menu>
 
-
+      
       <span *ngIf="(authService.userInfo.getValue().moderator); else NoMod">
 
         <a routerLinkActive="active" mat-button [matMenuTriggerFor]="raports"><mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Raporty</a>
