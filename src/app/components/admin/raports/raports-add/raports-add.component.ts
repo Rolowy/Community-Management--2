@@ -22,7 +22,7 @@ export class RaportsAddComponent implements OnInit {
     apartment: new FormControl('', [Validators.required]),
     startdate: new FormControl('', [Validators.required]),
     enddate: new FormControl('', [Validators.required]),
-    createtAt: new FormControl(''),
+    createdAt: new FormControl(new Date),
     otherStatus: this.fb.array([]),
     sum: new FormControl(''),
   })
@@ -37,8 +37,16 @@ export class RaportsAddComponent implements OnInit {
   constructor(private fb: FormBuilder, public asf: Firestore, private authService: AuthServiceService) {}
 
   ngOnInit(): void {
+    this.combiner();
     this.users = this.getUser();
     this.addOtherStatus(); //wymuszenie wykorzystania przynajmniej jednego pola - mini hack
+  }
+
+  combiner() {
+    this.form.valueChanges.subscribe((value) => {
+      this.form.value.sum = 0;
+      value.otherStatus.map((result:any) => {this.form.value.sum = this.form.value.sum + result.price * result.amount});
+    });
   }
 
   async getUser() {
@@ -75,6 +83,7 @@ export class RaportsAddComponent implements OnInit {
   }
 
   SaveRaport() {
+    this.form.value.createdAt = new Date;
       this.authService.addRaport(this.form.value).then(() => {
         this.authService.viewMessage('Dodano nowy raport');
       }).catch(error => {

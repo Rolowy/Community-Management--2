@@ -7,10 +7,12 @@ import { AuthServiceService } from 'src/app/shared/auth-service.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  lastraport:any;
 
   constructor(public authService: AuthServiceService) { }
 
   ngOnInit(): void {
+    this.lastraport = this.authService.getUser_LastRaport();
   }
 
 }

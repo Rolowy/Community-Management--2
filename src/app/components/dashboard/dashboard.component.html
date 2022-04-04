@@ -1,20 +1,26 @@
-<p>dashboard works!</p>
-
-
-
-<span *ngIf="authService.userInfo.getValue() as user">
-    {{user.uid}}
-</span>
-
-
-<div *ngIf="authService.userInfo.getValue().moderator; else NOADMIN">
-  </div>
-  <ng-template #NOADMIN>
-    <div fxLayout="row" class="mt-5" fxLayoutAlign="center" fxLayoutGap="10">
-  
-      <nz-card fxFlex="50" *ngIf="authService.userInfo | async" nzTitle="Indywidualny Numer Rachunku">
-        <span>Prosimy wysyłać przelewy tylko na indywidualny numer rachunku</span>
-        <p>{{authService.userInfo.getValue().bankaccount}}</p>
-      </nz-card>
-    </div>
-  </ng-template>
+<div class="container-fluid mt-5">
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30" *ngIf="authService.userInfo.getValue() as user">
+      <div fxLayout="row" fxFlex="50" class="dashboard-panel col">
+        <div fxFlex="15"><img src="../../assets/images/dashboard/bank-statement.png"></div>
+        <div class="desc" fxFlex>
+          <h2>Indywidualny numer konta</h2>
+          <p>{{user.bankaccount}}</p>
+        </div>
+      </div>
+      <div *ngFor="let x of lastraport | async" fxLayout="row" fxFlex="50" class="dashboard-panel col">
+        <div fxFlex="15"><img src="../../assets/images/dashboard/bill.png"></div>
+        <div class="desc" fxFlex>
+          <h2>Ostatnia wpłata</h2>
+          <p>{{ x.sum | currency: 'PLN' :'symbol':'1.1-2'}}</p>
+        </div>
+      </div>  
+      <div fxLayout="row" fxFlex="50" class="dashboard-panel col">
+        <div fxFlex="15"><img src="../../assets/images/dashboard/bill.png"></div>
+        <div class="desc" fxFlex>
+          <h2>Stan konta</h2>
+          <p>{{user.bankaccount}}</p>
+        </div>
+      </div>  
+      
+</div>
+</div>

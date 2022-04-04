@@ -28,10 +28,10 @@
         <a routerLinkActive="active" [routerLink]="['users']" mat-button><mat-icon aria-hidden="false" aria-label="supervisor_account">supervisor_account</mat-icon> Użytkownicy</a>
       </span>
 
-      <a routerLinkActive="active" [routerLink]="['user/chat']" mat-button><mat-icon aria-hidden="false" aria-label="chat">chat</mat-icon> Czat</a>
+      <a routerLinkActive="active" [routerLink]="['chat']" mat-button><mat-icon aria-hidden="false" aria-label="chat">chat</mat-icon> Czat</a>
       
       <ng-template #NoMod>
-        <a routerLinkActive="active" [routerLink]="['user/raport']" mat-button><mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Moje Raporty</a>
+        <a routerLinkActive="active" [routerLink]="['user/raports']" mat-button><mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Moje Raporty</a>
       </ng-template>
 
       <a [routerLink]="['/']" mat-button><mat-icon aria-hidden="false" aria-label="bento">bento</mat-icon> Panel</a>

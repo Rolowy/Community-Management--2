@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Raports } from 'src/app/_interface/raport';
 import { AuthServiceService } from 'src/app/shared/auth-service.service';
 import { collection, Firestore, getDocs } from '@angular/fire/firestore';
+import { RaportsDeleteComponent } from './raports-delete/raports-delete.component';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { collection, Firestore, getDocs } from '@angular/fire/firestore';
   styleUrls: ['./raports.component.scss']
 })
 export class RaportsComponent implements OnInit {
-  displayedColumns: string[] = ['name','owner','apartment', 'number', 'createdAt', 'scope', 'sum', 'delete'];
+  displayedColumns: string[] = ['number','owner','apartment', 'createdAt', 'scope', 'sum', 'accept', 'delete'];
   dataSource = new MatTableDataSource();
   raports:any;
 
@@ -27,6 +28,8 @@ export class RaportsComponent implements OnInit {
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) { }
 
   ngOnInit(): void {
+
+    
     this.refreshUsersList();
   }
 
@@ -40,8 +43,14 @@ export class RaportsComponent implements OnInit {
     });
   }
 
-  redirectToDelete(uid: string) {
-    // this.db.collection('raport').doc(uid).delete();
+  acceptRaport(uid:string) {
+    window.alert('działa');
+  }
+
+  redirectToDelete(raportData:Raports) {
+    this.dialog.open(RaportsDeleteComponent, {
+      data: raportData,
+    })
   }
 
   public doFilter = (value: string) => {

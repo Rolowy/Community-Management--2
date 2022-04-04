@@ -30,21 +30,24 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 
-import { addDoc, deleteDoc, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, deleteDoc, doc, getDoc, getDocs, limit, orderBy, updateDoc } from "firebase/firestore";
 
 import { User } from '../_interface/user';
 
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { EmailAuthCredential, EmailAuthProvider, onAuthStateChanged, reauthenticateWithCredential } from 'firebase/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Apartment } from '../_interface/apartment';
 import { Raports } from '../_interface/raport';
+import { Chat } from '../_interface/chat';
+import { ContentObserver } from '@angular/cdk/observers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthServiceService {
+  useruid:any;
   userInfo = new BehaviorSubject<User>({
     name: '',
     lastname: '',
@@ -61,11 +64,12 @@ export class AuthServiceService {
   constructor(private auth: Auth, private router: Router, private afs: Firestore, private toast: MatSnackBar) {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log('UID', user.uid);
-
+        this.useruid = user.uid;
         onSnapshot(doc(afs, 'users', `${user.uid}`), (doc) => {
           this.userInfo.next(doc.data() as User);
         });
+
+
 
         localStorage.setItem('user', JSON.stringify(user));
       } else {
@@ -81,8 +85,28 @@ export class AuthServiceService {
     return user !== null && user.emailVerified !== false ? true : false;
   }
 
+  async addChatMessage(user:Chat, message:string) {
+    return addDoc(collection(this.afs, 'chat'), {
+      uid: user.uid,
+      message: message,
+    })
+  }
+
   async addApartment(model:Apartment) {
     return addDoc(collection(this.afs, 'apartments'), model);
+  }
+
+  async getUser_LastRaport() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    console.log(user.uid);
+
+    
+    const q = query(collection(this.afs, "raports"), where("user.uid", "==", user.uid), limit(1));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(el => {
+      return el.data() as Raports;
+    });
   }
 
   async addRaport(model:Raports) {
@@ -165,6 +189,8 @@ export class AuthServiceService {
       })
     });
   }
+
+
 
 
 

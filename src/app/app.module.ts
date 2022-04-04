@@ -30,6 +30,9 @@ import { ApartmentsDeleteComponent } from './components/admin/apartments/apartme
 import { ApartmentsEditComponent } from './components/admin/apartments/apartments-edit/apartments-edit.component';
 import { RaportsComponent } from './components/admin/raports/raports.component';
 import { RaportsAddComponent } from './components/admin/raports/raports-add/raports-add.component';
+import { RaportsDeleteComponent } from './components/admin/raports/raports-delete/raports-delete.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { UserRaportsComponent } from './components/user/user-raports/user-raports.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +53,10 @@ import { RaportsAddComponent } from './components/admin/raports/raports-add/rapo
     ApartmentsDeleteComponent,
     ApartmentsEditComponent,
     RaportsComponent,
-    RaportsAddComponent
+    RaportsAddComponent,
+    RaportsDeleteComponent,
+    ChatComponent,
+    UserRaportsComponent
   ],
   imports: [
     BrowserModule,
