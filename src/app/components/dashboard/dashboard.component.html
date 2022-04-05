@@ -4,10 +4,11 @@
         <div fxFlex="15"><img src="../../assets/images/dashboard/bank-statement.png"></div>
         <div class="desc" fxFlex>
           <h2>Indywidualny numer konta</h2>
+          
+          <p nz-typography nzCopyable nzCopyText="{{user.bankaccount}}">Numer Konta: {{user.bankaccount}}</p>
           <div class="alert alert-warning" role="alert">
             Numer konta jest przypisany dla danej mieszkańca, prosimy o nieudostępnianie numeru innym mieszkańcom, każdy mieszkaniec ma swój indywidualny rachunek, na którym wykonuję wpłaty za lokale.
           </div>
-          <p nz-typography nzCopyable nzCopyText="{{user.bankaccount}}">Numer Konta: {{user.bankaccount}}</p>
         </div>
       </div>
       <div *ngFor="let x of lastraport | async" fxLayout="row" fxFlex="50" class="dashboard-panel col">
@@ -24,6 +25,5 @@
           <p>{{user.bankaccount}}</p>
         </div>
       </div>  
-      
 </div>
 </div>

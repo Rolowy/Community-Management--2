@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
 import { ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
@@ -11,19 +11,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthServiceService } from 'src/app/shared/auth-service.service';
 import { User } from 'src/app/_interface/user';
 import { collection, Firestore, getDocs } from '@angular/fire/firestore';
-import { ApartmentsAddComponent } from './apartments-add/apartments-add.component';
-import { ApartmentsDeleteComponent } from './apartments-delete/apartments-delete.component';
-import { ApartmentsEditComponent } from './apartments-edit/apartments-edit.component';
-import { Apartment } from 'src/app/_interface/apartment';
-
+import { Payment } from 'src/app/_interface/payment';
+import { PaymentsAddComponent } from './payments-add/payments-add.component';
+import { PaymentsDeleteComponent } from './payments-delete/payments-delete.component';
 
 @Component({
-  selector: 'app-apartments',
-  templateUrl: './apartments.component.html',
-  styleUrls: ['./apartments.component.scss']
+  selector: 'app-payments',
+  templateUrl: './payments.component.html',
+  styleUrls: ['./payments.component.scss']
 })
-export class ApartmentsComponent implements OnInit {
-  displayedColumns: string[] = ['street', 'buildingnumber', 'apartmentnumber', 'area', 'rate', 'postcode', 'edit', 'delete'];
+export class PaymentsComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['position', 'name', 'lastname', 'price', 'status', 'edit', 'delete'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
@@ -32,11 +30,11 @@ export class ApartmentsComponent implements OnInit {
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) { }
 
   ngOnInit(): void {
-    this.refreshApartmentsList();
+    this.refreshUsersList();
   }
 
   getRangeDisplayText = (page: number, pageSize: number, length: number) => {
-    const initialText = `Wyświetlonych lokali`;  // customize this line
+    const initialText = `Wyświetlonych płatności`;  // customize this line
     if (length == 0 || pageSize == 0) {
       return `${initialText} 0 z ${length}`;
     }
@@ -50,18 +48,18 @@ export class ApartmentsComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
-    if(this.paginator)
-    {
+    if (this.paginator) {
       this.paginator._intl.itemsPerPageLabel = "Liczba Stron";
       this.paginator._intl.getRangeLabel = this.getRangeDisplayText;
     }
   }
 
-  async refreshApartmentsList() {
-    const querySnapshot = await getDocs(collection(this.afs, "apartments"));
+
+  async refreshUsersList() {
+    const querySnapshot = await getDocs(collection(this.afs, "payments"));
 
     this.dataSource.data = querySnapshot.docs.map(el => {
-      const data = el.data() as User;
+      const data = el.data() as Payment;
       data.uid = el.id;
       return data;
     });
@@ -72,21 +70,21 @@ export class ApartmentsComponent implements OnInit {
   }
 
 
-  public redirectToEdit = (el:Apartment) => {
-    const dialogRef = this.dialog.open(ApartmentsEditComponent, {
+  public redirectToEdit = (el: any) => {
+    // const dialogRef = this.dialog.open(UsersEditComponent, {
+    //   width: '500px;',
+    //   data: el,
+    // });
+  }
+
+  public addPayment() {
+    const dialogRef = this.dialog.open(PaymentsAddComponent, {
       width: '500px;',
-      data: el,
     });
   }
 
-  public addApartment() {
-    const dialogRef = this.dialog.open(ApartmentsAddComponent, {
-      width: '500px;',
-    });
-  }
-
-  public redirectToDelete = (el:Apartment) => {
-    const dialogRef = this.dialog.open(ApartmentsDeleteComponent, {
+  public redirectToDelete = (el: any) => {
+    const dialogRef = this.dialog.open(PaymentsDeleteComponent, {
       width: '800px;',
       data: el,
     });

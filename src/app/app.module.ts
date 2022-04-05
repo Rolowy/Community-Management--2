@@ -40,6 +40,10 @@ import { pl_PL } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import pl from '@angular/common/locales/pl';
 import { HttpClientModule } from '@angular/common/http';
+import { PaymentsComponent } from './components/admin/payments/payments.component';
+import { PaymentsAddComponent } from './components/admin/payments/payments-add/payments-add.component';
+import { PaymentsEditComponent } from './components/admin/payments/payments-edit/payments-edit.component';
+import { PaymentsDeleteComponent } from './components/admin/payments/payments-delete/payments-delete.component';
 
 registerLocaleData(pl);
 
@@ -65,7 +69,11 @@ registerLocaleData(pl);
     RaportsAddComponent,
     RaportsDeleteComponent,
     ChatComponent,
-    UserRaportsComponent
+    UserRaportsComponent,
+    PaymentsComponent,
+    PaymentsAddComponent,
+    PaymentsEditComponent,
+    PaymentsDeleteComponent
   ],
   imports: [
     BrowserModule,

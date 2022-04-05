@@ -19,13 +19,13 @@
 
         <a routerLinkActive="active" mat-button [matMenuTriggerFor]="raports"><mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Raporty</a>
         <mat-menu #raports="matMenu">
-          <a [routerLink]="['raports']" mat-menu-item>Raporty</a>
-
+          <a mat-menu-item [routerLink]="['raports']"><mat-icon aria-hidden="false" aria-label="speaker_notes">speaker_notes</mat-icon> Raporty</a>
           <a mat-menu-item [routerLink]="['addraport']"><mat-icon aria-hidden="false" aria-label="post_add">post_add</mat-icon> Dodaj Raport</a>
         </mat-menu>
 
         <a routerLinkActive="active" [routerLink]="['apartments']" mat-button><mat-icon aria-hidden="false" aria-label="domain">domain</mat-icon> Mieszkania</a>
         <a routerLinkActive="active" [routerLink]="['users']" mat-button><mat-icon aria-hidden="false" aria-label="supervisor_account">supervisor_account</mat-icon> Użytkownicy</a>
+        <a routerLinkActive="active" [routerLink]="['payments']" mat-button><mat-icon aria-hidden="false" aria-label="payments">payments</mat-icon> Płatności</a>
       </span>
 
       <a routerLinkActive="active" [routerLink]="['chat']" mat-button><mat-icon aria-hidden="false" aria-label="chat">chat</mat-icon> Czat</a>

@@ -42,12 +42,12 @@ import { Apartment } from '../_interface/apartment';
 import { Raports } from '../_interface/raport';
 import { Chat } from '../_interface/chat';
 import { ContentObserver } from '@angular/cdk/observers';
+import { Payment } from '../_interface/payment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthServiceService {
-  useruid:any;
   userInfo = new BehaviorSubject<User>({
     name: '',
     lastname: '',
@@ -64,7 +64,6 @@ export class AuthServiceService {
   constructor(private auth: Auth, private router: Router, private afs: Firestore, private toast: MatSnackBar) {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        this.useruid = user.uid;
         onSnapshot(doc(afs, 'users', `${user.uid}`), (doc) => {
           this.userInfo.next(doc.data() as User);
         });
@@ -95,6 +94,11 @@ export class AuthServiceService {
   async addApartment(model:Apartment) {
     return addDoc(collection(this.afs, 'apartments'), model);
   }
+
+  async addPayment(model:Payment) {
+    return addDoc(collection(this.afs, 'payments'), model);
+  }
+
 
   async getUser_LastRaport() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');

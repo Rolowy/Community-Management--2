@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ApartmentsComponent } from './components/admin/apartments/apartments.component';
+import { PaymentsComponent } from './components/admin/payments/payments.component';
 import { RaportsAddComponent } from './components/admin/raports/raports-add/raports-add.component';
 import { RaportsComponent } from './components/admin/raports/raports.component';
 import { UsersComponent } from './components/admin/users/users.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'raports', component: RaportsComponent, canActivate: [GuardGuard] },
   {path: 'addraport', component: RaportsAddComponent, canActivate: [GuardGuard] },
   {path: 'chat', component: ChatComponent, canActivate: [GuardGuard] },
+  {path: 'payments', component: PaymentsComponent, canActivate: [GuardGuard] },
 
   {path: 'user/raports', component: UserRaportsComponent, canActivate: [GuardGuard] },
   {path: 'users', component: UsersComponent, canActivate: [GuardGuard] },
