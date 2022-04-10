@@ -42,6 +42,7 @@ import { PaymentsEditComponent } from './components/admin/payments/payments-edit
 import { PaymentsDeleteComponent } from './components/admin/payments/payments-delete/payments-delete.component';
 import { DasboardComponent } from './components/admin/dasboard/dasboard.component';
 import { UserRaportsViewComponent } from './components/user/user-raports-view/user-raports-view.component';
+import { provideStorage,getStorage } from '@angular/fire/storage';
 
 registerLocaleData(pl);
 
@@ -83,6 +84,7 @@ registerLocaleData(pl);
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    provideStorage(() => getStorage()),
   ],
   exports: [
   ],

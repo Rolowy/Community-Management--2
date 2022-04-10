@@ -1,9 +1,10 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
 import { ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl} from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+
 import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -15,6 +16,7 @@ import { Payment } from 'src/app/_interface/payment';
 import { PaymentsAddComponent } from './payments-add/payments-add.component';
 import { PaymentsDeleteComponent } from './payments-delete/payments-delete.component';
 import { PaymentsEditComponent } from './payments-edit/payments-edit.component';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -26,33 +28,32 @@ import { PaymentsEditComponent } from './payments-edit/payments-edit.component';
 export class PaymentsComponent implements OnInit {
 
   displayedColumns: string[] = ['position', 'name', 'lastname', 'price', 'status', 'date', 'edit'];
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource;
 
-
-  @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, {static:true}) sort!: MatSort;
+  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
 
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) {
-    this.getDocuments('payments');
   }
 
-  getDocuments(col:string) {
-    const querySnapshot = collection(this.afs, col);
-    let index = 1;
+
+  ngOnInit() {
+    const querySnapshot = collection(this.afs, 'payments');
     onSnapshot(querySnapshot, (querySnap) => {
-    this.dataSource.data = querySnap.docs.map(el => {
+      let index = 1;
+      this.dataSource.data = querySnap.docs.map(el => {
         const data = el.data() as Payment;
+        data.name = data.user.name;
+        data.lastname = data.user.lastname;
         data.uid = el.id;
         data.index = index;
         index+=1;
+        console.log(data)
         return data
       })
-  })
-  }
-
-  ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    })
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
 

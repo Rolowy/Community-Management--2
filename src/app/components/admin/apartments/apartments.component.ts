@@ -1,14 +1,14 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
 import { AuthServiceService } from 'src/app/shared/auth-service.service';
-import { collection, Firestore, getDocs } from '@angular/fire/firestore';
+import { collection, Firestore } from '@angular/fire/firestore';
 import { ApartmentsAddComponent } from './apartments-add/apartments-add.component';
 import { ApartmentsDeleteComponent } from './apartments-delete/apartments-delete.component';
 import { ApartmentsEditComponent } from './apartments-edit/apartments-edit.component';
@@ -28,9 +28,11 @@ export class ApartmentsComponent implements OnInit {
   displayedColumns: string[] = ['street', 'buildingnumber', 'apartmentnumber', 'area', 'rate', 'postcode', 'edit'];
   dataSource = new MatTableDataSource();
 
-  @ViewChild(MatSort) sort: MatSort;
+  
+  @ViewChild(MatSort, {static:true}) sort!: MatSort;
+  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
 
-  constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore, public sort: MatSort, public paginator: MatPaginator) {
+  constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) {
     this.getDocuments('apartments');
   }
 
@@ -40,6 +42,7 @@ export class ApartmentsComponent implements OnInit {
     this.dataSource.data = querySnap.docs.map(el => {
         const data = el.data() as Apartment;
         data.uid = el.id;
+        console.log(data);
         return data
       })
   })
@@ -47,8 +50,8 @@ export class ApartmentsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.dataSource.sort = this.sort;
-    // this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   getRangeDisplayText = (page: number, pageSize: number, length: number) => {
@@ -61,11 +64,10 @@ export class ApartmentsComponent implements OnInit {
     const endIndex = startIndex < length
       ? Math.min(startIndex + pageSize, length)
       : startIndex + pageSize;
-    return `${initialText} ${startIndex + 1} to ${endIndex} of ${length}`; // customize this line
+    return `${initialText} ${startIndex + 1} z ${endIndex} na ${length}`; // customize this line
   };
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
     if (this.paginator) {
       this.paginator._intl.itemsPerPageLabel = "Liczba Stron";
       this.paginator._intl.getRangeLabel = this.getRangeDisplayText;
