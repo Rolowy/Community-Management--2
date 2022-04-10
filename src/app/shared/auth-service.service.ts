@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import {
   authState,
   getAuth,
@@ -14,40 +14,37 @@ import {
 
 import {
   collection,
-  docData,
-  DocumentReference,
-  CollectionReference,
   Firestore,
   onSnapshot,
   query,
   where,
-  Unsubscribe,
-  Query,
-  DocumentData,
-  collectionData,
-  collectionChanges,
-  docSnapshots,
   setDoc,
 } from '@angular/fire/firestore';
 
-import { addDoc, deleteDoc, doc, getDoc, getDocs, limit, orderBy, updateDoc } from "firebase/firestore";
+import { addDoc, deleteDoc, doc, getDocs, limit, updateDoc } from "firebase/firestore";
 
 import { User } from '../_interface/user';
 
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { EmailAuthCredential, EmailAuthProvider, onAuthStateChanged, reauthenticateWithCredential } from 'firebase/auth';
+import { BehaviorSubject } from 'rxjs';
+import { EmailAuthProvider, onAuthStateChanged, reauthenticateWithCredential } from 'firebase/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Apartment } from '../_interface/apartment';
 import { Raports } from '../_interface/raport';
 import { Chat } from '../_interface/chat';
-import { ContentObserver } from '@angular/cdk/observers';
 import { Payment } from '../_interface/payment';
+import { jsonEval } from '@firebase/util';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthServiceService {
+  userID:string = '';
+  userMod:boolean = false;
+
+  totalprice = new BehaviorSubject<number>(0);
+
+
   userInfo = new BehaviorSubject<User>({
     name: '',
     lastname: '',
@@ -61,10 +58,19 @@ export class AuthServiceService {
     phone: '',
   });
 
-  constructor(private auth: Auth, private router: Router, private afs: Firestore, private toast: MatSnackBar) {
+  constructor(private auth: Auth,
+    private router: Router,
+    private afs: Firestore,
+    private toast: MatSnackBar,
+    ) {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        onSnapshot(doc(afs, 'users', `${user.uid}`), (doc) => {
+        this.userID = user.uid;
+        
+
+        await onSnapshot(doc(afs, 'users', `${user.uid}`), (doc) => {
+          localStorage.setItem('datainfo', JSON.stringify(doc.data()));
+          this.userMod = doc.get('moderator');
           this.userInfo.next(doc.data() as User);
         });
 
@@ -77,7 +83,40 @@ export class AuthServiceService {
 
 
     });
+
   }
+
+
+  obliczanieObciazenia() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    const querySnapshot = query(collection(this.afs, 'payments'), where("user.uid", "==", user.uid));
+    let items = 0;
+    onSnapshot(querySnapshot, (querySnap) => {
+      let wpl = 0;
+      let obc = 0;
+
+      querySnap.forEach(doc => {
+        const data = doc.data() as Payment;
+
+        if(data.status != "WPŁATA")
+        {
+          wpl += parseFloat(data.price);
+        }
+        else
+        {
+          obc += parseFloat(data.price);
+        }
+
+      })
+
+      items = wpl - obc;
+
+      this.totalprice.next(items);
+  })
+  return items;
+  }
+
 
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user')!);
@@ -99,6 +138,58 @@ export class AuthServiceService {
     return addDoc(collection(this.afs, 'payments'), model);
   }
 
+  
+
+  async getUser_LastPayment() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const q = query(collection(this.afs, "payments"), where("user.uid", "==", user.uid), limit(3));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(el => {
+      return el.data() as Raports;
+    });
+  }
+
+  async getUser_LastBurden() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    console.log(user.uid);
+
+    
+    const q = query(collection(this.afs, "payments"), where("user.uid", "==", user.uid), where('status', '==', 'OBCIĄŻENIE'), limit(3));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(el => {
+      return el.data() as Raports;
+    });
+  }
+
+  async getUser_Premises() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    console.log(user.uid);
+
+    
+    const q = query(collection(this.afs, "apartments"), where("owner", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(el => {
+      return el.data() as Apartment;
+    });
+  }
+
+  async getUser_Info(uid:string) {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    console.log(user.uid);
+
+    
+    const q = query(collection(this.afs, "apartments"), where("owner", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(el => {
+      return el.data() as Apartment;
+    });
+  }
+
+
+  
 
   async getUser_LastRaport() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -112,6 +203,7 @@ export class AuthServiceService {
       return el.data() as Raports;
     });
   }
+  
 
   async addRaport(model:Raports) {
     return addDoc(collection(this.afs, 'raports'), model);
@@ -177,9 +269,9 @@ export class AuthServiceService {
 
   async login(form: any) {
     await signInWithEmailAndPassword(this.auth, form.email, form.password).then((user) => {
-      location.reload();
+        this.router.navigate(['dashboard']);
     }).catch(error => {
-      window.alert(error);
+      this.viewMessage(error);
     });
   }
 
@@ -200,10 +292,7 @@ export class AuthServiceService {
 
   async logout() {
     await signOut(this.auth).then(() => {
-      this.router.navigate(['login']);
-      //  window.alert('Wylogowano');
-      localStorage.clear();
-      location.reload();
+        this.router.navigate(['login']);
     })
   }
 

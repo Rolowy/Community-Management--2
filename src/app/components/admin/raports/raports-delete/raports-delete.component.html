@@ -1,5 +1,9 @@
 <h1 mat-dialog-title>Czy jesteś pewny ?</h1>
-<div mat-dialog-content>Czy na pewno usunąć raport o numerze #{{data.number}} dla {{data.user.name}} {{data.user.lastname}} ?</div>
+<div mat-dialog-content>
+  <p>Raport o numerze: #{{data.number}}</p>
+  <p>Utworzony dla: {{data.user.name}} {{data.user.lastname}}</p>
+  <p>Data utworzenia: {{data.createdAt.seconds*1000 | date: 'dd.MM.Y'}}</p>
+</div>
 <div mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]="true">Oh nie!</button>
   <button mat-raised-button color="primary" (click)="onConfirm()" [mat-dialog-close]="true">Tak, proszę</button>

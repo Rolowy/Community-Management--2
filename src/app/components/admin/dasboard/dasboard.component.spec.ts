@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserChangepasswordComponent } from './user-changepassword.component';
+import { DasboardComponent } from './dasboard.component';
 
-describe('UserChangepasswordComponent', () => {
-  let component: UserChangepasswordComponent;
-  let fixture: ComponentFixture<UserChangepasswordComponent>;
+describe('DasboardComponent', () => {
+  let component: DasboardComponent;
+  let fixture: ComponentFixture<DasboardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserChangepasswordComponent ]
+      declarations: [ DasboardComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserChangepasswordComponent);
+    fixture = TestBed.createComponent(DasboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

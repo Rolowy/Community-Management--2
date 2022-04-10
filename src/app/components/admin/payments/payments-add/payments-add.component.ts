@@ -25,6 +25,8 @@ export class PaymentsAddComponent implements OnInit {
     user: new FormControl('', Validators.required),
     price: new FormControl('', Validators.required),
     status: new FormControl('', Validators.required),
+    date: new FormControl('', Validators.required),
+    createdAt: new FormControl('')
   });
 
 
@@ -51,6 +53,8 @@ export class PaymentsAddComponent implements OnInit {
   }
 
   createPayment() {
+    this.firstFormGroup.value.createdAt = new Date;
+
     this.authService.addPayment(this.firstFormGroup.value).then(() => {
       this.authService.viewMessage('Dodano nową płatność');
       this.dialogRef.close();

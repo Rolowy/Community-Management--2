@@ -2,16 +2,22 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    NzTypographyModule
+    NzTypographyModule,
+    NzCollapseModule,
+    NzNotificationModule
   ],
   exports: [
-    NzTypographyModule
+    NzTypographyModule,
+    NzCollapseModule,
+    NzNotificationModule
   ]
 })
 export class NgzorroModule { }

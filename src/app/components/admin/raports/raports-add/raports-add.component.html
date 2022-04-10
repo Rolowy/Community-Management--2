@@ -18,7 +18,7 @@
   
               <div class="col">
                 <mat-form-field appearance="fill">
-                  <mat-label>Użytkownik</mat-label>
+                  <mat-label>Mieszkaniec</mat-label>
                   <mat-select (selectionChange)="userSelected($event)" formControlName="user" placeholder="Wybierz użytkownika" required>
                     <mat-option *ngFor="let user of users | async" [value]="user">{{user.name}} {{user.lastname}}</mat-option>
                   </mat-select>
@@ -43,8 +43,8 @@
                 <mat-form-field appearance="fill">
                   <mat-label>Data</mat-label>
                   <mat-date-range-input [rangePicker]="picker" required>
-                    <input formControlName="startdate" matStartDate placeholder="od dnia">
-                    <input formControlName="enddate" matEndDate placeholder="do dnia">
+                    <input formControlName="startdate" matStartDate placeholder="XX/XX/XXXX">
+                    <input formControlName="enddate" matEndDate placeholder="XX/XX/XXXX">
                   </mat-date-range-input>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-date-range-picker #picker></mat-date-range-picker>
@@ -112,7 +112,6 @@
         </form>
 
         <div class="d-flex flex-row float-right" style="gap: 1em">
-        <button mat-button mat-dialog-close>Anuluj</button>
         <button mat-raised-button color="primary" (click)="SaveRaport()" [mat-dialog-close]="true" [disabled]="!form.valid">Generuj Raport</button>
         </div>
       </div>

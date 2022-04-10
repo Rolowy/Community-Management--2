@@ -6,6 +6,7 @@ export interface DialogData {
   number:number;
   user:any;
   uid:string;
+  createdAt:any
 }
 
 @Component({

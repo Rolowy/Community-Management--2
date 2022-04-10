@@ -17,11 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { HeaderComponent } from './header/header.component';
 import { RegisterComponent } from './components/register/register.component';
-import { UserDeleteComponent } from './components/user/user-delete/user-delete.component';
 import { NoactivationcodeComponent } from './components/login/noactivationcode/noactivationcode.component';
-import { UserChangepasswordComponent } from './components/user/user-changepassword/user-changepassword.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import { ApartmentsComponent } from './components/admin/apartments/apartments.component';
 import { UsersEditComponent } from './components/admin/users/users-edit/users-edit.component';
@@ -33,7 +30,6 @@ import { ApartmentsEditComponent } from './components/admin/apartments/apartment
 import { RaportsComponent } from './components/admin/raports/raports.component';
 import { RaportsAddComponent } from './components/admin/raports/raports-add/raports-add.component';
 import { RaportsDeleteComponent } from './components/admin/raports/raports-delete/raports-delete.component';
-import { ChatComponent } from './components/chat/chat.component';
 import { UserRaportsComponent } from './components/user/user-raports/user-raports.component';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { pl_PL } from 'ng-zorro-antd/i18n';
@@ -44,6 +40,8 @@ import { PaymentsComponent } from './components/admin/payments/payments.componen
 import { PaymentsAddComponent } from './components/admin/payments/payments-add/payments-add.component';
 import { PaymentsEditComponent } from './components/admin/payments/payments-edit/payments-edit.component';
 import { PaymentsDeleteComponent } from './components/admin/payments/payments-delete/payments-delete.component';
+import { DasboardComponent } from './components/admin/dasboard/dasboard.component';
+import { UserRaportsViewComponent } from './components/user/user-raports-view/user-raports-view.component';
 
 registerLocaleData(pl);
 
@@ -52,11 +50,8 @@ registerLocaleData(pl);
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    HeaderComponent,
     RegisterComponent,
-    UserDeleteComponent,
     NoactivationcodeComponent,
-    UserChangepasswordComponent,
     UsersComponent,
     ApartmentsComponent,
     UsersEditComponent,
@@ -68,12 +63,13 @@ registerLocaleData(pl);
     RaportsComponent,
     RaportsAddComponent,
     RaportsDeleteComponent,
-    ChatComponent,
     UserRaportsComponent,
     PaymentsComponent,
     PaymentsAddComponent,
     PaymentsEditComponent,
-    PaymentsDeleteComponent
+    PaymentsDeleteComponent,
+    DasboardComponent,
+    UserRaportsViewComponent,
   ],
   imports: [
     BrowserModule,

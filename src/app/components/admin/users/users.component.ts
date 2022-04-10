@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { AuthServiceService } from 'src/app/shared/auth-service.service';
 import { User } from 'src/app/_interface/user';
-import { collection, Firestore, getDocs } from '@angular/fire/firestore';
+import { collection, Firestore, getDocs, onSnapshot } from '@angular/fire/firestore';
 import { UsersEditComponent } from './users-edit/users-edit.component';
 import { UsersDeleteComponent } from './users-delete/users-delete.component';
 import { UsersAddComponent } from './users-add/users-add.component';
@@ -22,16 +22,17 @@ import { UsersAddComponent } from './users-add/users-add.component';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['position', 'name', 'lastname','bankaccount', 'address', 'city', 'postcode', 'email', 'phone', 'admin', 'edit', 'delete'];
+  displayedColumns: string[] = ['position', 'name', 'lastname','bankaccount', 'address', 'city', 'postcode', 'email', 'phone', 'admin', 'edit'];
   dataSource = new MatTableDataSource();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
 
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) { }
 
   ngOnInit(): void {
-    this.refreshUsersList();
+    this.getDocuments('users')
   }
 
   getRangeDisplayText = (page: number, pageSize: number, length: number) => {
@@ -48,7 +49,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
   };
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
     if(this.paginator)
     {
       this.paginator._intl.itemsPerPageLabel = "Liczba Stron";
@@ -57,14 +57,15 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
 
-  async refreshUsersList() {
-    const querySnapshot = await getDocs(collection(this.afs, "users"));
-
-    this.dataSource.data = querySnapshot.docs.map(el => {
-      const data = el.data() as User;
-      data.uid = el.id;
-      return data;
-    });
+  getDocuments(col:string) {
+    const querySnapshot = collection(this.afs, col);
+    onSnapshot(querySnapshot, (querySnap) => {
+    this.dataSource.data = querySnap.docs.map(el => {
+        const data = el.data() as User;
+        data.uid = el.id;
+        return data
+      })
+  })
   }
 
   public doFilter = (value: string) => {

@@ -1,0 +1,71 @@
+
+<h2 mat-dialog-title>Informację o fakturze numer #{{data.number}}</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>Imię i Nazwisko</h3>
+  <p>{{data.user.name}} {{data.user.lastname}}</p>
+
+  <h3>Lokal</h3>
+  <p>{{data.apartment.street}} {{data.apartment.buildingnumber}}/{{data.apartment.apartmentnumber}}</p>
+
+  <h3>Powierzchnia</h3>
+  {{data.apartment.area}} m2
+
+  {{data.otherStatus}}
+
+  <p *ngFor="let x of data.otherStatus | async">{{x | json}}</p>
+
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Zamknij</button>
+</mat-dialog-actions>
+
+
+<!-- {
+    "user": {
+      "bankaccount": "61 1090 1014 0000 0712 1981 2874",
+      "phone": "324354890",
+      "address": "Bolero",
+      "moderator": false,
+      "name": "Majki",
+      "email": "netowy@vp.pl",
+      "postcode": "32-434",
+      "lastname": "Pawłowski",
+      "uid": "OuGq0iGUlxf4To2PxT8G4LD1hnx1",
+      "city": "Ełk"
+    },
+    "apartment": {
+      "apartmentnumber": "4",
+      "owner": "OuGq0iGUlxf4To2PxT8G4LD1hnx1",
+      "area": "32.43",
+      "uid": "DbRMtSyvcNUmDmTRJbo3",
+      "street": "Makowska",
+      "buildingnumber": "13",
+      "rate": "1.4",
+      "postcode": "13-432"
+    },
+    "sum": 7.14,
+    "enddate": {
+      "seconds": 1650405600,
+      "nanoseconds": 0
+    },
+    "otherStatus": [
+      {
+        "amount": 3,
+        "name": "Kradzież Ubrań",
+        "price": 2.38,
+        "converter": "m3"
+      }
+    ],
+    "startdate": {
+      "seconds": 1649109600,
+      "nanoseconds": 0
+    },
+    "createdAt": {
+      "seconds": 1649016423,
+      "nanoseconds": 559000000
+    },
+    "number": 67,
+    "uid": "ZwZ0Ohd9LgLbJbSGITFm"
+  } -->

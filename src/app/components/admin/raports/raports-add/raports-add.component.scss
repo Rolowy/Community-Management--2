@@ -2,31 +2,35 @@
   margin: 0;
 }
 
-.vertical-center {
-    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-    min-height: 100vh; /* These two lines are counted as one :-)       */
-  
-    display: flex;
-    align-items: center;
-  }
+form {
+  background-color: #ffffffeb !important;
+  padding: 2em;
+}
 
-  .example-container .mat-form-field .mat-form-field {
-    margin-left: 8px;
-  }
-  
-  .example-right-align {
-    text-align: right;
-  }
-  
-  input.example-right-align::-webkit-outer-spin-button,
-  input.example-right-align::-webkit-inner-spin-button {
-    display: none;
-  }
-  
-  input.example-right-align {
-    -moz-appearance: textfield;
-  }
+.vertical-center {
+  min-height: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.example-container .mat-form-field .mat-form-field {
+  margin-left: 8px;
+}
+
+.example-right-align {
+  text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.example-right-align {
+  -moz-appearance: textfield;
+}
 
 mat-form-field {
-    width: 100%;
+  width: 100%;
 }

@@ -8,4 +8,5 @@ export interface Raports {
     createdAt: any;
     startdate: any;
     enddate: any;
+    otherStatus:any;
 }

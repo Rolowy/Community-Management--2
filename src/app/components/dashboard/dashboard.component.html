@@ -1,29 +1,75 @@
-<div class="container-fluid mt-5">
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30" *ngIf="authService.userInfo.getValue() as user">
-      <div fxLayout="row" fxFlex="50" class="dashboard-panel col">
-        <div fxFlex="15"><img src="../../assets/images/dashboard/bank-statement.png"></div>
-        <div class="desc" fxFlex>
-          <h2>Indywidualny numer konta</h2>
-          
-          <p nz-typography nzCopyable nzCopyText="{{user.bankaccount}}">Numer Konta: {{user.bankaccount}}</p>
-          <div class="alert alert-warning" role="alert">
-            Numer konta jest przypisany dla danej mieszkańca, prosimy o nieudostępnianie numeru innym mieszkańcom, każdy mieszkaniec ma swój indywidualny rachunek, na którym wykonuję wpłaty za lokale.
-          </div>
-        </div>
+<div class="container-fluid mt-5" *ngIf="authService.userInfo.getValue() as user">
+  <div class="row m-2">
+  <div fxLayout="row"fxFlex="70" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30" *ngIf="!user.moderator">
+    <div *ngIf="lastburden | async" fxLayout="row" fxFlex class="dashboard-panel col">
+      <div class="desc" fxFlex>
+        <h2><span class="material-icons">
+          balance
+          </span> Ostatnie obciążenia</h2>
+        <mat-selection-list [multiple]="false">
+          <mat-list-option *ngFor="let x of lastburden | async" [value]="x">
+            Data Zaksięgowania: {{x.date.seconds*1000 | date: 'dd/MM/YYYY'}}<br />
+            Kwota: {{x.price}} zł
+          </mat-list-option>
+        </mat-selection-list>
       </div>
-      <div *ngFor="let x of lastraport | async" fxLayout="row" fxFlex="50" class="dashboard-panel col">
-        <div fxFlex="15"><img src="../../assets/images/dashboard/bill.png"></div>
-        <div class="desc" fxFlex>
-          <h2>Ostatnia wpłata</h2>
-          <p>{{ x.sum | currency: 'PLN' :'symbol':'1.1-2'}}</p>
-        </div>
-      </div>  
-      <div fxLayout="row" fxFlex="50" class="dashboard-panel col">
-        <div fxFlex="15"><img src="../../assets/images/dashboard/bill.png"></div>
-        <div class="desc" fxFlex>
-          <h2>Stan konta</h2>
-          <p>{{user.bankaccount}}</p>
-        </div>
-      </div>  
+    </div>
+    <div *ngIf="lastpayments | async" fxLayout="row" fxFlex class="dashboard-panel col">
+      <div class="desc" fxFlex>
+        <h2><span class="material-icons">
+          trending_up
+          </span> Ostatnie wpłaty</h2>
+        <mat-selection-list [multiple]="false">
+          <mat-list-option *ngFor="let x of lastpayments | async" [value]="x">
+            Data Zaksięgowania: {{x.date.seconds*1000 | date: 'dd/MM/YYYY'}}<br />
+            Kwota: {{x.price}} zł
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+    </div>
+</div>
+<div fxLayout="row" fxFlex fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30" *ngIf="!user.moderator">
+  <div fxLayout="row" fxFlex="80" class="dashboard-panel col">
+    <div class="desc" fxFlex>
+      <h2><span class="material-icons">
+        request_page
+        </span> Saldo Konta</h2>
+      <mat-selection-list [multiple]="false">
+        <mat-list-option>
+          Twoje saldo: {{authService.totalprice | async}} zł
+        </mat-list-option>
+      </mat-selection-list>
+      <h2><span class="material-icons">
+        announcement
+        </span> Numer Rachunku</h2>
+      <mat-selection-list [multiple]="false">
+        <mat-list-option>
+          <p nz-typography nzCopyable nzCopyText="{{user.bankaccount}}">{{user.bankaccount}}</p>
+        </mat-list-option>
+      </mat-selection-list>
+      
+    </div>
+  </div>
+</div>
+</div>
+<div class="row m-2 mt-5">
+  <table class="table table-striped dashboard-panel" fxFlex="50">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Lokal</th>
+        <th scope="col">Powierzchnia</th>
+        <th scope="col">Do Zapłaty</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let x of premises | async; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{x.street | uppercase}} {{x.apartmentnumber}}/{{x.buildingnumber}}</td>
+        <td>{{x.area}}</td>
+        <td>?</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 </div>

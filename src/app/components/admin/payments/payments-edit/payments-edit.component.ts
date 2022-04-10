@@ -1,4 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, Inject, OnInit } from '@angular/core';
+import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/_interface/user';
+
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Payment } from 'src/app/_interface/payment';
+import { collection, getDocs } from 'firebase/firestore';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-payments-edit',
@@ -6,10 +15,48 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payments-edit.component.scss']
 })
 export class PaymentsEditComponent implements OnInit {
+  users:any;
 
-  constructor() { }
+  form = [
+    { label: 'WPŁATA'},
+    { label: 'OBCIĄŻENIE'}
+  ]
 
-  ngOnInit(): void {
+  firstFormGroup: FormGroup = this.fb.group({
+    user: new FormControl('', Validators.required),
+    price: new FormControl('', Validators.required),
+    status: new FormControl('', Validators.required),
+    date: new FormControl('', Validators.required),
+    createdAt: new FormControl('')
+  });
+
+
+  constructor(
+  public dialogRef: MatDialogRef<PaymentsEditComponent>,
+    private fb: FormBuilder,
+    private afs: Firestore,
+    private authService: AuthServiceService,
+    @Inject(MAT_DIALOG_DATA) public data:Payment,
+  ) {}
+
+  ngOnInit() {
+    this.getUsers();
   }
 
+  async getUsers() {
+    const querySnapshot = await getDocs(collection(this.afs, "users"));
+    this.users = querySnapshot.docs.map(el => {
+      const data = el.data() as User;
+      data.uid = el.id;
+      return data;
+    });
+  }
+
+  selectUser(event: any) {
+    this.firstFormGroup.value.user = event.value;
+  }
+
+  editPayment() {
+
+  }
 }

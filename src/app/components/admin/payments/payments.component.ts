@@ -10,60 +10,51 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { AuthServiceService } from 'src/app/shared/auth-service.service';
 import { User } from 'src/app/_interface/user';
-import { collection, Firestore, getDocs } from '@angular/fire/firestore';
+import { collection, Firestore, onSnapshot } from '@angular/fire/firestore';
 import { Payment } from 'src/app/_interface/payment';
 import { PaymentsAddComponent } from './payments-add/payments-add.component';
 import { PaymentsDeleteComponent } from './payments-delete/payments-delete.component';
+import { PaymentsEditComponent } from './payments-edit/payments-edit.component';
+
 
 @Component({
   selector: 'app-payments',
   templateUrl: './payments.component.html',
-  styleUrls: ['./payments.component.scss']
+  styleUrls: ['./payments.component.scss'],
+
 })
-export class PaymentsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['position', 'name', 'lastname', 'price', 'status', 'edit', 'delete'];
+export class PaymentsComponent implements OnInit {
+
+  displayedColumns: string[] = ['position', 'name', 'lastname', 'price', 'status', 'date', 'edit'];
   dataSource = new MatTableDataSource();
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) { }
-
-  ngOnInit(): void {
-    this.refreshUsersList();
+  constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) {
+    this.getDocuments('payments');
   }
 
-  getRangeDisplayText = (page: number, pageSize: number, length: number) => {
-    const initialText = `Wyświetlonych płatności`;  // customize this line
-    if (length == 0 || pageSize == 0) {
-      return `${initialText} 0 z ${length}`;
-    }
-    length = Math.max(length, 0);
-    const startIndex = page * pageSize;
-    const endIndex = startIndex < length
-      ? Math.min(startIndex + pageSize, length)
-      : startIndex + pageSize;
-    return `${initialText} ${startIndex + 1} to ${endIndex} of ${length}`; // customize this line
-  };
+  getDocuments(col:string) {
+    const querySnapshot = collection(this.afs, col);
+    let index = 1;
+    onSnapshot(querySnapshot, (querySnap) => {
+    this.dataSource.data = querySnap.docs.map(el => {
+        const data = el.data() as Payment;
+        data.uid = el.id;
+        data.index = index;
+        index+=1;
+        return data
+      })
+  })
+  }
 
-  ngAfterViewInit(): void {
+  ngOnInit() {
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    if (this.paginator) {
-      this.paginator._intl.itemsPerPageLabel = "Liczba Stron";
-      this.paginator._intl.getRangeLabel = this.getRangeDisplayText;
-    }
   }
 
-
-  async refreshUsersList() {
-    const querySnapshot = await getDocs(collection(this.afs, "payments"));
-
-    this.dataSource.data = querySnapshot.docs.map(el => {
-      const data = el.data() as Payment;
-      data.uid = el.id;
-      return data;
-    });
-  }
 
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
@@ -71,10 +62,10 @@ export class PaymentsComponent implements OnInit, AfterViewInit {
 
 
   public redirectToEdit = (el: any) => {
-    // const dialogRef = this.dialog.open(UsersEditComponent, {
-    //   width: '500px;',
-    //   data: el,
-    // });
+    const dialogRef = this.dialog.open(PaymentsEditComponent, {
+      width: '500px;',
+      data: el,
+    });
   }
 
   public addPayment() {

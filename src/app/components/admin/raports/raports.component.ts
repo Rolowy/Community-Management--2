@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Raports } from 'src/app/_interface/raport';
 import { AuthServiceService } from 'src/app/shared/auth-service.service';
-import { collection, Firestore, getDocs } from '@angular/fire/firestore';
+import { collection, Firestore, getDocs, onSnapshot } from '@angular/fire/firestore';
 import { RaportsDeleteComponent } from './raports-delete/raports-delete.component';
 
 
@@ -18,7 +18,7 @@ import { RaportsDeleteComponent } from './raports-delete/raports-delete.componen
   styleUrls: ['./raports.component.scss']
 })
 export class RaportsComponent implements OnInit {
-  displayedColumns: string[] = ['number','owner','apartment', 'createdAt', 'scope', 'sum', 'accept', 'delete'];
+  displayedColumns: string[] = ['number','owner','apartment', 'createdAt', 'scope', 'sum', 'edit'];
   dataSource = new MatTableDataSource();
   raports:any;
 
@@ -28,23 +28,18 @@ export class RaportsComponent implements OnInit {
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) { }
 
   ngOnInit(): void {
-
-    
-    this.refreshUsersList();
+    this.getDocuments('raports');
   }
 
-  async refreshUsersList() {
-    const querySnapshot = await getDocs(collection(this.afs, "raports"));
-
-    this.dataSource.data = querySnapshot.docs.map(el => {
-      const data = el.data() as Raports;
-      data.uid = el.id;
-      return data;
-    });
-  }
-
-  acceptRaport(uid:string) {
-    window.alert('działa');
+  getDocuments(col:string) {
+    const querySnapshot = collection(this.afs, col);
+    onSnapshot(querySnapshot, (querySnap) => {
+    this.dataSource.data = querySnap.docs.map(el => {
+        const data = el.data() as Raports;
+        data.uid = el.id;
+        return data
+      })
+  })
   }
 
   redirectToDelete(raportData:Raports) {

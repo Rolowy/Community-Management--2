@@ -2,19 +2,21 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+
 import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
 import { AuthServiceService } from 'src/app/shared/auth-service.service';
-import { User } from 'src/app/_interface/user';
 import { collection, Firestore, getDocs } from '@angular/fire/firestore';
 import { ApartmentsAddComponent } from './apartments-add/apartments-add.component';
 import { ApartmentsDeleteComponent } from './apartments-delete/apartments-delete.component';
 import { ApartmentsEditComponent } from './apartments-edit/apartments-edit.component';
 import { Apartment } from 'src/app/_interface/apartment';
+import { onSnapshot } from 'firebase/firestore';
+
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 
 @Component({
@@ -23,16 +25,30 @@ import { Apartment } from 'src/app/_interface/apartment';
   styleUrls: ['./apartments.component.scss']
 })
 export class ApartmentsComponent implements OnInit {
-  displayedColumns: string[] = ['street', 'buildingnumber', 'apartmentnumber', 'area', 'rate', 'postcode', 'edit', 'delete'];
+  displayedColumns: string[] = ['street', 'buildingnumber', 'apartmentnumber', 'area', 'rate', 'postcode', 'edit'];
   dataSource = new MatTableDataSource();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) { }
+  constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore, public sort: MatSort, public paginator: MatPaginator) {
+    this.getDocuments('apartments');
+  }
+
+  getDocuments(col:string) {
+    const querySnapshot = collection(this.afs, col);
+    onSnapshot(querySnapshot, (querySnap) => {
+    this.dataSource.data = querySnap.docs.map(el => {
+        const data = el.data() as Apartment;
+        data.uid = el.id;
+        return data
+      })
+  })
+  }
+
 
   ngOnInit(): void {
-    this.refreshApartmentsList();
+    // this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
   }
 
   getRangeDisplayText = (page: number, pageSize: number, length: number) => {
@@ -50,21 +66,10 @@ export class ApartmentsComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
-    if(this.paginator)
-    {
+    if (this.paginator) {
       this.paginator._intl.itemsPerPageLabel = "Liczba Stron";
       this.paginator._intl.getRangeLabel = this.getRangeDisplayText;
     }
-  }
-
-  async refreshApartmentsList() {
-    const querySnapshot = await getDocs(collection(this.afs, "apartments"));
-
-    this.dataSource.data = querySnapshot.docs.map(el => {
-      const data = el.data() as User;
-      data.uid = el.id;
-      return data;
-    });
   }
 
   public doFilter = (value: string) => {
@@ -72,7 +77,7 @@ export class ApartmentsComponent implements OnInit {
   }
 
 
-  public redirectToEdit = (el:Apartment) => {
+  public redirectToEdit = (el: Apartment) => {
     const dialogRef = this.dialog.open(ApartmentsEditComponent, {
       width: '500px;',
       data: el,
@@ -85,7 +90,7 @@ export class ApartmentsComponent implements OnInit {
     });
   }
 
-  public redirectToDelete = (el:Apartment) => {
+  public redirectToDelete = (el: Apartment) => {
     const dialogRef = this.dialog.open(ApartmentsDeleteComponent, {
       width: '800px;',
       data: el,
