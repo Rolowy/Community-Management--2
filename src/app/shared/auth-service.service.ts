@@ -1,11 +1,9 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
-  authState,
   getAuth,
   Auth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  user,
   sendEmailVerification,
   signOut,
   updatePassword,
@@ -21,7 +19,7 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 
-import { addDoc, deleteDoc, doc, getDocs, limit, updateDoc } from "firebase/firestore";
+import { addDoc, deleteDoc, doc, getDoc, getDocs, limit, updateDoc } from "firebase/firestore";
 
 import { User } from '../_interface/user';
 
@@ -33,14 +31,16 @@ import { Apartment } from '../_interface/apartment';
 import { Raports } from '../_interface/raport';
 import { Chat } from '../_interface/chat';
 import { Payment } from '../_interface/payment';
-import { jsonEval } from '@firebase/util';
+import { Config } from '../_interface/config'
+
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthServiceService {
-  userID:string = '';
-  userMod:boolean = false;
+  userID: string = '';
+  userMod: boolean = false;
 
   totalprice = new BehaviorSubject<number>(0);
 
@@ -62,11 +62,12 @@ export class AuthServiceService {
     private router: Router,
     private afs: Firestore,
     private toast: MatSnackBar,
-    ) {
+    private message: NzMessageService,
+  ) {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         this.userID = user.uid;
-        
+
 
         await onSnapshot(doc(afs, 'users', `${user.uid}`), (doc) => {
           localStorage.setItem('datainfo', JSON.stringify(doc.data()));
@@ -99,12 +100,10 @@ export class AuthServiceService {
       querySnap.forEach(doc => {
         const data = doc.data() as Payment;
 
-        if(data.status != "WPŁATA")
-        {
+        if (data.status != "WPŁATA") {
           wpl += parseFloat(data.price);
         }
-        else
-        {
+        else {
           obc += parseFloat(data.price);
         }
 
@@ -113,8 +112,8 @@ export class AuthServiceService {
       items = wpl - obc;
 
       this.totalprice.next(items);
-  })
-  return items;
+    })
+    return items;
   }
 
 
@@ -123,22 +122,59 @@ export class AuthServiceService {
     return user !== null && user.emailVerified !== false ? true : false;
   }
 
-  async addChatMessage(user:Chat, message:string) {
+  async addChatMessage(user: Chat, message: string) {
     return addDoc(collection(this.afs, 'chat'), {
       uid: user.uid,
       message: message,
     })
   }
 
-  async addApartment(model:Apartment) {
+  async addApartment(model: Apartment) {
     return addDoc(collection(this.afs, 'apartments'), model);
   }
 
-  async addPayment(model:Payment) {
+  async addPayment(model: Payment) {
     return addDoc(collection(this.afs, 'payments'), model);
   }
 
-  
+  async getConfig() {
+    const docRef = doc(this.afs, "config", "config");
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data() as Raports;
+      return data;
+    } else {
+      console.log("No such document!");
+      return {};
+    }
+  }
+
+
+  async saveDefaultConfiguration(form: any) {
+    await setDoc(doc(this.afs, "config", "config"), {
+      name: form.name,
+      address: form.address,
+      city: form.city,
+      postcode: form.postcode
+    }).then(() => {
+      return this.viewMessageSuccess('Poprawnie udało się zapisać zmiany. :)');
+    }).catch(error => { return this.viewMessageError('Coś poszło nie tak. :('); })
+  }
+
+
+  viewMessageSuccess(message: string): void {
+    this.message.success(message, {
+      nzDuration: 5000
+    });
+  }
+
+  viewMessageError(message: string): void {
+    this.message.error(message, {
+      nzDuration: 5000
+    });
+  }
+
 
   async getUser_LastPayment() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -152,9 +188,6 @@ export class AuthServiceService {
   async getUser_LastBurden() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    console.log(user.uid);
-
-    
     const q = query(collection(this.afs, "payments"), where("user.uid", "==", user.uid), where('status', '==', 'OBCIĄŻENIE'), limit(3));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(el => {
@@ -165,9 +198,6 @@ export class AuthServiceService {
   async getUser_Premises() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    console.log(user.uid);
-
-    
     const q = query(collection(this.afs, "apartments"), where("owner", "==", user.uid));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(el => {
@@ -175,45 +205,35 @@ export class AuthServiceService {
     });
   }
 
-  async getUser_Info(uid:string) {
+  async getUser_Info(uid: string) {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    console.log(user.uid);
-
-    
     const q = query(collection(this.afs, "apartments"), where("owner", "==", user.uid));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(el => {
       return el.data() as Apartment;
     });
   }
-
-
-  
 
   async getUser_LastRaport() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    console.log(user.uid);
-
-    
     const q = query(collection(this.afs, "raports"), where("user.uid", "==", user.uid), limit(1));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(el => {
       return el.data() as Raports;
     });
   }
-  
 
-  async addRaport(model:Raports) {
+  async addRaport(model: Raports) {
     return addDoc(collection(this.afs, 'raports'), model);
   }
 
-  viewMessage(message:string) {
-    return this.toast.open(message, 'X', { duration: 5000});
+  viewMessage(message: string) {
+    return this.toast.open(message, 'X', { duration: 5000 });
   }
 
-  async delete(uid:string, collection:string) {
+  async delete(uid: string, collection: string) {
     await deleteDoc(doc(this.afs, collection, uid)).then(() => {
       this.viewMessage('Usunięto dane poprawnie');
     }).catch(error => {
@@ -221,11 +241,11 @@ export class AuthServiceService {
     })
   }
 
-  async update(data:any, collection:string) {
+  async update(data: any, collection: string) {
     return updateDoc(doc(this.afs, collection, `${data.uid}`), data);
   }
 
-  register(form:User) {
+  register(form: User) {
     createUserWithEmailAndPassword(this.auth, form.email, form.password).then(async (user) => {
       if (user) {
         const userData: User = {
@@ -244,12 +264,12 @@ export class AuthServiceService {
         await setDoc(doc(this.afs, "users", `${user.user.uid}`), userData).then(() => {
           this.SendVerificationMail();
         }).catch(error => {
-          window.alert('Wystąpił błąd podczas dodawania konta. Skontatuj się z administratorem.');
+          this.viewMessage('Wystąpił błąd podczas dodawania konta. Skontatuj się z administratorem.');
         })
       }
-      window.alert('udało się')
+      this.viewMessage('Zarejestrowano konto.')
     }).catch(error => {
-      window.alert('Email jest już w użytku.');
+      this.viewMessage('Email jest już w użytku.');
     })
   }
 
@@ -259,17 +279,17 @@ export class AuthServiceService {
     if (user) {
 
       sendEmailVerification(user).then(() => {
-        window.alert('Wysłano email z potwierdzeniem');
+        this.viewMessage('Wysłano email z potwierdzeniem.');
       }).catch(error => {
-        window.alert('Wystąpił błąd podczas wysyłania potwierdzenia, skontaktuj się administratorem.');
+        console.log('Wystąpił błąd podczas wysyłania potwierdzenia, skontaktuj się administratorem.');
       });
     }
-    window.alert('Nie znaleziono użytkownika');
+    console.log('Nie znaleziono użytkownika');
   }
 
   async login(form: any) {
     await signInWithEmailAndPassword(this.auth, form.email, form.password).then((user) => {
-        this.router.navigate(['dashboard']);
+      this.router.navigate(['dashboard']);
     }).catch(error => {
       this.viewMessage(error);
     });
@@ -286,13 +306,9 @@ export class AuthServiceService {
     });
   }
 
-
-
-
-
   async logout() {
     await signOut(this.auth).then(() => {
-        this.router.navigate(['login']);
+      this.router.navigate(['login']);
     })
   }
 
@@ -306,7 +322,7 @@ export class AuthServiceService {
     });
   }
 
-  async getApartments(uid:string) {
+  async getApartments(uid: string) {
     const q = await query(collection(this.afs, "apartments"), where("owner", "==", uid));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(el => {
@@ -316,21 +332,52 @@ export class AuthServiceService {
     });
   }
 
-  
-
   async changePassword(oldPassword: string, newPassword: string) {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
 
+      window.alert('1');
+      window.alert(user.email);
+      const credential = await EmailAuthProvider.credential((user.email || this.userInfo.value.email), oldPassword);
+      window.alert('2');
+
+      window.alert(credential);
+      const result = await reauthenticateWithCredential(
+        auth.currentUser,
+        credential
+      )
+
+      window.alert(result);
+
+      window.alert('3');
+      await updatePassword(user, newPassword).then(() => {
+        return this.viewMessage('Zmieniono hasło pomyślnie');
+      }).catch(error => {
+        return this.viewMessage('Wystąpił błąd, prosimy o ponowne zalogowanie się.')
+      })
+    }
+    window.alert('4');
+  }
+
+  changePassword2(oldPassword: string, newPassword: string) {
     const auth = getAuth();
     const user = auth.currentUser;
 
     if (user) {
-      const credential = await EmailAuthProvider.credential((user.email || ''), oldPassword);
-      await reauthenticateWithCredential(user, credential);
-      await updatePassword(user, newPassword).then(() => {
-        window.alert('Zmieniono hasło: ' + newPassword);
-      }).catch(error => {
-        window.alert(error);
-      })
+      let credential = EmailAuthProvider.credential(
+        this.userInfo.value.email,
+        oldPassword
+      );
+
+      reauthenticateWithCredential(auth.currentUser, credential)
+        .then(result => {
+          updatePassword(user, newPassword).then(() => {
+            return this.viewMessage('Zmieniono hasło pomyślnie');
+          }).catch(error => {
+            return this.viewMessage('Wystąpił błąd, prosimy o ponowne zalogowanie się.')
+          })
+        })
     }
   }
 

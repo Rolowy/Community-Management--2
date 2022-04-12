@@ -48,7 +48,6 @@ export class PaymentsComponent implements OnInit {
         data.uid = el.id;
         data.index = index;
         index+=1;
-        console.log(data)
         return data
       })
     })

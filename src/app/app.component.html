@@ -9,11 +9,11 @@
     <span class="menu-spacer"></span>
     <div fxShow="true" fxHide.lt-md>
 
-      <a routerLinkActive="active"mat-button  class="online_status"><mat-icon class="online_status mr-1" aria-hidden="false" aria-label="sensor_occupied">sensor_occupied</mat-icon> Zalogowany: {{authService.userInfo.getValue().name}} {{authService.userInfo.getValue().lastname}}</a>
-      <!-- <mat-menu #user="matMenu">   [matMenuTriggerFor]="user"-->
-        <!-- <a mat-menu-item (click)="deleteUserComp()"><mat-icon aria-hidden="false" aria-label="sync_lock">delete</mat-icon>Usuń Konto</a>
-        <a mat-menu-item (click)="changePasswordUserComp()"><mat-icon aria-hidden="false" aria-label="sync_lock">sync_lock</mat-icon> Zmiana Hasła</a> -->
-      <!-- </mat-menu> -->
+      <a routerLinkActive="active"mat-button  [matMenuTriggerFor]="user" class="online_status"><mat-icon class="online_status mr-1" aria-hidden="false" aria-label="sensor_occupied">sensor_occupied</mat-icon> Zalogowany: {{authService.userInfo.getValue().name}} {{authService.userInfo.getValue().lastname}}</a>
+      <mat-menu #user="matMenu">
+        <!-- <a mat-menu-item (click)="deleteUserComp()"><mat-icon aria-hidden="false" aria-label="sync_lock">delete</mat-icon>Usuń Konto</a> -->
+        <a mat-menu-item (click)="changePassword()"><mat-icon aria-hidden="false" aria-label="sync_lock">sync_lock</mat-icon> Zmiana Hasła</a>
+      </mat-menu>
 
       
       <span *ngIf="(authService.userInfo.getValue().moderator); else NoMod">
@@ -23,7 +23,7 @@
           <a mat-menu-item [routerLink]="['raports']"><mat-icon aria-hidden="false" aria-label="speaker_notes">speaker_notes</mat-icon> Raporty</a>
           <a mat-menu-item [routerLink]="['addraport']"><mat-icon aria-hidden="false" aria-label="post_add">post_add</mat-icon> Dodaj Raport</a>
         </mat-menu>
-
+        
         <a routerLinkActive="active" [routerLink]="['apartments']" mat-button><mat-icon aria-hidden="false" aria-label="domain">domain</mat-icon> Mieszkania</a>
         <a routerLinkActive="active" [routerLink]="['users']" mat-button><mat-icon aria-hidden="false" aria-label="supervisor_account">supervisor_account</mat-icon> Użytkownicy</a>
         <a routerLinkActive="active" [routerLink]="['payments']" mat-button><mat-icon aria-hidden="false" aria-label="payments">payments</mat-icon> Płatności</a>

@@ -5,6 +5,7 @@ export interface Payment {
     user:any;
     uid:string;
     price:string;
+    date:any;
     createdAt:any;
     status:string;
 }

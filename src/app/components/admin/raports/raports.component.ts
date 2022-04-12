@@ -20,15 +20,16 @@ import { RaportsDeleteComponent } from './raports-delete/raports-delete.componen
 export class RaportsComponent implements OnInit {
   displayedColumns: string[] = ['number','owner','apartment', 'createdAt', 'scope', 'sum', 'edit'];
   dataSource = new MatTableDataSource();
-  raports:any;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatSort, {static:true}) sort!: MatSort;
+  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
 
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) { }
 
   ngOnInit(): void {
     this.getDocuments('raports');
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   getDocuments(col:string) {

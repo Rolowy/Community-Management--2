@@ -13,6 +13,7 @@ import { UserRaportsComponent } from './components/user/user-raports/user-raport
 
 import { GuardGuard } from './shared/guard.guard';
 import { ModeratorGuard } from './shared/moderator.guard';
+import { UserGuard } from './shared/user.guard';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -20,7 +21,7 @@ const routes: Routes = [
   {path: 'raports', component: RaportsComponent, canActivate: [GuardGuard, ModeratorGuard] },
   {path: 'addraport', component: RaportsAddComponent, canActivate: [GuardGuard, ModeratorGuard] },
   {path: 'payments', component: PaymentsComponent, canActivate: [GuardGuard, ModeratorGuard] },
-  {path: 'user/raports', component: UserRaportsComponent, canActivate: [GuardGuard] },
+  {path: 'user/raports', component: UserRaportsComponent, canActivate: [GuardGuard, UserGuard] },
   {path: 'user/raports/:id', component: UserRaportsViewComponent},
   {path: 'users', component: UsersComponent, canActivate: [GuardGuard, ModeratorGuard] },
   {path: 'apartments', component: ApartmentsComponent, canActivate: [GuardGuard, ModeratorGuard] },

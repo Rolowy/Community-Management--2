@@ -25,18 +25,19 @@ export class UsersComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['position', 'name', 'lastname','bankaccount', 'address', 'city', 'postcode', 'email', 'phone', 'admin', 'edit'];
   dataSource = new MatTableDataSource();
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
+  @ViewChild(MatSort, {static:true}) sort!: MatSort;
+  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
 
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) { }
 
   ngOnInit(): void {
     this.getDocuments('users')
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   getRangeDisplayText = (page: number, pageSize: number, length: number) => {
-    const initialText = `Wyświetlonych użytkowników`;  // customize this line
+    const initialText = `Wyświetlonych użytkowników`; 
     if (length == 0 || pageSize == 0) {
       return `${initialText} 0 z ${length}`;
     }
@@ -45,7 +46,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     const endIndex = startIndex < length
       ? Math.min(startIndex + pageSize, length)
       : startIndex + pageSize;
-    return `${initialText} ${startIndex + 1} to ${endIndex} of ${length}`; // customize this line
+    return `${initialText} ${startIndex + 1} z ${endIndex} na ${length}`;
   };
 
   ngAfterViewInit(): void {
@@ -68,28 +69,30 @@ export class UsersComponent implements OnInit, AfterViewInit {
   })
   }
 
-  public doFilter = (value: string) => {
+  doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
 
-  public redirectToEdit = (el: any) => {
+  redirectToEdit = (el: any) => {
     const dialogRef = this.dialog.open(UsersEditComponent, {
       width: '500px;',
       data: el,
     });
   }
 
-  public addUser() {
+  redirectAddUser() {
     const dialogRef = this.dialog.open(UsersAddComponent, {
       width: '500px;',
     });
   }
 
-  public redirectToDelete = (el: any) => {
+  redirectToDelete = (el: any) => {
     const dialogRef = this.dialog.open(UsersDeleteComponent, {
       width: '800px;',
       data: el,
     });
   }
+
+
 }

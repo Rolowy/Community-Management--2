@@ -43,6 +43,8 @@ import { PaymentsDeleteComponent } from './components/admin/payments/payments-de
 import { DasboardComponent } from './components/admin/dasboard/dasboard.component';
 import { UserRaportsViewComponent } from './components/user/user-raports-view/user-raports-view.component';
 import { provideStorage,getStorage } from '@angular/fire/storage';
+import { ChangepasswordComponent } from './components/user/changepassword/changepassword.component';
+import { DashboardSuccessComponent } from './components/dashboard/dashboard-success/dashboard-success.component';
 
 registerLocaleData(pl);
 
@@ -71,6 +73,8 @@ registerLocaleData(pl);
     PaymentsDeleteComponent,
     DasboardComponent,
     UserRaportsViewComponent,
+    ChangepasswordComponent,
+    DashboardSuccessComponent,
   ],
   imports: [
     BrowserModule,

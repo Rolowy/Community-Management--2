@@ -16,7 +16,7 @@
     
           <!-- Position Column -->
           <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer Faktury </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer Rozliczenia </th>
             <td mat-cell *matCellDef="let element">#{{element.number}}</td>
           </ng-container>
         
@@ -45,19 +45,9 @@
               <ng-container matColumnDef="edit">
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                      <mat-icon>more_vert</mat-icon>
+                    <button mat-icon-button [routerLink]="['/user/raports/', element.uid]">
+                      <mat-icon>assignment</mat-icon>
                     </button>
-                    <mat-menu #menu="matMenu">
-                      <button mat-menu-item (click)="GeneratePDF(element)">
-                        <mat-icon fas fa-clipboard-check>edit</mat-icon>
-                        <span>Exportuj</span>
-                      </button>
-                      <button mat-menu-item (click)="showDetail(element)">
-                        <mat-icon>visibility</mat-icon>
-                        <span>Wyświetl</span>
-                      </button>
-                    </mat-menu> 
                   </td>
                 </ng-container>
         

@@ -8,6 +8,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Payment } from 'src/app/_interface/payment';
 import { collection, getDocs } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
+import { formatDate } from '@angular/common';
+
 
 @Component({
   selector: 'app-payments-edit',
@@ -26,7 +28,7 @@ export class PaymentsEditComponent implements OnInit {
     user: new FormControl('', Validators.required),
     price: new FormControl('', Validators.required),
     status: new FormControl('', Validators.required),
-    date: new FormControl('', Validators.required),
+    date: new FormControl(new Date(this.data.date.seconds*1000), Validators.required),
     createdAt: new FormControl('')
   });
 

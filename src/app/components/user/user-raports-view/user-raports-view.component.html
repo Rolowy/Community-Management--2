@@ -1,71 +1,87 @@
 
-<h2 mat-dialog-title>Informację o fakturze numer #{{data.number}}</h2>
-<mat-dialog-content class="mat-typography">
-  <h3>Imię i Nazwisko</h3>
-  <p>{{data.user.name}} {{data.user.lastname}}</p>
+<div class="container my-5 bg" fxFlex fxLayout="column" *ngIf="(value | async) as data">
+<div class="my-5" fxFlex fxLayoutAlign="center center">
+    <button mat-flat-button color="primary" (click)="openPDF()"><span class="material-icons">picture_as_pdf</span>Eksportuj do PDF</button>
+</div>
+<div fxFlex fxLayout="column" id="Document">
+    <div class="row logo" fxFlex fxLayoutAlign="center center">To Mój<span class="logop2 ml-2">Dom</span></div>
+    <div class="row" fxLayout="row" >
+        
+    <div class="col-8" fxLayout="column" fxLayoutGap="10" *ngIf="(config | async) as con">
+        <div class="col">{{con.name}}</div>
+        <div class="col">{{con.address}}</div>
+        <div class="col">{{con.city}}, {{con.postcode}}</div>
+    </div>
+    
+    <div class="col" align="right">
+        <p>Numer Faktury: #{{data.number}}</p>
+        <p>Data: {{data.createdAt.seconds*1000 | date: 'dd/MM/YYYY'}}</p>
+    </div>
+    </div>
+    <div class="row my-3" fxLayout="row-reverse">
+        <div class="col-3 " fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10">
+            <div class="col">Imie: {{data.user.name}}</div>
+            <div class="col">Nazwisko: {{data.user.lastname}}</div>
+            <div class="col">Ulica: {{data.apartment.street}} {{data.apartment.buildingnumber}}/{{data.apartment.apartmentnumber}}</div>
+        </div>
+        </div>
+    <div class="row" fxFlex fxLayout="column" fxLayoutAlign="center center">
+        <h2>Kalkulacja opłat za lokal</h2>
+        <p>Opłata za okres {{data.startdate.seconds*1000 | date: 'dd/MM/YYYY'}} - {{data.enddate.seconds*1000 | date: 'dd/MM/YYYY'}}</p>
+    </div> 
 
-  <h3>Lokal</h3>
-  <p>{{data.apartment.street}} {{data.apartment.buildingnumber}}/{{data.apartment.apartmentnumber}}</p>
+    <div class="row my-5" fxLayout="row" fxLayoutAlign="center center">
+        <table mat-table [dataSource]="dataSource" fxFlex="80" class="mat-elevation-z8 demo-table">
+            <ng-container matColumnDef="index">
+              <th mat-header-cell *matHeaderCellDef> Pozycja </th>
+              <td mat-cell *matCellDef="let element; let i = index"> {{i}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Nazwa </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef> Ilość </th>
+              <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="converter">
+                <th mat-header-cell *matHeaderCellDef> Jednostka </th>
+                <td mat-cell *matCellDef="let element"> {{element.converter}} </td>
+              </ng-container>
 
-  <h3>Powierzchnia</h3>
-  {{data.apartment.area}} m2
+              <ng-container matColumnDef="unit">
+                <th mat-header-cell *matHeaderCellDef> Cena za jednostkę </th>
+                <td mat-cell *matCellDef="let element"> {{element.price}} zł</td>
+              </ng-container>
 
-  {{data.otherStatus}}
-
-  <p *ngFor="let x of data.otherStatus | async">{{x | json}}</p>
-
-
-
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Zamknij</button>
-</mat-dialog-actions>
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef> Suma </th>
+                <td mat-cell *matCellDef="let element"> {{element.price * element.amount}} zł</td>
+              </ng-container>
 
 
-<!-- {
-    "user": {
-      "bankaccount": "61 1090 1014 0000 0712 1981 2874",
-      "phone": "324354890",
-      "address": "Bolero",
-      "moderator": false,
-      "name": "Majki",
-      "email": "netowy@vp.pl",
-      "postcode": "32-434",
-      "lastname": "Pawłowski",
-      "uid": "OuGq0iGUlxf4To2PxT8G4LD1hnx1",
-      "city": "Ełk"
-    },
-    "apartment": {
-      "apartmentnumber": "4",
-      "owner": "OuGq0iGUlxf4To2PxT8G4LD1hnx1",
-      "area": "32.43",
-      "uid": "DbRMtSyvcNUmDmTRJbo3",
-      "street": "Makowska",
-      "buildingnumber": "13",
-      "rate": "1.4",
-      "postcode": "13-432"
-    },
-    "sum": 7.14,
-    "enddate": {
-      "seconds": 1650405600,
-      "nanoseconds": 0
-    },
-    "otherStatus": [
-      {
-        "amount": 3,
-        "name": "Kradzież Ubrań",
-        "price": 2.38,
-        "converter": "m3"
-      }
-    ],
-    "startdate": {
-      "seconds": 1649109600,
-      "nanoseconds": 0
-    },
-    "createdAt": {
-      "seconds": 1649016423,
-      "nanoseconds": 559000000
-    },
-    "number": 67,
-    "uid": "ZwZ0Ohd9LgLbJbSGITFm"
-  } -->
+
+              <ng-container matColumnDef="total">
+                <td mat-footer-cell *matFooterCellDef colspan="100%">
+                    <div>Podsumowanie: <strong>{{data.sum}} zł</strong></div>
+                </td>
+              </ng-container>
+  
+                
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="['total']" class="footer-row"></tr>
+
+          </table>
+    </div>
+    <div class="footer">
+        <p>Wpłaty prosimy uregulowywać na ten numer bankowy: {{data.user.bankaccount}}</p>
+    </div>
+</div>
+</div>
+
+<!-- {{value | async | json}} -->

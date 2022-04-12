@@ -1,75 +1,178 @@
-<div class="container-fluid mt-5" *ngIf="authService.userInfo.getValue() as user">
-  <div class="row m-2">
-  <div fxLayout="row"fxFlex="70" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30" *ngIf="!user.moderator">
-    <div *ngIf="lastburden | async" fxLayout="row" fxFlex class="dashboard-panel col">
-      <div class="desc" fxFlex>
-        <h2><span class="material-icons">
-          balance
-          </span> Ostatnie obciążenia</h2>
-        <mat-selection-list [multiple]="false">
-          <mat-list-option *ngFor="let x of lastburden | async" [value]="x">
-            Data Zaksięgowania: {{x.date.seconds*1000 | date: 'dd/MM/YYYY'}}<br />
-            Kwota: {{x.price}} zł
-          </mat-list-option>
-        </mat-selection-list>
+<div *ngIf="authService.isLoggedIn">
+  <div class="container-fluid mt-5">
+
+    <div *ngIf="authService.userInfo.getValue() as user">
+      <div class="row m-2" *ngIf="!user.moderator">
+        <div fxLayout="row" fxFlex="70" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30">
+          <div *ngIf="lastburden | async" fxLayout="row" fxFlex class="dashboard-panel col">
+            <div class="desc" fxFlex>
+              <h2><span class="material-icons">
+                  balance
+                </span> Ostatnie obciążenia</h2>
+              <mat-selection-list [multiple]="false">
+                <mat-list-option *ngFor="let x of lastburden | async" [value]="x">
+                  Data Zaksięgowania: {{x.date.seconds*1000 | date: 'dd/MM/YYYY'}}<br />
+                  Kwota: {{x.price}} zł
+                </mat-list-option>
+              </mat-selection-list>
+            </div>
+          </div>
+          <div *ngIf="lastpayments | async" fxLayout="row" fxFlex class="dashboard-panel col">
+            <div class="desc" fxFlex>
+              <h2><span class="material-icons">
+                  trending_up
+                </span> Ostatnie wpłaty</h2>
+              <mat-selection-list [multiple]="false">
+                <mat-list-option *ngFor="let x of lastpayments | async" [value]="x">
+                  Data Zaksięgowania: {{x.date.seconds*1000 | date: 'dd/MM/YYYY'}}<br />
+                  Kwota: {{x.price}} zł
+                </mat-list-option>
+              </mat-selection-list>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row" fxFlex fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30" *ngIf="!user.moderator">
+          <div fxLayout="row" fxFlex="80" class="dashboard-panel col">
+            <div class="desc" fxFlex>
+              <h2><span class="material-icons">
+                  request_page
+                </span> Saldo Konta</h2>
+              <mat-selection-list [multiple]="false">
+                <mat-list-option>
+                  Twoje saldo: {{authService.totalprice | async}} zł
+                </mat-list-option>
+              </mat-selection-list>
+              <h2><span class="material-icons">
+                  announcement
+                </span> Numer Rachunku</h2>
+              <mat-selection-list [multiple]="false">
+                <mat-list-option>
+                  <p nz-typography nzCopyable nzCopyText="{{user.bankaccount}}">{{user.bankaccount}}</p>
+                </mat-list-option>
+              </mat-selection-list>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row m-2 mt-5" *ngIf="!user.moderator">
+        <div class="dashboard-panel" fxLayout="column" fxFlex="50">
+          <h2><span class="material-icons">
+              door_front
+            </span> Twoje lokale</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Lokal</th>
+                <th scope="col">Powierzchnia</th>
+                <th scope="col">Opłata za powierzchnie</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of premises | async; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{x.street | uppercase}} {{x.apartmentnumber}}/{{x.buildingnumber}}</td>
+                <td>{{x.area}} m2</td>
+                <td>{{getPrice(x.area, x.rate)}} zł</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    <div *ngIf="lastpayments | async" fxLayout="row" fxFlex class="dashboard-panel col">
-      <div class="desc" fxFlex>
-        <h2><span class="material-icons">
-          trending_up
-          </span> Ostatnie wpłaty</h2>
-        <mat-selection-list [multiple]="false">
-          <mat-list-option *ngFor="let x of lastpayments | async" [value]="x">
-            Data Zaksięgowania: {{x.date.seconds*1000 | date: 'dd/MM/YYYY'}}<br />
-            Kwota: {{x.price}} zł
-          </mat-list-option>
-        </mat-selection-list>
-      </div>
+
+
+    <div *ngIf="authService.userMod == true">
+
+      <form [formGroup]="form" (ngSubmit)="saveCommunityName()" fxLayout="column">
+        <div class="ml-3" fxLayoutGap="20" fxLayout="column">
+          <div class="row" fxLayoutGap="20">
+            <div class="dashboard-panel" fxLayout="column" fxFlex="40">
+              <h2><span class="material-icons">
+                  rate_review
+                </span>Nazwa Wspólnoty</h2>
+
+              <div class="ml-3" fxFlex>
+                <mat-form-field appearance="outline" fxFlex>
+                  <mat-label>Nazwa Wspólnoty</mat-label>
+                  <input matInput formControlName="name" placeholder="Podaj nazwę wspólnoty">
+                  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na tą nazwę będą generowane raporty
+                  </mat-hint>
+
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="dashboard-panel" fxLayout="column" fxFlex="40">
+              <h2><span class="material-icons">
+                  rate_review
+                </span>Adres Wspólnoty</h2>
+
+              <div class="ml-3" fxFlex>
+                <mat-form-field appearance="outline" fxFlex>
+                  <mat-label>Adres</mat-label>
+                  <input matInput formControlName="address" placeholder="Podaj adres wspólnoty">
+                  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na tą nazwę będą generowane raporty
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row" fxLayoutGap="20">
+            <div class="dashboard-panel" fxLayout="column" fxFlex="40">
+              <h2><span class="material-icons">
+                  rate_review
+                </span>Miasto</h2>
+
+              <div class="ml-3" fxFlex>
+                <mat-form-field appearance="outline" fxFlex>
+                  <mat-label>Miasto</mat-label>
+                  <input matInput formControlName="city" placeholder="Podaj miasto, w którym znajduję się wspólnota">
+                  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na tą nazwę będą generowane raporty
+                  </mat-hint>
+
+                </mat-form-field>
+              </div>
+            </div>
+
+
+            <div class="dashboard-panel" fxLayout="column" fxFlex="40">
+              <h2><span class="material-icons">
+                  rate_review
+                </span>Kod Pocztowy</h2>
+
+              <div class="ml-3" fxFlex>
+                <mat-form-field appearance="outline" fxFlex>
+                  <mat-label>Kod Pocztowy</mat-label>
+                  <input matInput formControlName="postcode" placeholder="Podaj kod pocztowy wspólnoty">
+                  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na tą nazwę będą generowane raporty
+                  </mat-hint>
+
+                </mat-form-field>
+              </div>
+
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="row mt-3" fxFlex=30>
+          <button mat-raised-button color="primary" [disabled]="!this.form.valid" type="submit">Zapisz zmiany</button>
+        </div>
+
+      </form>
+
     </div>
-</div>
-<div fxLayout="row" fxFlex fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30" *ngIf="!user.moderator">
-  <div fxLayout="row" fxFlex="80" class="dashboard-panel col">
-    <div class="desc" fxFlex>
-      <h2><span class="material-icons">
-        request_page
-        </span> Saldo Konta</h2>
-      <mat-selection-list [multiple]="false">
-        <mat-list-option>
-          Twoje saldo: {{authService.totalprice | async}} zł
-        </mat-list-option>
-      </mat-selection-list>
-      <h2><span class="material-icons">
-        announcement
-        </span> Numer Rachunku</h2>
-      <mat-selection-list [multiple]="false">
-        <mat-list-option>
-          <p nz-typography nzCopyable nzCopyText="{{user.bankaccount}}">{{user.bankaccount}}</p>
-        </mat-list-option>
-      </mat-selection-list>
-      
-    </div>
+
+
+
   </div>
-</div>
-</div>
-<div class="row m-2 mt-5">
-  <table class="table table-striped dashboard-panel" fxFlex="50">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Lokal</th>
-        <th scope="col">Powierzchnia</th>
-        <th scope="col">Do Zapłaty</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let x of premises | async; let i = index">
-        <th scope="row">{{ i + 1 }}</th>
-        <td>{{x.street | uppercase}} {{x.apartmentnumber}}/{{x.buildingnumber}}</td>
-        <td>{{x.area}}</td>
-        <td>?</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
 </div>

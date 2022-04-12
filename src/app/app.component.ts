@@ -10,6 +10,7 @@ import {
   NavigationStart,
   Router
 } from '@angular/router';
+import { ChangepasswordComponent } from './components/user/changepassword/changepassword.component';
 
 
 @Component({
@@ -42,7 +43,7 @@ export class AppComponent {
     });
   }
 
-
-
-
+  changePassword() {
+    this.dialog.open(ChangepasswordComponent);
+  }
 }

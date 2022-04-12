@@ -1,0 +1,69 @@
+.bg {
+    background-color: #fff;
+    padding: 5px 15px 15px 5px;
+    font-size: 14px;
+    box-shadow: 5px 5px 5px rgb(0 0 0 / 30%);
+}
+
+.logo {
+    text-shadow: 2px 2px #625b5b9e;
+    font-size: 35px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #3a68e0;
+    height: 80px;
+    line-height: 80px;
+
+    .logop2 {
+        font-size: 2em;
+        color: #ff0000;
+        padding-bottom: 25px;
+    }
+}
+
+.footer-row {
+    text-align: right;
+}
+
+.demo-table {
+    width: 100%;
+}
+
+.mat-column-index {
+    width: 32px;
+    border-right: 1px solid currentColor;
+    padding-right: 24px;
+    text-align: center;
+}
+
+.mat-column-name {
+    padding-left: 16px;
+    font-size:14px;
+}
+
+.mat-column-amount {
+    padding-left: 16px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.mat-column-unit {
+    padding-left: 16px;
+    font-size: 14px;
+    text-align: center;
+}
+
+#Document { padding: 30px;}
+
+
+.mat-column-converter {
+    font-size: 14px;
+    text-align: center;
+}
+
+.mat-column-price {
+    width: 8em;
+    font-size: 15px;
+    text-align: center;
+    font-weight: bold;
+}

@@ -3,10 +3,11 @@ export interface Raports {
     uid: string;
     name: string;
     number: string;
-    user: string;
-    apartment: string;
+    user: any;
+    apartment: any;
     createdAt: any;
     startdate: any;
     enddate: any;
     otherStatus:any;
+    sum:number;
 }

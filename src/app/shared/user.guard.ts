@@ -6,7 +6,7 @@ import { AuthServiceService } from './auth-service.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ModeratorGuard implements CanActivate {
+export class UserGuard implements CanActivate {
   constructor(
     private authService: AuthServiceService,
     private router: Router
@@ -18,10 +18,10 @@ export class ModeratorGuard implements CanActivate {
     if(this.authService.isLoggedIn == true) {
       if(this.authService.userMod == true)
       {
-        return true;
+        this.router.navigate(['dashboard']);
+        return false;
       }
     }
-    this.router.navigate(['login']);
-    return false;
+    return true;
     }
 }
