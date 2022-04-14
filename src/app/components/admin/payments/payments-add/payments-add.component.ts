@@ -36,16 +36,11 @@ export class PaymentsAddComponent implements OnInit {
     public authService: AuthServiceService) { }
 
   ngOnInit() {
-    this.getUsers();
+    this.users = this.getUser();
   }
 
-  async getUsers() {
-    const querySnapshot = await getDocs(collection(this.afs, "users"));
-    this.users = querySnapshot.docs.map(el => {
-      const data = el.data() as User;
-      data.uid = el.id;
-      return data;
-    });
+  async getUser() {
+    return await this.authService.getUsers();
   }
 
   selectUser(event: any) {
@@ -56,8 +51,11 @@ export class PaymentsAddComponent implements OnInit {
     this.firstFormGroup.value.createdAt = new Date;
 
     this.authService.addPayment(this.firstFormGroup.value).then(() => {
-      this.authService.viewMessage('Dodano nową płatność');
+      this.authService.viewMessageSuccess('Pomyślnie dodano nową płatność.');
       this.dialogRef.close();
+    }).catch(error => {
+      this.authService.viewMessageError('Wystąpił błąd poczas dodawania płatności');
+      console.log(error);
     })
   }
 }

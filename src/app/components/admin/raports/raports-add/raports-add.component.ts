@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
-import { Raports } from 'src/app/_interface/raport';
 import { AuthServiceService } from 'src/app/shared/auth-service.service';
 import { Firestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { getAdditionalUserInfo } from 'firebase/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-raports-add',
@@ -34,7 +31,7 @@ export class RaportsAddComponent implements OnInit {
     { label: 'szt'},
   ]
 
-  constructor(private fb: FormBuilder, public asf: Firestore, private authService: AuthServiceService) {}
+  constructor(private fb: FormBuilder, public asf: Firestore, private authService: AuthServiceService, private router: Router) {}
 
   ngOnInit(): void {
     this.combiner();
@@ -59,9 +56,9 @@ export class RaportsAddComponent implements OnInit {
 
   userSelected(event:any) {
     this.apartments = this.authService.getApartments(event.value.uid).catch(error =>{ 
-      this.authService.viewMessage('Wystąpił błąd podczas pobierania lokali użytkownika');
+      this.authService.viewMessageError('Wystąpił błąd podczas pobierania lokali użytkownika');
+      console.log(error);
     });
-
   }
 
   buildingSelected(event:any) {
@@ -77,7 +74,6 @@ export class RaportsAddComponent implements OnInit {
     }));
   }
 
-
   removeOtherStatus(i:number) {
     this.otherStatus.removeAt(i);
   }
@@ -85,11 +81,12 @@ export class RaportsAddComponent implements OnInit {
   SaveRaport() {
     this.form.value.createdAt = new Date;
       this.authService.addRaport(this.form.value).then(() => {
-        this.authService.viewMessage('Dodano nowy raport');
+        this.router.navigate(['/raports']);
+        this.authService.viewMessageSuccess('Pomyślnie dodatkowy nowy raport');
       }).catch(error => {
-        this.authService.viewMessage('Wystąpił błąd podczas wysyłania żądania.')
+        this.authService.viewMessageError('Wystąpił błąd podczas wysyłania żądania.')
+        console.log(error);
       })
   }
-
 }
 

@@ -56,12 +56,7 @@ export class UsersEditComponent implements OnInit {
       moderator: this.form.value.moderator
     };
 
-    this.authService.update(dataUser, 'users').then(() => {
-      this.authService.viewMessage('Udało się');
-    }).catch(error => {
-      this.authService.viewMessage('Coś poszło nie tak');
-    });
-
+    this.authService.update(dataUser, 'users');
     this.dialogRef.close();
   }
 }

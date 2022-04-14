@@ -23,8 +23,13 @@ export class ApartmentsDeleteComponent implements OnInit {
   ) {}
 
   onConfirm(): void {
-    this.authService.delete(this.data.uid, 'apartments');
-    this.dialogRef.close(true);
+    this.authService.delete(this.data.uid, 'apartments').then(() => {
+      this.authService.viewMessageSuccess('Pomyślnie usunięto lokal');
+      this.dialogRef.close(true);
+    }).catch(error => {
+      this.authService.viewMessageError('Wystąpił błąd podczas dodawania lokalu.');
+      console.log(error);
+    })
   }
 
   ngOnInit(): void {

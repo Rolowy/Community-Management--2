@@ -8,8 +8,7 @@
               <mat-form-field appearance="fill">
                 <mat-label>Użytkownik</mat-label>
                 <mat-select formControlName="owner" (selectionChange)="selectUser($event)" placeholder="Wybierz użytkownika" required>
-                  <mat-option *ngFor="let user of users" [value]="user.uid">{{user.name}} {{user.lastname}}</mat-option>
-                </mat-select>
+                  <mat-option *ngFor="let user of users | async" [value]="user">{{user.name}} {{user.lastname}}</mat-option></mat-select>
               </mat-form-field>
             </div>
         </div>

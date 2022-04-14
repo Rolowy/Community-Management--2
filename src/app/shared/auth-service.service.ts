@@ -10,6 +10,9 @@ import {
   sendPasswordResetEmail
 } from '@angular/fire/auth';
 
+
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+
 import {
   collection,
   Firestore,
@@ -34,6 +37,7 @@ import { Payment } from '../_interface/payment';
 import { Config } from '../_interface/config'
 
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -88,7 +92,7 @@ export class AuthServiceService {
   }
 
 
-  obliczanieObciazenia() {
+  calcOfTheLoad() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     const querySnapshot = query(collection(this.afs, 'payments'), where("user.uid", "==", user.uid));
@@ -229,28 +233,33 @@ export class AuthServiceService {
     return addDoc(collection(this.afs, 'raports'), model);
   }
 
-  viewMessage(message: string) {
-    return this.toast.open(message, 'X', { duration: 5000 });
-  }
-
   async delete(uid: string, collection: string) {
     await deleteDoc(doc(this.afs, collection, uid)).then(() => {
-      this.viewMessage('Usunięto dane poprawnie');
+      this.viewMessageSuccess('Pomyślnie usunięto dane.');
     }).catch(error => {
-      this.viewMessage('Coś poszło nie tak, spróbuj ponownie..');
+      this.viewMessageError('Wystąpił błąd podczas usuwania danych..');
+      console.log(error);
     })
   }
 
-  async update(data: any, collection: string) {
-    return updateDoc(doc(this.afs, collection, `${data.uid}`), data);
+  async update(data: any, collection: string) {;
+    return updateDoc(doc(this.afs, collection, `${data.uid}`), data).then(() => {
+      this.viewMessageSuccess('Zaktualizowano dane poprawnie.')
+    }).catch(error => {
+      this.viewMessageError('Nie udało się zaktualizować danych.')
+      console.log(error);
+    })
   }
 
   register(form: User) {
-    createUserWithEmailAndPassword(this.auth, form.email, form.password).then(async (user) => {
+    let originalUser = getAuth().currentUser;
+
+    const user = createUserWithEmailAndPassword(this.auth, form.email, form.password).then(async (user) => {
       if (user) {
         const userData: User = {
           uid: user.user.uid,
           email: user.user.email,
+          verifyemail: user.user.emailVerified,
           name: form.name,
           moderator: true,
           lastname: form.lastname,
@@ -264,12 +273,14 @@ export class AuthServiceService {
         await setDoc(doc(this.afs, "users", `${user.user.uid}`), userData).then(() => {
           this.SendVerificationMail();
         }).catch(error => {
-          this.viewMessage('Wystąpił błąd podczas dodawania konta. Skontatuj się z administratorem.');
+          this.viewMessageError('Wystąpił błąd podczas dodawania konta.');
+          console.log(error);
         })
+
+        getAuth().updateCurrentUser(originalUser);
       }
-      this.viewMessage('Zarejestrowano konto.')
     }).catch(error => {
-      this.viewMessage('Email jest już w użytku.');
+      this.viewMessageError('Email jest już w użytku.');
     })
   }
 
@@ -279,9 +290,11 @@ export class AuthServiceService {
     if (user) {
 
       sendEmailVerification(user).then(() => {
-        this.viewMessage('Wysłano email z potwierdzeniem.');
+        this.viewMessageSuccess('Wysłano email z potwierdzeniem.');
       }).catch(error => {
-        console.log('Wystąpił błąd podczas wysyłania potwierdzenia, skontaktuj się administratorem.');
+        this.viewMessageError('Wystąpił błąd podczas wysyłania potwerdzenia');
+        console.log('Sprawdź połączenie z firebase.');
+        console.log(error);
       });
     }
     console.log('Nie znaleziono użytkownika');
@@ -291,18 +304,8 @@ export class AuthServiceService {
     await signInWithEmailAndPassword(this.auth, form.email, form.password).then((user) => {
       this.router.navigate(['dashboard']);
     }).catch(error => {
-      this.viewMessage(error);
-    });
-  }
-
-  async deleteAccount() {
-    await signInWithEmailAndPassword(this.auth, 'rolowaty@gmail.com', 'Nocka1207').then((user) => {
-      user.user.delete().then(() => {
-        window.alert('Usunięto twoje konto pomyślnie.');
-        this.logout();
-      }).catch(error => {
-        window.alert(error);
-      })
+      this.viewMessageError('Nie udało się zalogować.');
+      console.log(error);
     });
   }
 
@@ -352,9 +355,10 @@ export class AuthServiceService {
 
       window.alert('3');
       await updatePassword(user, newPassword).then(() => {
-        return this.viewMessage('Zmieniono hasło pomyślnie');
+        return this.viewMessageSuccess('Zmieniono hasło pomyślnie');
       }).catch(error => {
-        return this.viewMessage('Wystąpił błąd, prosimy o ponowne zalogowanie się.')
+        console.log(error);
+        return this.viewMessageError('Wystąpił błąd, prosimy o ponowne zalogowanie się.')
       })
     }
     window.alert('4');
@@ -373,9 +377,9 @@ export class AuthServiceService {
       reauthenticateWithCredential(auth.currentUser, credential)
         .then(result => {
           updatePassword(user, newPassword).then(() => {
-            return this.viewMessage('Zmieniono hasło pomyślnie');
+            return this.viewMessageSuccess('Zmieniono hasło pomyślnie');
           }).catch(error => {
-            return this.viewMessage('Wystąpił błąd, prosimy o ponowne zalogowanie się.')
+            return this.viewMessageError('Wystąpił błąd, prosimy o ponowne zalogowanie się.')
           })
         })
     }
@@ -383,7 +387,10 @@ export class AuthServiceService {
 
   async resetPassword(email: string): Promise<any> {
     await sendPasswordResetEmail(this.auth, email).then(() => {
-      window.alert('Procedura resetowania hasła została wysłana na twój email.');
-    });
+      this.viewMessageSuccess('Procedura resetowania hasła została wysłana na email');
+    }).catch(error => {
+      this.viewMessageError('Nie udało się. Sprawdź czy użytkownik ma poprawny email oraz czy jest połączenie z bazą danych.');
+      console.log(error);
+    })
   }
 }

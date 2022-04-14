@@ -5,6 +5,7 @@ export interface User {
     uid?:string;
     password?:any;
     email?:any;
+    verifyemail?:boolean;
     moderator:boolean;
     address: string;
     postcode: string;

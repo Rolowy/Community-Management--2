@@ -42,17 +42,9 @@ export class PaymentsEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getUsers();
+    this.users = this.authService.getUsers();
   }
 
-  async getUsers() {
-    const querySnapshot = await getDocs(collection(this.afs, "users"));
-    this.users = querySnapshot.docs.map(el => {
-      const data = el.data() as User;
-      data.uid = el.id;
-      return data;
-    });
-  }
 
   selectUser(event: any) {
     this.firstFormGroup.value.user = event.value;

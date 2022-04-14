@@ -20,8 +20,13 @@ export class PaymentsDeleteComponent implements OnInit {
   ) {}
 
   onConfirm(): void {
-    this.authService.delete(this.data.uid, 'payments');
-    this.dialogRef.close(true);
+    this.authService.delete(this.data.uid, 'payments').then(() => {
+      this.authService.viewMessageError('Pomyślnie usunięto płatność');
+      this.dialogRef.close(true);
+    }).catch(error => {
+      this.authService.viewMessageError('Wystąpił błąd poczas usuwania płatności');
+      console.log(error);
+    })
   }
 
   ngOnInit(): void {

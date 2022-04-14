@@ -24,8 +24,14 @@ export class RaportsDeleteComponent implements OnInit {
 
 
   onConfirm(): void {
-    this.authService.delete(this.data.uid, 'raports');
-    this.dialogRef.close(true);
+    this.authService.delete(this.data.uid, 'raports').then(() => {
+      this.authService.viewMessageSuccess('Pomyślnie usunięto raport');
+      this.dialogRef.close(true);
+    }).catch(error => {
+      this.authService.viewMessageError('Wystąpił błąd poczas usuwania raportu');
+      console.log(error);
+    })
+    
   }
 
   ngOnInit(): void {

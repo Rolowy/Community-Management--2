@@ -22,7 +22,7 @@ import { UsersAddComponent } from './users-add/users-add.component';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['position', 'name', 'lastname','bankaccount', 'address', 'city', 'postcode', 'email', 'phone', 'admin', 'edit'];
+  displayedColumns: string[] = ['position', 'name', 'lastname','bankaccount', 'address', 'city', 'postcode', 'email', 'phone', 'verifyemail', 'admin', 'edit'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatSort, {static:true}) sort!: MatSort;
@@ -92,6 +92,10 @@ export class UsersComponent implements OnInit, AfterViewInit {
       width: '800px;',
       data: el,
     });
+  }
+
+  resetpassword(email:string) {
+    this.authService.resetPassword(email);
   }
 
 

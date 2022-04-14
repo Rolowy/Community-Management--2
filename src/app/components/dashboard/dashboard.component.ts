@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   
 
   constructor(public authService: AuthServiceService, private notification: NzNotificationService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.authService.getConfig().then(data => {
@@ -37,12 +37,10 @@ export class DashboardComponent implements OnInit {
       this.form.controls['city'].setValue(this.config.city);
       this.form.controls['address'].setValue(this.config.address);
       this.form.controls['postcode'].setValue(this.config.postcode);
-      
     })
 
-    
 
-    this.authService.obliczanieObciazenia();
+    this.authService.calcOfTheLoad();
 
     this.lastraport = this.authService.getUser_LastRaport();
     this.lastpayments = this.authService.getUser_LastPayment();

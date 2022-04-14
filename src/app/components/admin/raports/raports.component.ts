@@ -37,6 +37,7 @@ export class RaportsComponent implements OnInit {
     onSnapshot(querySnapshot, (querySnap) => {
     this.dataSource.data = querySnap.docs.map(el => {
         const data = el.data() as Raports;
+        data.fullname = data.user.name;
         data.uid = el.id;
         return data
       })

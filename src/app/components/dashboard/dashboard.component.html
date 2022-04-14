@@ -97,9 +97,12 @@
                 <mat-form-field appearance="outline" fxFlex>
                   <mat-label>Nazwa Wspólnoty</mat-label>
                   <input matInput formControlName="name" placeholder="Podaj nazwę wspólnoty">
-                  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na tą nazwę będą generowane raporty
+                  <mat-icon matSuffix>description</mat-icon>
+                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na tą pełną nazwę wspólnoty będą generowane raporty
                   </mat-hint>
+                  <mat-error *ngIf="form.hasError('name') && !form.hasError('required')">
+                    Proszę wpisać nazwę wspólnoty.
+                  </mat-error>
 
                 </mat-form-field>
               </div>
@@ -114,8 +117,8 @@
                 <mat-form-field appearance="outline" fxFlex>
                   <mat-label>Adres</mat-label>
                   <input matInput formControlName="address" placeholder="Podaj adres wspólnoty">
-                  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na tą nazwę będą generowane raporty
+                  <mat-icon matSuffix>description</mat-icon>
+                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na ten adres będą generowane raporty
                   </mat-hint>
                 </mat-form-field>
               </div>
@@ -133,8 +136,8 @@
                 <mat-form-field appearance="outline" fxFlex>
                   <mat-label>Miasto</mat-label>
                   <input matInput formControlName="city" placeholder="Podaj miasto, w którym znajduję się wspólnota">
-                  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na tą nazwę będą generowane raporty
+                  <mat-icon matSuffix>description</mat-icon>
+                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na te miasto będą generowane raporty
                   </mat-hint>
 
                 </mat-form-field>
@@ -151,8 +154,8 @@
                 <mat-form-field appearance="outline" fxFlex>
                   <mat-label>Kod Pocztowy</mat-label>
                   <input matInput formControlName="postcode" placeholder="Podaj kod pocztowy wspólnoty">
-                  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na tą nazwę będą generowane raporty
+                  <mat-icon matSuffix>description</mat-icon>
+                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na ten kod pocztowy będą generowane raporty
                   </mat-hint>
 
                 </mat-form-field>
@@ -164,7 +167,7 @@
 
         </div>
 
-        <div class="row mt-3" fxFlex=30>
+        <div class="row mt-3" fxFlex fxLayoutAlign="center center">
           <button mat-raised-button color="primary" [disabled]="!this.form.valid" type="submit">Zapisz zmiany</button>
         </div>
 

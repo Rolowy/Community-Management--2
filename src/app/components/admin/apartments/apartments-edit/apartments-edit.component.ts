@@ -51,8 +51,6 @@ export class ApartmentsEditComponent implements OnInit {
     this.dialogRef.close();
   }
 
-
-
   save() {
     const model: Apartment = {
       uid: this.data.uid,
@@ -66,9 +64,10 @@ export class ApartmentsEditComponent implements OnInit {
     };
 
     this.authService.update(model, 'apartments').then(() => {
-      this.authService.viewMessage('Udało się');
+      this.authService.viewMessageSuccess('Pomyślnie edytowano lokal');
     }).catch(error => {
-      this.authService.viewMessage('Coś poszło nie tak');
+      this.authService.viewMessageError('Wystąpił błąd poczas dodawania lokalu.');
+      console.log(error);
     });
 
     this.dialogRef.close();

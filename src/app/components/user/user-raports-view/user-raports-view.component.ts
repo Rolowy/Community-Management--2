@@ -12,9 +12,6 @@ import { Raports } from 'src/app/_interface/raport';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-import pdfMake from "pdfmake/build/pdfmake";  
-import pdfFonts from "pdfmake/build/vfs_fonts";  
-pdfMake.vfs = pdfFonts.pdfMake.vfs;  
 
 @Component({
   selector: 'app-user-raports-view',
@@ -23,13 +20,13 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class UserRaportsViewComponent implements OnInit {
   displayedColumns: string[] = ['index', 'name', 'amount', 'converter', 'unit', 'price'];
-  dataSource:any;
-  value = new Subject<Raports>();
-  dateu:any;
+  dataSource: any;
+  value = new BehaviorSubject<Raports>({} as any);
+  dateu: any;
   config = new BehaviorSubject<Config>({} as any);
 
   bankaccount = new BehaviorSubject('');
-  
+
 
   constructor(private activeRouter: ActivatedRoute, private afs: Firestore, private authService: AuthServiceService) { }
 
@@ -39,14 +36,6 @@ export class UserRaportsViewComponent implements OnInit {
     this.getDetails();
   }
 
-  generatePDF() {  
-    let docDefinition = {  
-      header: 'C#Corner PDF Header',  
-      content: 'Sample PDF generated with Angular and PDFMake for C#Corner Blog'  
-    };  
-   
-    pdfMake.createPdf(docDefinition).open();  
-  }  
 
   async getDetails() {
     let uid = this.activeRouter.snapshot.paramMap.get('id') || '';
@@ -56,7 +45,7 @@ export class UserRaportsViewComponent implements OnInit {
 
     if (docSnap.exists()) {
       const data = docSnap.data() as Raports;
-      this.value.next(data);
+      this.value.next({ ...data });
       this.dataSource = data.otherStatus;
       //console.log("Document data:", docSnap.data());
     } else {
@@ -93,7 +82,7 @@ export class UserRaportsViewComponent implements OnInit {
   }
 
   getTotalCost() {
-    return this.dataSource.otherStatus.map((t:any) => t.price).reduce((acc:number, value:number) => acc + value, 0);
+    return this.dataSource.otherStatus.map((t: any) => t.price).reduce((acc: number, value: number) => acc + value, 0);
   }
 
 }

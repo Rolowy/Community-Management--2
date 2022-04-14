@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
 import { ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorIntl} from '@angular/material/paginator';
+import { MatPaginator} from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
@@ -10,13 +10,11 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 import { AuthServiceService } from 'src/app/shared/auth-service.service';
-import { User } from 'src/app/_interface/user';
 import { collection, Firestore, onSnapshot } from '@angular/fire/firestore';
 import { Payment } from 'src/app/_interface/payment';
 import { PaymentsAddComponent } from './payments-add/payments-add.component';
 import { PaymentsDeleteComponent } from './payments-delete/payments-delete.component';
 import { PaymentsEditComponent } from './payments-edit/payments-edit.component';
-import { Observable } from 'rxjs';
 
 
 @Component({
