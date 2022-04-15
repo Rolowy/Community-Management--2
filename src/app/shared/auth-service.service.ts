@@ -11,7 +11,7 @@ import {
 } from '@angular/fire/auth';
 
 
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 
 import {
   collection,
@@ -242,7 +242,8 @@ export class AuthServiceService {
     })
   }
 
-  async update(data: any, collection: string) {;
+  async update(data: any, collection: string) {
+    ;
     return updateDoc(doc(this.afs, collection, `${data.uid}`), data).then(() => {
       this.viewMessageSuccess('Zaktualizowano dane poprawnie.')
     }).catch(error => {
@@ -261,7 +262,7 @@ export class AuthServiceService {
           email: user.user.email,
           verifyemail: user.user.emailVerified,
           name: form.name,
-          moderator: true,
+          moderator: form.moderator,
           lastname: form.lastname,
           bankaccount: form.bankaccount,
           city: form.city,
@@ -283,12 +284,10 @@ export class AuthServiceService {
       this.viewMessageError('Email jest już w użytku.');
     })
   }
-
+  
   SendVerificationMail(): void {
     const user = this.auth.currentUser;
-
     if (user) {
-
       sendEmailVerification(user).then(() => {
         this.viewMessageSuccess('Wysłano email z potwierdzeniem.');
       }).catch(error => {

@@ -1,20 +1,17 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
-
 import { MatDialog } from '@angular/material/dialog';
 
 import { AuthServiceService } from 'src/app/shared/auth-service.service';
 import { User } from 'src/app/_interface/user';
-import { collection, Firestore, getDocs, onSnapshot } from '@angular/fire/firestore';
+import { collection, Firestore, onSnapshot } from '@angular/fire/firestore';
 import { UsersEditComponent } from './users-edit/users-edit.component';
 import { UsersDeleteComponent } from './users-delete/users-delete.component';
 import { UsersAddComponent } from './users-add/users-add.component';
-
 
 @Component({
   selector: 'app-users',
@@ -22,7 +19,7 @@ import { UsersAddComponent } from './users-add/users-add.component';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['position', 'name', 'lastname','bankaccount', 'address', 'city', 'postcode', 'email', 'phone', 'verifyemail', 'admin', 'edit'];
+  displayedColumns: string[] = ['position', 'name', 'lastname','bankaccount', 'address', 'city', 'postcode', 'email', 'phone', 'admin', 'edit'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatSort, {static:true}) sort!: MatSort;
@@ -56,7 +53,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
       this.paginator._intl.getRangeLabel = this.getRangeDisplayText;
     }
   }
-
 
   getDocuments(col:string) {
     const querySnapshot = collection(this.afs, col);
@@ -97,6 +93,4 @@ export class UsersComponent implements OnInit, AfterViewInit {
   resetpassword(email:string) {
     this.authService.resetPassword(email);
   }
-
-
 }

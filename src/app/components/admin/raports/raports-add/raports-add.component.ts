@@ -67,7 +67,7 @@ export class RaportsAddComponent implements OnInit {
 
   addOtherStatus() {
     this.otherStatus.push(this.fb.group({
-      name: new FormControl('', Validators.required),
+      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       price: new FormControl('', Validators.required),
       amount: new FormControl('', Validators.required),
       converter: new FormControl('', Validators.required),

@@ -13,8 +13,8 @@ import { NoactivationcodeComponent } from './noactivationcode/noactivationcode.c
 export class LoginComponent implements OnInit {
   visible_password: boolean = true;
   form = new FormGroup({
-    email: new FormControl(),
-    password: new FormControl()
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(5)])
   });
 
   constructor(private authService: AuthServiceService, private router:Router, private dialog: MatDialog) {
@@ -28,9 +28,5 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.authService.login(this.form.value);
-  }
-
-  dialogInfo() {
-    this.dialog.open(NoactivationcodeComponent);
   }
 }

@@ -11,18 +11,16 @@ import { User } from 'src/app/_interface/user';
 })
 export class RegisterComponent implements OnInit {
   form = new FormGroup({
-    email: new FormControl('', [Validators.email, Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    name: new FormControl('', [Validators.required]),
-    lastname: new FormControl('', [Validators.required]),
-    address: new FormControl('', [Validators.required]),
-    postcode: new FormControl('', [Validators.required]),
-    city: new FormControl('', [Validators.required]),
-    phone: new FormControl(''),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    lastname: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    address: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    postcode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{2}[-][0-9]{3}')]),
+    city: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    phone: new FormControl('', Validators.pattern('[0-9]{3}[- ][0-9]{3}[- ][0-9]{3}')),
     moderator: new FormControl(true)
   });
-
-
 
   constructor(private fb: FormBuilder,
     public authService: AuthServiceService,

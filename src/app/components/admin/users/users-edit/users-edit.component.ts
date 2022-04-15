@@ -15,7 +15,7 @@ export class UsersEditComponent implements OnInit {
   form: FormGroup = this.fb.group({
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
     lastname: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    phone: new FormControl('', Validators.pattern("[0-9]{9}")),
+    phone: new FormControl('', Validators.pattern("[0-9]{3}[-][0-9]{3}[-][0-9]{3}")),
     postcode: new FormControl('', [Validators.required, Validators.pattern("[0-9]{2}-[0-9]{3}")]),
     address: new FormControl('', [Validators.required, Validators.minLength(5)]),
     bankaccount: new FormControl('', [Validators.required, Validators.pattern("[0-9]{2}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}")]),

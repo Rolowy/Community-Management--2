@@ -10,6 +10,7 @@
                 <mat-form-field appearance="fill" floatLabel="always">
                   <mat-label>Numer Faktury</mat-label>
                   <input formControlName="number" step="1" min="0" oninput="validity.valid||(value='');" matInput type="number">
+                  <mat-error *ngIf="this.form.controls['number'].hasError('required')">Numer faktury jest wymagany</mat-error>
                 </mat-form-field>
               </div>
               </div>
@@ -22,6 +23,7 @@
                   <mat-select (selectionChange)="userSelected($event)" formControlName="user" placeholder="Wybierz użytkownika" required>
                     <mat-option *ngFor="let user of users | async" [value]="user">{{user.name}} {{user.lastname}}</mat-option>
                   </mat-select>
+                  <mat-error *ngIf="this.form.controls['user'].hasError('required')">Mieszkaniec jest wymagany</mat-error>
                 </mat-form-field>
               </div>
   
@@ -31,6 +33,7 @@
                   <mat-select (selectionChange)="buildingSelected($event)" formControlName="apartment" placeholder="Wybierz mieszkanie" required>
                     <mat-option *ngFor="let apartment of apartments | async" [value]="apartment">{{apartment.street}} {{apartment.buildingnumber}}/{{apartment.apartmentnumber}}</mat-option>
                   </mat-select>
+                  <mat-error *ngIf="this.form.controls['apartment'].hasError('required')">Lokal jest wymagany</mat-error>
                 </mat-form-field>
               </div>
 
@@ -46,6 +49,7 @@
                     <input formControlName="startdate" matStartDate placeholder="XX/XX/XXXX">
                     <input formControlName="enddate" matEndDate placeholder="XX/XX/XXXX">
                   </mat-date-range-input>
+                  
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-date-range-picker #picker></mat-date-range-picker>
                 </mat-form-field>
@@ -60,7 +64,7 @@
               </div>
             </div>
             <div class="col-12">
-              <div formArrayName="otherStatus" *ngFor="let mobile of otherStatus.controls; let i = index"
+              <div formArrayName="otherStatus" *ngFor="let x of otherStatus.controls; let i = index"
                 class="input-group mb-3">
   
                 <div class="row col-12" [formGroupName]="i">
@@ -77,8 +81,6 @@
                       <input formControlName="amount" matInput type="number" class="example-right-align" step="0.01" min="0.00" oninput="validity.valid||(value='');" placeholder="0,00">
                     </mat-form-field>
                   </div>
-  
-                    
 
                   <div class="col">
                     <mat-form-field appearance="fill">

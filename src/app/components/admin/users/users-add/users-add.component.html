@@ -5,16 +5,18 @@
         <div class="row">
           <div class="col">
             <mat-form-field class="my-2" appearance="fill">
-              <mat-label>Email</mat-label>
+              <mat-label>Adres Email</mat-label>
               <input matInput placeholder="Email" formControlName="email">
-              <!-- <mat-error *ngIf="firstFormGroup.invalid">{{getErrorMessage()}}</mat-error> -->
-  
+              <mat-error *ngIf="firstFormGroup.controls['email'].hasError('required')">Email jest wymagany</mat-error>
+              <mat-error *ngIf="firstFormGroup.controls['email'].hasError('email')">Nieprawidłowo wpisany adres email</mat-error>
             </mat-form-field>
           </div>
           <div class="col">
             <mat-form-field class="my-2" appearance="fill">
               <mat-label>Hasło</mat-label>
-              <input matInput placeholder="Hasło" formControlName="password" required>
+              <input matInput placeholder="Hasło" formControlName="password">
+            <mat-error *ngIf="firstFormGroup.controls['password'].hasError('required')">Hasło jest wymagane</mat-error>
+            <mat-error *ngIf="firstFormGroup.controls['password'].hasError('minlength')">Hasło jest zbyt krótkie</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -30,13 +32,14 @@
           <div class="col">
             <mat-form-field appearance="fill">
               <mat-label>Imię</mat-label>
-              <input matInput placeholder="Imię" formControlName="name" required>
-            </mat-form-field>
+              <input matInput placeholder="Imię" formControlName="name">
+              <mat-error *ngIf="secondFormGroup.controls['name'].hasError('required')">Imię jest wymagane</mat-error>            </mat-form-field>
           </div>
           <div class="col">
             <mat-form-field appearance="fill">
               <mat-label>Nazwisko</mat-label>
-              <input matInput placeholder="Hasło" formControlName="lastname" required>
+              <input matInput placeholder="Hasło" formControlName="lastname">
+              <mat-error *ngIf="secondFormGroup.controls['lastname'].hasError('required')">Nazwisko jest wymagane</mat-error> 
             </mat-form-field>
           </div>
         </div>
@@ -45,13 +48,16 @@
           <div class="col ">
             <mat-form-field appearance="fill">
               <mat-label>Adres</mat-label>
-              <input matInput placeholder="Adres" formControlName="address" required>
+              <input matInput placeholder="Adres" formControlName="address">
+              <mat-error *ngIf="secondFormGroup.controls['address'].hasError('required')">Adres jest wymagany</mat-error> 
             </mat-form-field>
           </div>
           <div class="col">
             <mat-form-field appearance="fill">
               <mat-label>Kod Pocztowy</mat-label>
-              <input matInput placeholder="XX-XXX" formControlName="postcode">
+              <input matInput placeholder="Kod Pocztowy" formControlName="postcode">
+              <mat-error *ngIf="secondFormGroup.controls['postcode'].hasError('required')">Kod Pocztowy jest wymagany</mat-error> 
+              <mat-hint>XX-XXX</mat-hint>
             </mat-form-field>
           </div>
         </div>
@@ -60,6 +66,7 @@
             <mat-form-field appearance="fill">
               <mat-label>Miasto</mat-label>
               <input matInput placeholder="Miasto" formControlName="city">
+              <mat-error *ngIf="secondFormGroup.controls['city'].hasError('required')">Miasto jest wymagane</mat-error> 
             </mat-form-field>
           </div>
   
@@ -67,6 +74,8 @@
             <mat-form-field appearance="fill">
               <mat-label>Telefon Kontaktowy</mat-label>
               <input matInput placeholder="Telefon Kontaktowy" formControlName="phone">
+              <mat-hint>XXX-XXX-XXX</mat-hint>
+              <mat-error *ngIf="secondFormGroup.controls['phone'].hasError('pattern')">Telefon jest nieprawidłowy</mat-error>
             </mat-form-field>
           </div>
   
@@ -77,7 +86,10 @@
             <mat-form-field appearance="fill" fxFlex>
               <mat-label>Rachunek Bankowy</mat-label>
               <input matInput placeholder="Rachunek Bankowy" formControlName="bankaccount" placeholder="61 1090 1014 0000 0712 1981 2874"/>
+              <mat-hint>XX XXXX XXXX XXXX XXXX XXXX XXXX</mat-hint>
+              <mat-error *ngIf="secondFormGroup.controls['bankaccount'].hasError('required')">Rachunek Bankowy jest wymagany</mat-error>
             </mat-form-field>
+            
           </div>
         </div>
   

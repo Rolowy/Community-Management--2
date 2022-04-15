@@ -20,12 +20,10 @@ export class DashboardComponent implements OnInit {
     postcode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{2}-[0-9]{3}')])
   })
   
-
   lastraport:any;
   lastpayments:any;
   lastburden:any;
   premises:any;
-  
 
   constructor(public authService: AuthServiceService, private notification: NzNotificationService,
     private fb: FormBuilder) {}
