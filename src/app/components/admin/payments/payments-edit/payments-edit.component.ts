@@ -25,7 +25,7 @@ export class PaymentsEditComponent implements OnInit {
   ]
 
   firstFormGroup: FormGroup = this.fb.group({
-    user: new FormControl('', Validators.required),
+    user: new FormControl(this.data.user.uid, Validators.required),
     price: new FormControl('', Validators.required),
     status: new FormControl('', Validators.required),
     date: new FormControl(new Date(this.data.date.seconds*1000), Validators.required),
@@ -44,7 +44,6 @@ export class PaymentsEditComponent implements OnInit {
   ngOnInit() {
     this.users = this.authService.getUsers();
   }
-
 
   selectUser(event: any) {
     this.firstFormGroup.value.user = event.value;

@@ -11,6 +11,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./users-add.component.scss'],
 })
 export class UsersAddComponent implements OnInit {
+  visible_password = true;
 
   firstFormGroup: FormGroup = this.fb.group({
     email: new FormControl('', [Validators.required, Validators.email]),

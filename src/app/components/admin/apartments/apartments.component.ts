@@ -25,7 +25,7 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./apartments.component.scss']
 })
 export class ApartmentsComponent implements OnInit {
-  displayedColumns: string[] = ['street', 'buildingnumber', 'apartmentnumber', 'area', 'rate', 'postcode', 'edit'];
+  displayedColumns: string[] = ['street', 'ownername', 'ownerlastname', 'buildingnumber', 'apartmentnumber', 'area', 'rate', 'postcode', 'edit'];
   dataSource = new MatTableDataSource();
 
   
@@ -41,6 +41,8 @@ export class ApartmentsComponent implements OnInit {
     onSnapshot(querySnapshot, (querySnap) => {
     this.dataSource.data = querySnap.docs.map(el => {
         const data = el.data() as Apartment;
+        data.name = data.owner.name;
+        data.lastname = data.owner.lastname;
         data.uid = el.id;
         console.log(data);
         return data

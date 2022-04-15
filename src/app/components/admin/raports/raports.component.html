@@ -39,12 +39,6 @@
             <td mat-cell *matCellDef="let element">{{element.startdate.toDate() | date: 'dd/MM/yyyy'}} -
               {{element.enddate.toDate() | date: 'dd/MM/yyyy'}}</td>
           </ng-container>
-  
-          <ng-container matColumnDef="sum">
-            <th mat-header-cell *matHeaderCellDef> Do zapłaty</th>
-            <td mat-cell *matCellDef="let element"><span *ngIf="element.sum">{{element.sum}} zł</span></td>
-          </ng-container>
-
 
           <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef></th>

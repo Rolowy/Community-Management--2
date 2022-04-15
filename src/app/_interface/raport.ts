@@ -9,5 +9,4 @@ export interface Raports {
     startdate: any;
     enddate: any;
     otherStatus:any;
-    sum:number;
 }

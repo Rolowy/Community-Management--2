@@ -5,50 +5,50 @@
         <div class="row my-3">
           <div class="col-3">
 
-              <mat-form-field appearance="fill">
+              <mat-form-field appearance="outline">
                 <mat-label>Użytkownik</mat-label>
-                <mat-select formControlName="owner" (selectionChange)="selectUser($event)" placeholder="Wybierz użytkownika" required>
+                <mat-select formControlName="owner" (selectionChange)="selectUser($event)" placeholder="Wybierz użytkownika">
                   <mat-option *ngFor="let user of users | async" [value]="user">{{user.name}} {{user.lastname}}</mat-option></mat-select>
               </mat-form-field>
             </div>
         </div>
         <div class="row">
           <div class="col">
-            <mat-form-field class="my-2" appearance="fill">
+            <mat-form-field class="my-2" appearance="outline">
               <mat-label>Ulica</mat-label>
-              <input matInput placeholder="Ulica" formControlName="street" required>
+              <input matInput placeholder="Ulica" formControlName="street">
             </mat-form-field>
           </div>
           <div class="col">
-            <mat-form-field class="my-2" appearance="fill">
+            <mat-form-field class="my-2" appearance="outline">
               <mat-label>Numer Budynku</mat-label>
-              <input matInput placeholder="Numer Budynku" formControlName="buildingnumber" required>
+              <input matInput placeholder="Numer Budynku" formControlName="buildingnumber">
             </mat-form-field>
           </div>
           <div class="col">
-            <mat-form-field class="my-2" appearance="fill">
-              <mat-label>Numer Mieszkania</mat-label>
-              <input matInput placeholder="Numer Mieszkania" formControlName="apartmentnumber" required>
+            <mat-form-field class="my-2" appearance="outline">
+              <mat-label>Numer Lokalu</mat-label>
+              <input matInput placeholder="Numer Mieszkania" formControlName="apartmentnumber">
             </mat-form-field>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <mat-form-field class="my-2" appearance="fill">
+            <mat-form-field class="my-2" appearance="outline">
               <mat-label>Kod Pocztowy</mat-label>
-              <input matInput placeholder="Kod Pocztowy" formControlName="postcode" required>
+              <input matInput placeholder="Kod Pocztowy" formControlName="postcode" >
             </mat-form-field>
           </div>
           <div class="col">
-            <mat-form-field class="my-2" appearance="fill">
+            <mat-form-field class="my-2" appearance="outline">
               <mat-label>Powierzchnia (m2)</mat-label>
-              <input matInput placeholder="Np. 2.05" formControlName="area" required>
+              <input matInput placeholder="Np. 2.05" formControlName="area" min="0.01" step="0.01">
             </mat-form-field>
           </div>
           <div class="col">
-            <mat-form-field class="my-2" appearance="fill">
+            <mat-form-field class="my-2" appearance="outline">
               <mat-label>Stawka (za m2)</mat-label>
-              <input matInput placeholder="Np. 1.39" formControlName="rate" required>
+              <input matInput placeholder="Np. 1.39" formControlName="rate" min="0.01" step="0.01">
             </mat-form-field>
           </div>
         </div>
@@ -67,7 +67,7 @@
           <div class="col">
             <mat-list-item>Ulica: {{firstFormGroup.value.street}} </mat-list-item>
             <mat-list-item>Number Budynku: {{firstFormGroup.value.buildingnumber}} </mat-list-item>
-            <mat-list-item>Numer Mieszkania: {{firstFormGroup.value.apartmentnumber}} </mat-list-item>
+            <mat-list-item>Numer Lokalu: {{firstFormGroup.value.apartmentnumber}} </mat-list-item>
             <mat-list-item>Kod Pocztowy: {{firstFormGroup.value.postcode}} </mat-list-item>
           </div>
         </mat-list>

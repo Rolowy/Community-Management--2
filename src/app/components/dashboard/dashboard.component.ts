@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   lastburden:any;
   premises:any;
 
-  constructor(public authService: AuthServiceService, private notification: NzNotificationService,
+  constructor(public authService: AuthServiceService,
     private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -44,14 +44,6 @@ export class DashboardComponent implements OnInit {
     this.lastpayments = this.authService.getUser_LastPayment();
     this.lastburden = this.authService.getUser_LastBurden();
     this.premises = this.authService.getUser_Premises();
-
-    if(this.authService.isLoggedIn)
-      if(this.authService.userMod == false)
-      {
-        this.notification.info('Rachunek', 'Każdy mieszkaniec ma swój indywidualny numer rachunku.', {
-          nzPlacement: 'bottomRight',
-        });
-      }
   }
 
   getPrice(area:string, rate:string) {

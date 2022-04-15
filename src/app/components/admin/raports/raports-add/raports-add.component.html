@@ -7,7 +7,7 @@
           <div class="row g-6">
             <div class="col-md-12 input-group mb-3">
               <div class="col">
-                <mat-form-field appearance="fill" floatLabel="always">
+                <mat-form-field appearance="outline" floatLabel="always">
                   <mat-label>Numer Faktury</mat-label>
                   <input formControlName="number" step="1" min="0" oninput="validity.valid||(value='');" matInput type="number">
                   <mat-error *ngIf="this.form.controls['number'].hasError('required')">Numer faktury jest wymagany</mat-error>
@@ -18,7 +18,7 @@
               <div class="col-md-12 input-group mb-3">
   
               <div class="col">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="outline">
                   <mat-label>Mieszkaniec</mat-label>
                   <mat-select (selectionChange)="userSelected($event)" formControlName="user" placeholder="Wybierz użytkownika" required>
                     <mat-option *ngFor="let user of users | async" [value]="user">{{user.name}} {{user.lastname}}</mat-option>
@@ -28,7 +28,7 @@
               </div>
   
               <div class="col">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="outline">
                   <mat-label>Lokal/Mieszkanie</mat-label>
                   <mat-select (selectionChange)="buildingSelected($event)" formControlName="apartment" placeholder="Wybierz mieszkanie" required>
                     <mat-option *ngFor="let apartment of apartments | async" [value]="apartment">{{apartment.street}} {{apartment.buildingnumber}}/{{apartment.apartmentnumber}}</mat-option>
@@ -43,7 +43,7 @@
               <div class="col-md-12 input-group mb-3">
                 
               <div class="col">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="outline">
                   <mat-label>Data</mat-label>
                   <mat-date-range-input [rangePicker]="picker" required>
                     <input formControlName="startdate" matStartDate placeholder="XX/XX/XXXX">
@@ -69,21 +69,21 @@
   
                 <div class="row col-12" [formGroupName]="i">
                   <div class="col">
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="outline">
                       <mat-label>Usługa</mat-label>
                       <input formControlName="name" matInput placeholder="Przykład (Zimna woda i ścieki)">
                     </mat-form-field>
                   </div>
 
                   <div class="col">
-                    <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-form-field appearance="outline">
                       <mat-label>Zużycie</mat-label>
                       <input formControlName="amount" matInput type="number" class="example-right-align" step="0.01" min="0.00" oninput="validity.valid||(value='');" placeholder="0,00">
                     </mat-form-field>
                   </div>
 
                   <div class="col">
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="outline">
                       <mat-label>Jednostka</mat-label>
                       <mat-select formControlName="converter">
                         <mat-option *ngFor="let conv of converter" [value]="conv.label">
@@ -94,7 +94,7 @@
                   </div>
 
                   <div class="col">
-                    <mat-form-field appearance="fill" floatLabel="always">
+                    <mat-form-field appearance="outline" floatLabel="always">
                       <mat-label>Koszt jednostkowy</mat-label>
                       <input formControlName="price" matInput type="number" step="0.01" min="0.00" oninput="validity.valid||(value='');" class="example-right-align" placeholder="0,00">
                       <span matPrefix>zł&nbsp;</span>

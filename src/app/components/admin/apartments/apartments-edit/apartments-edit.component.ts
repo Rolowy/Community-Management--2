@@ -17,7 +17,7 @@ export class ApartmentsEditComponent implements OnInit {
   users: any;
 
   form: FormGroup = this.fb.group({
-    owner: new FormControl(this.data.owner, [Validators.required]),
+    owner: new FormControl(this.data.owner.uid, [Validators.required]),
     apartmentnumber: new FormControl(''),
     buildingnumber: new FormControl('', Validators.required),
     street: new FormControl('', Validators.required),
@@ -35,16 +35,7 @@ export class ApartmentsEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getUsers();
-  }
-
-  async getUsers() {
-    const querySnapshot = await getDocs(collection(this.afs, "users"));
-    this.users = querySnapshot.docs.map(el => {
-      const data = el.data() as User;
-      data.uid = el.id;
-      return data;
-    });
+    this.users = this.authService.getUsers();
   }
 
   onNoClick(): void {
@@ -54,6 +45,8 @@ export class ApartmentsEditComponent implements OnInit {
   save() {
     const model: Apartment = {
       uid: this.data.uid,
+      name: this.form.value.owner.name,
+      lastname: this.form.value.owner.lastname,
       owner: this.form.value.owner,
       apartmentnumber:this.form.value.apartmentnumber,
       buildingnumber: this.form.value.buildingnumber,

@@ -84,11 +84,10 @@
 
 
     <div *ngIf="authService.userMod == true">
-
-      <form [formGroup]="form" (ngSubmit)="saveCommunityName()" fxLayout="column">
-        <div class="ml-3" fxLayoutGap="20" fxLayout="column">
-          <div class="row" fxLayoutGap="20">
-            <div class="dashboard-panel" fxLayout="column" fxFlex="40">
+      <form [formGroup]="form" (ngSubmit)="saveCommunityName()" fxFlex fxLayout="column">
+        <div fxLayout="column" fxFlex fxLayoutGap="20">
+          <div class="row" fxLayout="row" fxLayout.md="column" fxLayout.sm ="column" fxLayout.xs="column" fxFlex fxLayoutGap="20">
+            <div class="dashboard-panel col" fxFlex fxLayout="column">
               <h2><span class="material-icons">
                   rate_review
                 </span>Nazwa Wspólnoty</h2>
@@ -108,7 +107,7 @@
               </div>
             </div>
 
-            <div class="dashboard-panel" fxLayout="column" fxFlex="40">
+            <div class="dashboard-panel col" fxFlex fxLayout="column">
               <h2><span class="material-icons">
                   rate_review
                 </span>Adres Wspólnoty</h2>
@@ -126,8 +125,8 @@
 
           </div>
 
-          <div class="row" fxLayoutGap="20">
-            <div class="dashboard-panel" fxLayout="column" fxFlex="40">
+          <div class="row" fxLayout="row" fxLayout="row" fxLayout.md="column" fxLayout.sm ="column" fxLayout.xs="column" fxFlex fxLayoutGap="20">
+            <div class="dashboard-panel col" fxFlex fxLayout="column">
               <h2><span class="material-icons">
                   rate_review
                 </span>Miasto</h2>
@@ -145,7 +144,7 @@
             </div>
 
 
-            <div class="dashboard-panel" fxLayout="column" fxFlex="40">
+            <div class="dashboard-panel col" fxFlex fxLayout="column">
               <h2><span class="material-icons">
                   rate_review
                 </span>Kod Pocztowy</h2>

@@ -1,9 +1,9 @@
-<div class="loginform" style="height: 100vh;justify-content:center;align-items:center;">
-  <mat-card fxFlex="100" fxFlex.md="50" fxFlex.sm="70" fxFlex.xl="40" fxFlex.lg="30" fxLayout="column" fxLayoutAlign="center">
-    <mat-card-title class="text-center mb-5">Logowanie</mat-card-title>
+<div class="loginform col" fxLayoutAlign="center center">
+  <mat-card fxFlex="100" fxFlex.md="50" fxFlex.sm="100" fxFlex.xl="40" fxFlex.lg="30" fxLayout="column" fxLayoutAlign="center">
+    <mat-card-title class="text-center">Logowanie</mat-card-title>
     <form [formGroup]="form" (ngSubmit)="login()" autocomplete="on">
       <mat-card-content fxLayout="column">
-        <mat-form-field class="my-3" appearance="legacy">
+        <mat-form-field class="my-3" appearance="outline">
           <mat-label>Email:</mat-label>
           <input matInput type="email" formControlName="email" placeholder="Twój email" />
           <mat-icon matSuffix>mail_outline</mat-icon>
@@ -11,7 +11,7 @@
           <mat-error *ngIf="form.controls['email'].hasError('required')">Email jest wymagany</mat-error>
           <mat-error *ngIf="form.controls['email'].hasError('email')">Nieprawidłowo wpisany adres email</mat-error>
         </mat-form-field>
-        <mat-form-field class="my-3" appearance="standard">
+        <mat-form-field class="my-3" appearance="outline">
           <mat-label>Hasło </mat-label>
           <input matInput [type]="visible_password ? 'password' : 'text'" placeholder="Twoje hasło" formControlName="password" />
           <mat-icon (click)="visible_password=!visible_password" matSuffix>

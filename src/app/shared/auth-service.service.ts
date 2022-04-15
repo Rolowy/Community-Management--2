@@ -113,7 +113,7 @@ export class AuthServiceService {
 
       })
 
-      items = wpl - obc;
+      items =  obc - wpl;
 
       this.totalprice.next(items);
     })
@@ -182,7 +182,7 @@ export class AuthServiceService {
 
   async getUser_LastPayment() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const q = query(collection(this.afs, "payments"), where("user.uid", "==", user.uid), limit(3));
+    const q = query(collection(this.afs, "payments"), where("user.uid", "==", user.uid), where('status', '==', 'WPŁATA'), limit(3));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(el => {
       return el.data() as Raports;
@@ -202,7 +202,7 @@ export class AuthServiceService {
   async getUser_Premises() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    const q = query(collection(this.afs, "apartments"), where("owner", "==", user.uid));
+    const q = query(collection(this.afs, "apartments"), where("owner.uid", "==", user.uid));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(el => {
       return el.data() as Apartment;
@@ -325,7 +325,7 @@ export class AuthServiceService {
   }
 
   async getApartments(uid: string) {
-    const q = await query(collection(this.afs, "apartments"), where("owner", "==", uid));
+    const q = await query(collection(this.afs, "apartments"), where("owner.uid", "==", uid));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(el => {
       const data = el.data() as Apartment;

@@ -21,8 +21,13 @@
     }
 }
 
-.footer-row {
-    text-align: right;
+.footer {
+    text-align: center;
+
+    .col {
+        border: 1px solid #ddd;
+        padding: 20px;
+    }
 }
 
 .demo-table {

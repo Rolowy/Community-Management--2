@@ -18,7 +18,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
-import { NoactivationcodeComponent } from './components/login/noactivationcode/noactivationcode.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import { ApartmentsComponent } from './components/admin/apartments/apartments.component';
 import { UsersEditComponent } from './components/admin/users/users-edit/users-edit.component';
@@ -40,11 +39,9 @@ import { PaymentsComponent } from './components/admin/payments/payments.componen
 import { PaymentsAddComponent } from './components/admin/payments/payments-add/payments-add.component';
 import { PaymentsEditComponent } from './components/admin/payments/payments-edit/payments-edit.component';
 import { PaymentsDeleteComponent } from './components/admin/payments/payments-delete/payments-delete.component';
-import { DasboardComponent } from './components/admin/dasboard/dasboard.component';
 import { UserRaportsViewComponent } from './components/user/user-raports-view/user-raports-view.component';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { ChangepasswordComponent } from './components/user/changepassword/changepassword.component';
-import { DashboardSuccessComponent } from './components/dashboard/dashboard-success/dashboard-success.component';
 
 registerLocaleData(pl);
 
@@ -54,7 +51,6 @@ registerLocaleData(pl);
     LoginComponent,
     DashboardComponent,
     RegisterComponent,
-    NoactivationcodeComponent,
     UsersComponent,
     ApartmentsComponent,
     UsersEditComponent,
@@ -71,10 +67,8 @@ registerLocaleData(pl);
     PaymentsAddComponent,
     PaymentsEditComponent,
     PaymentsDeleteComponent,
-    DasboardComponent,
     UserRaportsViewComponent,
     ChangepasswordComponent,
-    DashboardSuccessComponent,
   ],
   imports: [
     BrowserModule,

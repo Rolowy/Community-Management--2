@@ -6,12 +6,11 @@
     <form [formGroup]="form" (ngSubmit)="save()" autocomplete="on">
       <mat-card-content>
         <div class="row mt-4">
-
           <div class="col-3">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
               <mat-label>Użytkownik</mat-label>
-              <mat-select formControlName="owner" placeholder="Wybierz użytkownika" required>
-                <mat-option *ngFor="let user of users" [value]="user.uid">{{user.name}} {{user.lastname}}</mat-option>
+              <mat-select formControlName="owner" placeholder="Wybierz użytkownika">
+                <mat-option *ngFor="let user of users | async" [value]="user.uid">{{user.name}} {{user.lastname}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -20,7 +19,7 @@
         <div class="row">
 
           <div class="col-6">
-            <mat-form-field appearance="legacy">
+            <mat-form-field appearance="outline">
               <mat-label>Ulica:</mat-label>
               <input matInput type="text" [(ngModel)]="data.street" formControlName="street" placeholder="Ulica" />
               <mat-icon matSuffix>edit_road</mat-icon>
@@ -29,7 +28,7 @@
           </div>
 
           <div class="col-6">
-            <mat-form-field appearance="legacy">
+            <mat-form-field appearance="outline">
               <mat-label>Numer Budynku:</mat-label>
               <input matInput type="text" [(ngModel)]="data.buildingnumber" formControlName="buildingnumber" placeholder="Numer Budynku" />
               <mat-icon matSuffix>format_list_numbered</mat-icon>
@@ -43,7 +42,7 @@
         <div class="row mt-3">
 
           <div class="col-6">
-            <mat-form-field appearance="legacy">
+            <mat-form-field appearance="outline">
               <mat-label>Numer Lokalu:</mat-label>
               <input matInput type="text" [(ngModel)]="data.apartmentnumber" formControlName="apartmentnumber" placeholder="Numer Lokalu" />
               <mat-icon matSuffix>format_list_numbered</mat-icon>
@@ -52,7 +51,7 @@
           </div>
 
           <div class="col-6">
-            <mat-form-field appearance="legacy">
+            <mat-form-field appearance="outline">
               <mat-label>Kod Pocztowy</mat-label>
               <input matInput type="text" [(ngModel)]="data.postcode" formControlName="postcode" placeholder="Kod Pocztowy" />
               <mat-icon matSuffix>signpost</mat-icon>
@@ -69,7 +68,7 @@
         <div class="row my-3">
 
           <div class="col-6">
-            <mat-form-field appearance="legacy">
+            <mat-form-field appearance="outline">
               <mat-label>Powierzchnia:</mat-label>
               <input matInput type="text" [(ngModel)]="data.area" formControlName="area" placeholder="Powierzchnia" />
               <mat-icon matSuffix>height</mat-icon>
@@ -78,7 +77,7 @@
           </div>
 
           <div class="col-6">
-            <mat-form-field appearance="legacy">
+            <mat-form-field appearance="outline">
               <mat-label>Stawka</mat-label>
               <input matInput type="text" [(ngModel)]="data.rate" formControlName="rate" placeholder="Stawka" />
               <mat-icon matSuffix>price_check</mat-icon>

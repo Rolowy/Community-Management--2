@@ -4,7 +4,7 @@
         <ng-template matStepLabel>Podstawowe Dane</ng-template>
         <div class="row">
           <div class="col">
-            <mat-form-field class="my-2" appearance="fill">
+            <mat-form-field class="my-2" appearance="outline">
               <mat-label>Adres Email</mat-label>
               <input matInput placeholder="Email" formControlName="email">
               <mat-error *ngIf="firstFormGroup.controls['email'].hasError('required')">Email jest wymagany</mat-error>
@@ -12,12 +12,16 @@
             </mat-form-field>
           </div>
           <div class="col">
-            <mat-form-field class="my-2" appearance="fill">
-              <mat-label>Hasło</mat-label>
-              <input matInput placeholder="Hasło" formControlName="password">
-            <mat-error *ngIf="firstFormGroup.controls['password'].hasError('required')">Hasło jest wymagane</mat-error>
-            <mat-error *ngIf="firstFormGroup.controls['password'].hasError('minlength')">Hasło jest zbyt krótkie</mat-error>
-            </mat-form-field>
+            
+        <mat-form-field class="my-2" appearance="outline">
+          <mat-label>Hasło </mat-label>
+          <input matInput [type]="visible_password ? 'password' : 'text'" placeholder="Twoje hasło" formControlName="password" />
+          <mat-icon (click)="visible_password=!visible_password" matSuffix>
+            {{ visible_password ? 'visibility' : 'visibility_off' }}
+          </mat-icon>
+          <mat-error *ngIf="firstFormGroup.controls['password'].hasError('required')">Hasło jest wymagane</mat-error>
+          <mat-error *ngIf="firstFormGroup.controls['password'].hasError('minlength')">Hasło jest zbyt krótkie</mat-error>
+        </mat-form-field>
           </div>
         </div>
         <div>
@@ -30,13 +34,13 @@
         <ng-template matStepLabel>Rozszerzenie użytkownika</ng-template>
         <div class="row my-2">
           <div class="col">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
               <mat-label>Imię</mat-label>
               <input matInput placeholder="Imię" formControlName="name">
               <mat-error *ngIf="secondFormGroup.controls['name'].hasError('required')">Imię jest wymagane</mat-error>            </mat-form-field>
           </div>
           <div class="col">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
               <mat-label>Nazwisko</mat-label>
               <input matInput placeholder="Hasło" formControlName="lastname">
               <mat-error *ngIf="secondFormGroup.controls['lastname'].hasError('required')">Nazwisko jest wymagane</mat-error> 
@@ -46,14 +50,14 @@
   
         <div class="row my-2">
           <div class="col ">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
               <mat-label>Adres</mat-label>
               <input matInput placeholder="Adres" formControlName="address">
               <mat-error *ngIf="secondFormGroup.controls['address'].hasError('required')">Adres jest wymagany</mat-error> 
             </mat-form-field>
           </div>
           <div class="col">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
               <mat-label>Kod Pocztowy</mat-label>
               <input matInput placeholder="Kod Pocztowy" formControlName="postcode">
               <mat-error *ngIf="secondFormGroup.controls['postcode'].hasError('required')">Kod Pocztowy jest wymagany</mat-error> 
@@ -63,7 +67,7 @@
         </div>
         <div class="row my-2">
           <div class="col ">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
               <mat-label>Miasto</mat-label>
               <input matInput placeholder="Miasto" formControlName="city">
               <mat-error *ngIf="secondFormGroup.controls['city'].hasError('required')">Miasto jest wymagane</mat-error> 
@@ -71,7 +75,7 @@
           </div>
   
           <div class="col ">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="outline">
               <mat-label>Telefon Kontaktowy</mat-label>
               <input matInput placeholder="Telefon Kontaktowy" formControlName="phone">
               <mat-hint>XXX-XXX-XXX</mat-hint>
@@ -83,7 +87,7 @@
   
         <div class="row my-2">
           <div class="col ">
-            <mat-form-field appearance="fill" fxFlex>
+            <mat-form-field appearance="outline" fxFlex>
               <mat-label>Rachunek Bankowy</mat-label>
               <input matInput placeholder="Rachunek Bankowy" formControlName="bankaccount" placeholder="61 1090 1014 0000 0712 1981 2874"/>
               <mat-hint>XX XXXX XXXX XXXX XXXX XXXX XXXX</mat-hint>

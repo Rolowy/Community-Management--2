@@ -42,6 +42,8 @@ export class ApartmentsAddComponent implements OnInit {
   createBuilding() {
     const model: Apartment = {
       owner: this.firstFormGroup.value.owner,
+      name: this.firstFormGroup.value.owner.name,
+      lastname: this.firstFormGroup.value.owner.lastname,
       street: this.firstFormGroup.value.street,
       buildingnumber: this.firstFormGroup.value.buildingnumber,
       apartmentnumber: this.firstFormGroup.value.apartmentnumber,

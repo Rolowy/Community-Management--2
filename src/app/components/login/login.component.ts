@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthServiceService } from 'src/app/shared/auth-service.service';
-import { NoactivationcodeComponent } from './noactivationcode/noactivationcode.component';
 
 @Component({
   selector: 'app-login',

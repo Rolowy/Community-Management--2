@@ -18,7 +18,7 @@ import { RaportsDeleteComponent } from './raports-delete/raports-delete.componen
   styleUrls: ['./raports.component.scss']
 })
 export class RaportsComponent implements OnInit {
-  displayedColumns: string[] = ['number','owner','apartment', 'createdAt', 'scope', 'sum', 'edit'];
+  displayedColumns: string[] = ['number','owner','apartment', 'createdAt', 'scope', 'edit'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatSort, {static:true}) sort!: MatSort;

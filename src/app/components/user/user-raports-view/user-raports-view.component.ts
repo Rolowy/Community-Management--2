@@ -1,10 +1,8 @@
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-import { Component, OnInit, Inject, NgModule } from '@angular/core';
-import { Firestore, query } from '@angular/fire/firestore';
+import { Component, OnInit } from '@angular/core';
+import { Firestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
-import { collection, doc, getDoc, getDocs, where } from 'firebase/firestore';
-import { umask } from 'process';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { doc, getDoc, } from 'firebase/firestore';
+import { BehaviorSubject } from 'rxjs';
 import { AuthServiceService } from 'src/app/shared/auth-service.service';
 import { Config } from 'src/app/_interface/config';
 import { Raports } from 'src/app/_interface/raport';
@@ -20,13 +18,14 @@ import html2canvas from 'html2canvas';
 })
 export class UserRaportsViewComponent implements OnInit {
   displayedColumns: string[] = ['index', 'name', 'amount', 'converter', 'unit', 'price'];
+  displayedColumnsApartment: string[] = ['index', 'name', 'amount', 'converter', 'unit', 'price'];
+
   dataSource: any;
+
   value = new BehaviorSubject<Raports>({} as any);
-  dateu: any;
   config = new BehaviorSubject<Config>({} as any);
-
+  sum = new BehaviorSubject(0);
   bankaccount = new BehaviorSubject('');
-
 
   constructor(private activeRouter: ActivatedRoute, private afs: Firestore, private authService: AuthServiceService) { }
 
@@ -35,7 +34,6 @@ export class UserRaportsViewComponent implements OnInit {
     this.getConfig();
     this.getDetails();
   }
-
 
   async getDetails() {
     let uid = this.activeRouter.snapshot.paramMap.get('id') || '';
@@ -46,15 +44,18 @@ export class UserRaportsViewComponent implements OnInit {
     if (docSnap.exists()) {
       const data = docSnap.data() as Raports;
       this.value.next({ ...data });
+      
+      data.otherStatus.unshift({name: "Opłata za lokal", amount: this.parseToPrice(data.apartment.area), converter: "m2", price: this.parseToPrice(data.apartment.rate)});  
       this.dataSource = data.otherStatus;
       //console.log("Document data:", docSnap.data());
+      const totalprice = data.otherStatus.reduce((acc:number, val:any) => {acc += parseFloat(val.price)*parseFloat(val.amount); return acc}, 0);
+      this.sum.next(totalprice.toFixed(2));
     } else {
-      // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   }
 
-  public openPDF(): void {
+  public openPDF(): void { 
     let DATA: any = document.getElementById('Document');
     html2canvas(DATA).then((canvas) => {
       let fileWidth = 208;
@@ -63,8 +64,15 @@ export class UserRaportsViewComponent implements OnInit {
       let PDF = new jsPDF('p', 'mm', 'a4');
       let position = 10;
       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-      PDF.save('angular-demo.pdf');
+      PDF.save(`Rozliczenie.pdf`);
     });
+  }
+
+
+
+  parseToPrice(value:string) {
+    value = value.replace(',', '.');
+    return parseFloat(value).toFixed(2);
   }
 
   async getConfig() {

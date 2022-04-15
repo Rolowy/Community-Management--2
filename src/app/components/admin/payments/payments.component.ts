@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ViewChild } from '@angular/core';
 import { MatPaginator} from '@angular/material/paginator';
@@ -34,7 +34,6 @@ export class PaymentsComponent implements OnInit {
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) {
   }
 
-
   ngOnInit() {
     const querySnapshot = collection(this.afs, 'payments');
     onSnapshot(querySnapshot, (querySnap) => {
@@ -53,11 +52,9 @@ export class PaymentsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
-
 
   public redirectToEdit = (el: any) => {
     const dialogRef = this.dialog.open(PaymentsEditComponent, {

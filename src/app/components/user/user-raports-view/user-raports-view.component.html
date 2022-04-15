@@ -29,6 +29,7 @@
         <h2>Kalkulacja opłat za lokal</h2>
         <p>Opłata za okres {{data.startdate.seconds*1000 | date: 'dd/MM/YYYY'}} - {{data.enddate.seconds*1000 | date: 'dd/MM/YYYY'}}</p>
     </div> 
+    
 
     <div class="row my-5" fxLayout="row" fxLayoutAlign="center center">
         <table mat-table [dataSource]="dataSource" fxFlex="80" class="mat-elevation-z8 demo-table">
@@ -59,27 +60,25 @@
 
               <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef> Suma </th>
-                <td mat-cell *matCellDef="let element"> {{element.price * element.amount}} zł</td>
+                <td mat-cell *matCellDef="let element"> {{(element.price * element.amount).toFixed(2)}} zł</td>
               </ng-container>
-
-
 
               <ng-container matColumnDef="total">
                 <td mat-footer-cell *matFooterCellDef colspan="100%">
-                    <div>Podsumowanie: <strong>{{data.sum}} zł</strong></div>
+                    <div>Podsumowanie: <strong>{{sum | async}} zł</strong></div>
                 </td>
               </ng-container>
   
-                
-          
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             <tr mat-footer-row *matFooterRowDef="['total']" class="footer-row"></tr>
 
           </table>
     </div>
-    <div class="footer">
-        <p>Wpłaty prosimy uregulowywać na ten numer bankowy: {{data.user.bankaccount}}</p>
+    <div class="footer" fxFlex="80" fxLayout="row">
+      <div class="col">Numer Bankowy:</div>
+      <div class="col">{{data.user.bankaccount}}</div>
+      <div class="col">{{sum | async}} zł</div>
     </div>
 </div>
 </div>
