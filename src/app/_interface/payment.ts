@@ -4,7 +4,7 @@ export interface Payment {
     lastname:string;
     user:any;
     uid:string;
-    price:string;
+    amount:string;
     date:any;
     createdAt:any;
     status:string;

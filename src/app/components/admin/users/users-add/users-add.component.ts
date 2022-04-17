@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/_interface/user'; 
 import { MatDialogRef } from '@angular/material/dialog';
@@ -34,7 +34,7 @@ export class UsersAddComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
     public dialogRef: MatDialogRef<UsersAddComponent>,
-    private authService: AuthServiceService) { }
+    private authService: AuthService) { }
 
   ngOnInit() {
   }

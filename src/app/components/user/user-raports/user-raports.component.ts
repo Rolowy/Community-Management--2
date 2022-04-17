@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { collection, Firestore, onSnapshot } from '@angular/fire/firestore';
 import { Raports } from 'src/app/_interface/raport';
 import { query, where } from 'firebase/firestore';
@@ -34,7 +34,7 @@ export class UserRaportsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) {
+  constructor(private router: Router, public dialog: MatDialog, public authService: AuthService, public afs: Firestore) {
     this.uid = this.authService.userID;
     this.getDocuments('raports');
   }

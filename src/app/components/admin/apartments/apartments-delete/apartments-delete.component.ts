@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 
 export interface DialogData {
   uid:string;
@@ -18,7 +18,7 @@ export class ApartmentsDeleteComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ApartmentsDeleteComponent>,
-    private authService: AuthServiceService,
+    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {}
 

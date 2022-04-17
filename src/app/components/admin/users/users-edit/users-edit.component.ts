@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { User } from 'src/app/_interface/user';
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { doc, Firestore, updateDoc} from '@angular/fire/firestore';
 
 @Component({
@@ -28,7 +28,7 @@ export class UsersEditComponent implements OnInit {
     public dialogRef: MatDialogRef<UsersEditComponent>,
     private fb: FormBuilder,
     public afs: Firestore,
-    private authService: AuthServiceService,
+    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data:User,
   ) {
   }

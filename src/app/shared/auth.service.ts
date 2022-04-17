@@ -11,8 +11,6 @@ import {
 } from '@angular/fire/auth';
 
 
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-
 import {
   collection,
   Firestore,
@@ -22,7 +20,7 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 
-import { addDoc, deleteDoc, doc, getDoc, getDocs, limit, updateDoc } from "firebase/firestore";
+import { addDoc, deleteDoc, doc, DocumentData, getDoc, getDocs, limit, updateDoc } from "firebase/firestore";
 
 import { User } from '../_interface/user';
 
@@ -32,23 +30,18 @@ import { EmailAuthProvider, onAuthStateChanged, reauthenticateWithCredential } f
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Apartment } from '../_interface/apartment';
 import { Raports } from '../_interface/raport';
-import { Chat } from '../_interface/chat';
 import { Payment } from '../_interface/payment';
-import { Config } from '../_interface/config'
 
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthServiceService {
+export class AuthService {
   userID: string = '';
-  userMod: boolean = false;
+  userMod = new BehaviorSubject<boolean>(false);
 
   totalprice = new BehaviorSubject<number>(0);
-
-
   userInfo = new BehaviorSubject<User>({
     name: '',
     lastname: '',
@@ -75,7 +68,7 @@ export class AuthServiceService {
 
         await onSnapshot(doc(afs, 'users', `${user.uid}`), (doc) => {
           localStorage.setItem('datainfo', JSON.stringify(doc.data()));
-          this.userMod = doc.get('moderator');
+          this.userMod.next(doc.get('moderator'));
           this.userInfo.next(doc.data() as User);
         });
 
@@ -91,7 +84,6 @@ export class AuthServiceService {
 
   }
 
-
   calcOfTheLoad() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -105,10 +97,10 @@ export class AuthServiceService {
         const data = doc.data() as Payment;
 
         if (data.status != "WPŁATA") {
-          wpl += parseFloat(data.price);
+          wpl += parseFloat(data.amount);
         }
         else {
-          obc += parseFloat(data.price);
+          obc += parseFloat(data.amount);
         }
 
       })
@@ -120,17 +112,15 @@ export class AuthServiceService {
     return items;
   }
 
+  get getModerator(): boolean {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    return user !== null && user.moderator !== false ? true : false;
+  }
+
 
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user')!);
     return user !== null && user.emailVerified !== false ? true : false;
-  }
-
-  async addChatMessage(user: Chat, message: string) {
-    return addDoc(collection(this.afs, 'chat'), {
-      uid: user.uid,
-      message: message,
-    })
   }
 
   async addApartment(model: Apartment) {
@@ -242,8 +232,16 @@ export class AuthServiceService {
     })
   }
 
+  async updateByUID(data: any, collection: string) {
+    return updateDoc(doc(this.afs, collection, `${data.uid}`), data).then(() => {
+      this.viewMessageSuccess('Zaktualizowano dane poprawnie.')
+    }).catch(error => {
+      this.viewMessageError('Nie udało się zaktualizować danych.')
+      console.log(error);
+    })
+  }
+
   async update(data: any, collection: string) {
-    ;
     return updateDoc(doc(this.afs, collection, `${data.uid}`), data).then(() => {
       this.viewMessageSuccess('Zaktualizowano dane poprawnie.')
     }).catch(error => {
@@ -272,7 +270,7 @@ export class AuthServiceService {
         }
 
         await setDoc(doc(this.afs, "users", `${user.user.uid}`), userData).then(() => {
-          this.SendVerificationMail();
+          this.sendVerificationMail();
         }).catch(error => {
           this.viewMessageError('Wystąpił błąd podczas dodawania konta.');
           console.log(error);
@@ -285,7 +283,7 @@ export class AuthServiceService {
     })
   }
   
-  SendVerificationMail(): void {
+  sendVerificationMail(): void {
     const user = this.auth.currentUser;
     if (user) {
       sendEmailVerification(user).then(() => {

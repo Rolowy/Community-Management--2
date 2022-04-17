@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-changepassword',
@@ -22,7 +22,7 @@ export class ChangepasswordComponent implements OnInit {
   newpassword?: string;
   oldpassword?: string;
 
-  constructor(private fb: FormBuilder, private authService: AuthServiceService) { }
+  constructor(private fb: FormBuilder, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
@@ -31,7 +31,7 @@ export class RaportsAddComponent implements OnInit {
     { label: 'szt'},
   ]
 
-  constructor(private fb: FormBuilder, public asf: Firestore, private authService: AuthServiceService, private router: Router) {}
+  constructor(private fb: FormBuilder, public asf: Firestore, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.combiner();

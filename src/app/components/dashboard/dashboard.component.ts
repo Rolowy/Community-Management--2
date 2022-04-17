@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Config } from 'src/app/_interface/config';
@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   lastburden:any;
   premises:any;
 
-  constructor(public authService: AuthServiceService,
+  constructor(public authService: AuthService,
     private fb: FormBuilder) {}
 
   ngOnInit(): void {

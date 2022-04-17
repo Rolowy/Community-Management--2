@@ -8,7 +8,7 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
-import { AuthServiceService } from './shared/auth-service.service';
+import { AuthService } from './shared/auth.service';
 
 import { MaterialModule } from './material/material.module';
 import { NgzorroModule } from './material/ngzorro.module';
@@ -86,7 +86,7 @@ registerLocaleData(pl);
   ],
   exports: [
   ],
-  providers: [AuthServiceService, { provide: NZ_I18N, useValue: pl_PL }],
+  providers: [AuthService, { provide: NZ_I18N, useValue: pl_PL }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

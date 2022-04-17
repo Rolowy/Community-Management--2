@@ -27,6 +27,7 @@ const routes: Routes = [
   {path: 'apartments', component: ApartmentsComponent, canActivate: [GuardGuard, ModeratorGuard] },
   {path: 'dashboard', component: DashboardComponent, canActivate: [GuardGuard] },
   {path:'', redirectTo:'/dashboard', pathMatch:'full'},
+  {path: '**', component: LoginComponent}
 ];
 
 @NgModule({

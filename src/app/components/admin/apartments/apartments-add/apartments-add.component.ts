@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Apartment } from 'src/app/_interface/apartment';
@@ -28,7 +28,7 @@ export class ApartmentsAddComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ApartmentsAddComponent>,
     public afs: Firestore,
-    public authService: AuthServiceService,
+    public authService: AuthService,
     private toast: MatSnackBar) { }
 
   ngOnInit() {

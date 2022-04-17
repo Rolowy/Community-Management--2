@@ -3,7 +3,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { doc, getDoc, } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { Config } from 'src/app/_interface/config';
 import { Raports } from 'src/app/_interface/raport';
 
@@ -27,7 +27,7 @@ export class UserRaportsViewComponent implements OnInit {
   sum = new BehaviorSubject(0);
   bankaccount = new BehaviorSubject('');
 
-  constructor(private activeRouter: ActivatedRoute, private afs: Firestore, private authService: AuthServiceService) { }
+  constructor(private activeRouter: ActivatedRoute, private afs: Firestore, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.bankaccount.next(this.authService.userInfo.value.bankaccount || '');

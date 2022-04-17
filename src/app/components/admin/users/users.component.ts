@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { User } from 'src/app/_interface/user';
 import { collection, Firestore, onSnapshot } from '@angular/fire/firestore';
 import { UsersEditComponent } from './users-edit/users-edit.component';
@@ -25,7 +25,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, {static:true}) sort!: MatSort;
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
 
-  constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) { }
+  constructor(private router: Router, public dialog: MatDialog, public authService: AuthService, public afs: Firestore) { }
 
   ngOnInit(): void {
     this.getDocuments('users')

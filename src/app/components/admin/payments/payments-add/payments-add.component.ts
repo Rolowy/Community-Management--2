@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { User } from 'src/app/_interface/user';
@@ -33,7 +33,7 @@ export class PaymentsAddComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<PaymentsAddComponent>,
     public afs: Firestore,
-    public authService: AuthServiceService) { }
+    public authService: AuthService) { }
 
   ngOnInit() {
     this.users = this.getUser();

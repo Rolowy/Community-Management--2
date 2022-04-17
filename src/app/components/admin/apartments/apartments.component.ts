@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { collection, Firestore } from '@angular/fire/firestore';
 import { ApartmentsAddComponent } from './apartments-add/apartments-add.component';
 import { ApartmentsDeleteComponent } from './apartments-delete/apartments-delete.component';
@@ -32,7 +32,7 @@ export class ApartmentsComponent implements OnInit {
   @ViewChild(MatSort, {static:true}) sort!: MatSort;
   @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
 
-  constructor(private router: Router, public dialog: MatDialog, public authService: AuthServiceService, public afs: Firestore) {
+  constructor(private router: Router, public dialog: MatDialog, public authService: AuthService, public afs: Firestore) {
     this.getDocuments('apartments');
   }
 

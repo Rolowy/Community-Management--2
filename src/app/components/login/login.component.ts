@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(5)])
   });
 
-  constructor(private authService: AuthServiceService, private router:Router, private dialog: MatDialog) {
+  constructor(private authService: AuthService, private router:Router, private dialog: MatDialog) {
     if (this.authService.isLoggedIn) {
       this.router.navigate(['dashboard']);
     }

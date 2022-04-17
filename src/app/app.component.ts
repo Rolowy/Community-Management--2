@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
-import { AuthServiceService } from './shared/auth-service.service';
+import { AuthService } from './shared/auth.service';
 import {
   Event,
   NavigationCancel,
@@ -22,7 +22,7 @@ export class AppComponent {
   appname:string = environment.title;
   loading = false;
 
-  constructor(private router: Router, public authService: AuthServiceService, private dialog: MatDialog) {
+  constructor(private router: Router, public authService: AuthService, private dialog: MatDialog) {
     this.router.events.subscribe((event: Event) => {
       switch (true) {
         case event instanceof NavigationStart: {

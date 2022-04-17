@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { Apartment } from 'src/app/_interface/apartment';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
@@ -30,7 +30,7 @@ export class ApartmentsEditComponent implements OnInit {
     public dialogRef: MatDialogRef<ApartmentsEditComponent>,
     private fb: FormBuilder,
     private afs: Firestore,
-    private authService: AuthServiceService,
+    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data:Apartment,
   ) {}
 

@@ -1,6 +1,6 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { AuthServiceService } from 'src/app/shared/auth-service.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/_interface/user';
 
@@ -26,10 +26,9 @@ export class PaymentsEditComponent implements OnInit {
 
   firstFormGroup: FormGroup = this.fb.group({
     user: new FormControl(this.data.user.uid, Validators.required),
-    price: new FormControl('', Validators.required),
-    status: new FormControl('', Validators.required),
-    date: new FormControl(new Date(this.data.date.seconds*1000), Validators.required),
-    createdAt: new FormControl('')
+    amount: new FormControl(this.data.amount, Validators.required),
+    status: new FormControl(this.data.status, Validators.required),
+    date: new FormControl(new Date(this.data.date.seconds*1000), Validators.required)
   });
 
 
@@ -37,7 +36,7 @@ export class PaymentsEditComponent implements OnInit {
   public dialogRef: MatDialogRef<PaymentsEditComponent>,
     private fb: FormBuilder,
     private afs: Firestore,
-    private authService: AuthServiceService,
+    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data:Payment,
   ) {}
 
@@ -50,6 +49,8 @@ export class PaymentsEditComponent implements OnInit {
   }
 
   editPayment() {
-
+    this.data.date = new Date();
+    this.authService.updateByUID(this.data, 'payments');
+    this.dialogRef.close();
   }
 }
