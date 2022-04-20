@@ -53,6 +53,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Adres</mat-label>
               <input matInput placeholder="Adres" formControlName="address">
+              <mat-error *ngIf="secondFormGroup.controls['address'].hasError('minlength')">Minimum 5 znaków</mat-error> 
               <mat-error *ngIf="secondFormGroup.controls['address'].hasError('required')">Adres jest wymagany</mat-error> 
             </mat-form-field>
           </div>
@@ -93,7 +94,6 @@
               <mat-hint>XX XXXX XXXX XXXX XXXX XXXX XXXX</mat-hint>
               <mat-error *ngIf="secondFormGroup.controls['bankaccount'].hasError('required')">Rachunek Bankowy jest wymagany</mat-error>
             </mat-form-field>
-            
           </div>
         </div>
   

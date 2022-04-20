@@ -10,7 +10,6 @@ import {
   sendPasswordResetEmail
 } from '@angular/fire/auth';
 
-
 import {
   collection,
   Firestore,
@@ -20,7 +19,7 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 
-import { addDoc, deleteDoc, doc, DocumentData, getDoc, getDocs, limit, updateDoc } from "firebase/firestore";
+import { addDoc, deleteDoc, doc, getDoc, getDocs, limit, updateDoc } from "firebase/firestore";
 
 import { User } from '../_interface/user';
 
@@ -40,6 +39,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class AuthService {
   userID: string = '';
   userMod = new BehaviorSubject<boolean>(false);
+  isLogged = new BehaviorSubject<boolean>(false);
 
   totalprice = new BehaviorSubject<number>(0);
   userInfo = new BehaviorSubject<User>({
@@ -64,15 +64,13 @@ export class AuthService {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         this.userID = user.uid;
-
+        this.isLogged.next(true);
 
         await onSnapshot(doc(afs, 'users', `${user.uid}`), (doc) => {
           localStorage.setItem('datainfo', JSON.stringify(doc.data()));
           this.userMod.next(doc.get('moderator'));
           this.userInfo.next(doc.data() as User);
         });
-
-
 
         localStorage.setItem('user', JSON.stringify(user));
       } else {
@@ -88,7 +86,7 @@ export class AuthService {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     const querySnapshot = query(collection(this.afs, 'payments'), where("user.uid", "==", user.uid));
-    let items = 0;
+    let sum = 0;
     onSnapshot(querySnapshot, (querySnap) => {
       let wpl = 0;
       let obc = 0;
@@ -105,11 +103,14 @@ export class AuthService {
 
       })
 
-      items =  obc - wpl;
-
-      this.totalprice.next(items);
+      sum =  obc - wpl;
+      
+      if(!isNaN(sum))
+      {
+        this.totalprice.next(sum);
+      }
     })
-    return items;
+    return sum;
   }
 
   get getModerator(): boolean {
@@ -144,7 +145,6 @@ export class AuthService {
     }
   }
 
-
   async saveDefaultConfiguration(form: any) {
     await setDoc(doc(this.afs, "config", "config"), {
       name: form.name,
@@ -168,7 +168,6 @@ export class AuthService {
       nzDuration: 5000
     });
   }
-
 
   async getUser_LastPayment() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -308,6 +307,7 @@ export class AuthService {
 
   async logout() {
     await signOut(this.auth).then(() => {
+      this.isLogged.next(false);
       this.router.navigate(['login']);
     })
   }
@@ -336,21 +336,13 @@ export class AuthService {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user) {
-
-      window.alert('1');
-      window.alert(user.email);
       const credential = await EmailAuthProvider.credential((user.email || this.userInfo.value.email), oldPassword);
-      window.alert('2');
 
-      window.alert(credential);
       const result = await reauthenticateWithCredential(
         auth.currentUser,
         credential
       )
 
-      window.alert(result);
-
-      window.alert('3');
       await updatePassword(user, newPassword).then(() => {
         return this.viewMessageSuccess('Zmieniono hasło pomyślnie');
       }).catch(error => {
@@ -358,7 +350,6 @@ export class AuthService {
         return this.viewMessageError('Wystąpił błąd, prosimy o ponowne zalogowanie się.')
       })
     }
-    window.alert('4');
   }
 
   changePassword2(oldPassword: string, newPassword: string) {
@@ -382,7 +373,7 @@ export class AuthService {
     }
   }
 
-  async resetPassword(email: string): Promise<any> {
+  async resetPassword(email: string) {
     await sendPasswordResetEmail(this.auth, email).then(() => {
       this.viewMessageSuccess('Procedura resetowania hasła została wysłana na email');
     }).catch(error => {

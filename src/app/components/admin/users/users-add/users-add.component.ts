@@ -3,7 +3,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/_interface/user'; 
 import { MatDialogRef } from '@angular/material/dialog';
-
+import { Email } from 'src/app/validator/email';
 
 @Component({
   selector: 'app-users-add',

@@ -23,7 +23,7 @@
               <mat-label>Ulica:</mat-label>
               <input matInput type="text" [(ngModel)]="data.street" formControlName="street" placeholder="Ulica" />
               <mat-icon matSuffix>edit_road</mat-icon>
-              <mat-hint>Ulica</mat-hint>
+              <mat-error *ngIf="form.controls['street'].hasError('required')">Ulica jest wymagana</mat-error>
             </mat-form-field>
           </div>
 
@@ -32,8 +32,6 @@
               <mat-label>Numer Budynku:</mat-label>
               <input matInput type="text" [(ngModel)]="data.buildingnumber" formControlName="buildingnumber" placeholder="Numer Budynku" />
               <mat-icon matSuffix>format_list_numbered</mat-icon>
-              <mat-hint>Numer Budynku</mat-hint>
-
             </mat-form-field>
           </div>
 
@@ -46,7 +44,8 @@
               <mat-label>Numer Lokalu:</mat-label>
               <input matInput type="text" [(ngModel)]="data.apartmentnumber" formControlName="apartmentnumber" placeholder="Numer Lokalu" />
               <mat-icon matSuffix>format_list_numbered</mat-icon>
-              <mat-hint>Numer Lokalu</mat-hint>
+              <mat-error *ngIf="form.controls['apartmentnumber'].hasError('required')">Numer Lokalu jest wymagany</mat-error>
+              
             </mat-form-field>
           </div>
 
@@ -55,7 +54,7 @@
               <mat-label>Kod Pocztowy</mat-label>
               <input matInput type="text" [(ngModel)]="data.postcode" formControlName="postcode" placeholder="Kod Pocztowy" />
               <mat-icon matSuffix>signpost</mat-icon>
-              <mat-hint>Kod Pocztowy</mat-hint>
+              <mat-error *ngIf="form.controls['postcode'].hasError('required')">Kod pocztowy jest wymagany</mat-error>
             </mat-form-field>
           </div>
 
@@ -72,16 +71,16 @@
               <mat-label>Powierzchnia:</mat-label>
               <input matInput type="text" [(ngModel)]="data.area" formControlName="area" placeholder="Powierzchnia" />
               <mat-icon matSuffix>height</mat-icon>
-              <mat-hint>Powierzchnia</mat-hint>
+              <mat-error *ngIf="form.controls['area'].hasError('required')">Powierzchnia jest wymagana</mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-6">
             <mat-form-field appearance="outline">
-              <mat-label>Stawka</mat-label>
+              <mat-label>Stawka za m2</mat-label>
               <input matInput type="text" [(ngModel)]="data.rate" formControlName="rate" placeholder="Stawka" />
               <mat-icon matSuffix>price_check</mat-icon>
-              <mat-hint>Stawka</mat-hint>
+              <mat-error *ngIf="form.controls['rate'].hasError('required')">Stawka jest wymagana</mat-error>
             </mat-form-field>
           </div>
 

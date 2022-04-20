@@ -18,8 +18,8 @@ export class ApartmentsEditComponent implements OnInit {
 
   form: FormGroup = this.fb.group({
     owner: new FormControl(this.data.owner.uid, [Validators.required]),
-    apartmentnumber: new FormControl(''),
-    buildingnumber: new FormControl('', Validators.required),
+    apartmentnumber: new FormControl('', Validators.required),
+    buildingnumber: new FormControl(''),
     street: new FormControl('', Validators.required),
     postcode: new FormControl('', Validators.required),
     area: new FormControl('', Validators.required),

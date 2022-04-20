@@ -1,4 +1,4 @@
-<div *ngIf="authService.isLoggedIn; else NOLOGGED" style="height: 100vh;">
+<div *ngIf="authService.isLogged | async; else NOLOGGED" style="height: 100vh;">
 <mat-toolbar color="primary" class="p-2">
   <mat-toolbar-row>
     <button mat-icon-button fxShow="true" fxHide.gt-sm>
@@ -16,7 +16,7 @@
       </mat-menu>
 
       
-      <span *ngIf="(authService.userMod); else NoMod">
+      <span *ngIf="authService.userMod | async; else NoMod">
 
         <a routerLinkActive="active" mat-button [matMenuTriggerFor]="raports"><mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Raporty</a>
         <mat-menu #raports="matMenu">

@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: 'raports', component: RaportsComponent, canActivate: [GuardGuard, ModeratorGuard] },
   {path: 'addraport', component: RaportsAddComponent, canActivate: [GuardGuard, ModeratorGuard] },
   {path: 'payments', component: PaymentsComponent, canActivate: [GuardGuard, ModeratorGuard] },
-  {path: 'user/raports', component: UserRaportsComponent, canActivate: [GuardGuard, UserGuard] },
+  {path: 'user/raports', component: UserRaportsComponent, canActivate: [UserGuard] },
   {path: 'user/raports/:id', component: UserRaportsViewComponent},
   {path: 'users', component: UsersComponent, canActivate: [GuardGuard, ModeratorGuard] },
   {path: 'apartments', component: ApartmentsComponent, canActivate: [GuardGuard, ModeratorGuard] },

@@ -18,10 +18,10 @@ export class ApartmentsAddComponent implements OnInit {
   firstFormGroup: FormGroup = this._formBuilder.group({
     owner: new FormControl('', Validators.required),
     street: new FormControl('', Validators.required),
-    buildingnumber: new FormControl('', Validators.required),
+    buildingnumber: new FormControl(''),
     apartmentnumber: new FormControl('', Validators.required),
     postcode: new FormControl('', [Validators.required, Validators.pattern("[0-9]{2}-[0-9]{3}")]),
-    area: new FormControl('', [Validators.required, Validators.pattern('[0-9]{2}.[0-9]{2}')]),
+    area: new FormControl('', [Validators.required, Validators.pattern('([0-9]*\.?[0-9]{2})|[0-9]')]),
     rate: new FormControl('', Validators.required)
   });
 
