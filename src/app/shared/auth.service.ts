@@ -41,6 +41,8 @@ export class AuthService {
   userMod = new BehaviorSubject<boolean>(false);
   isLogged = new BehaviorSubject<boolean>(false);
 
+  users = new BehaviorSubject<User[]>([]);
+
   totalprice = new BehaviorSubject<number>(0);
   userInfo = new BehaviorSubject<User>({
     name: '',
@@ -80,6 +82,10 @@ export class AuthService {
 
     });
 
+    const q = query(collection(this.afs, "users"), where("moderator", "!=", true));
+    onSnapshot((q), (doc:any) => {
+      this.users.next(doc.data());
+    });
   }
 
   calcOfTheLoad() {

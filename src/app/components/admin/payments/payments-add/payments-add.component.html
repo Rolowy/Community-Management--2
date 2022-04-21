@@ -4,12 +4,12 @@
         <ng-template matStepLabel>Konfiguracja Płatności</ng-template>
         <div class="row my-3">
           <div class="col-3">
-
               <mat-form-field appearance="outline">
                 <mat-label>Użytkownik</mat-label>
                 <mat-select formControlName="user" (selectionChange)="selectUser($event)" placeholder="Wybierz użytkownika" required>
                   <mat-option *ngFor="let user of users | async" [value]="user">{{user.name}} {{user.lastname}}</mat-option></mat-select>
-              </mat-form-field>
+                  <mat-error *ngIf="firstFormGroup.controls['user'].hasError('required')">Lokal musi mieć przypisanego mieszkańca</mat-error>
+                </mat-form-field>
             </div>
         </div>
         <div class="row">
