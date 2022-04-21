@@ -11,6 +11,8 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class LoginComponent implements OnInit {
   visible_password: boolean = true;
+  loading:boolean = false;
+
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(5)])
@@ -26,6 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.form.value);
+    this.loading = true;
+    setTimeout(() => { this.loading=false; this.authService.login(this.form.value); }, 3000);
   }
 }
