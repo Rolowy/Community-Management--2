@@ -40,6 +40,7 @@
               <mat-label>Kod Pocztowy</mat-label>
               <input matInput placeholder="Kod Pocztowy" formControlName="postcode" >
               <mat-error *ngIf="firstFormGroup.controls['postcode'].hasError('required')">Kod Pocztowy jest wymagany</mat-error>
+              <mat-error *ngIf="firstFormGroup.controls['postcode'].hasError('pattern')">Kod Pocztowy nie jest prawidłowy (XX-XXX)</mat-error>
 
             </mat-form-field>
           </div>
@@ -54,7 +55,7 @@
           <div class="col">
             <mat-form-field class="my-2" appearance="outline">
               <mat-label>Stawka (za m2)</mat-label>
-              <input matInput placeholder="Np. 1.39" formControlName="rate" min="0.01" step="0.01">
+              <input matInput placeholder="X.XX" formControlName="rate" min="0.01" step="0.01">
               <mat-error *ngIf="firstFormGroup.controls['rate'].hasError('required')">Stawka jest wymagana</mat-error>
             </mat-form-field>
           </div>
