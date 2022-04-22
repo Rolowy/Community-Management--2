@@ -13,7 +13,7 @@ import { Firestore } from '@angular/fire/firestore';
   styleUrls: ['./apartments-add.component.scss']
 })
 export class ApartmentsAddComponent implements OnInit {
-  users:any;
+  rate = new FormControl('', Validators.required)
 
   firstFormGroup: FormGroup = this._formBuilder.group({
     owner: new FormControl('', Validators.required),
@@ -22,7 +22,7 @@ export class ApartmentsAddComponent implements OnInit {
     apartmentnumber: new FormControl('', Validators.required),
     postcode: new FormControl('', [Validators.required, Validators.pattern("[0-9]{2}-[0-9]{3}")]),
     area: new FormControl('', [Validators.required, Validators.pattern('([0-9]*\.?[0-9]{2})|[0-9]')]),
-    rate: new FormControl('', [Validators.required, Validators.pattern('([0-9]*\.?[0-9]{2})|[0-9]')])
+    rate: this.rate
   });
 
   constructor(private _formBuilder: FormBuilder,
@@ -32,7 +32,6 @@ export class ApartmentsAddComponent implements OnInit {
     private toast: MatSnackBar) { }
 
   ngOnInit() {
-    this.users = this.authService.getUsers();
   }
 
   selectUser(event: any) {

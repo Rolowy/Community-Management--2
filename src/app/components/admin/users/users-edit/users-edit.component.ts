@@ -11,14 +11,17 @@ import { doc, Firestore, updateDoc} from '@angular/fire/firestore';
   styleUrls: ['./users-edit.component.scss']
 })
 export class UsersEditComponent implements OnInit {
+  postcode = new FormControl('', Validators.required)
+  phone = new FormControl('')
+  bankaccount = new FormControl('', Validators.required)
 
   form: FormGroup = this.fb.group({
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
     lastname: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    phone: new FormControl('', Validators.pattern("[0-9]{3}[-][0-9]{3}[-][0-9]{3}")),
-    postcode: new FormControl('', [Validators.required, Validators.pattern("[0-9]{2}-[0-9]{3}")]),
+    phone: this.phone,
+    postcode: this.postcode,
     address: new FormControl('', [Validators.required, Validators.minLength(5)]),
-    bankaccount: new FormControl('', [Validators.required, Validators.pattern("[0-9]{2}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}")]),
+    bankaccount: this.bankaccount,
     city: new FormControl('', [Validators.required, Validators.minLength(3)]),
     moderator: new FormControl(this.data.moderator)
   })
