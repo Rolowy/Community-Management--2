@@ -17,6 +17,8 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./payments-edit.component.scss']
 })
 export class PaymentsEditComponent implements OnInit {
+  amount = new FormControl('', Validators.required)
+
   form = [
     { label: 'WPŁATA'},
     { label: 'OBCIĄŻENIE'}
@@ -24,7 +26,7 @@ export class PaymentsEditComponent implements OnInit {
 
   firstFormGroup: FormGroup = this.fb.group({
     user: new FormControl(this.data.user.uid, Validators.required),
-    amount: new FormControl(this.data.amount, Validators.required),
+    amount: this.amount,
     status: new FormControl(this.data.status, Validators.required),
     date: new FormControl(new Date(this.data.date.seconds*1000), Validators.required)
   });

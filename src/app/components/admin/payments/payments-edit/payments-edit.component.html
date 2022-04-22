@@ -13,13 +13,7 @@
             </mat-form-field>
           </div>
           <div class="col">
-            <mat-form-field appearance="outline" floatLabel="always">
-              <mat-label>Kwota</mat-label>
-              <input formControlName="amount" [(ngModel)]="data.amount" matInput type="number" step="0.01" min="0.00" oninput="validity.valid||(value='');" class="example-right-align" placeholder="0.00">
-              <span matPrefix>zł&nbsp;</span>
-              <mat-hint>Kwota</mat-hint>
-            </mat-form-field>
-            
+            <app-input title="Kwota" [ngModel]="data.amount" [minLength]=5 [maxLength]=5 [control]="amount" [dropSpecial]=false format="separator.2" placeholder="X.XX"></app-input>    
           </div>
       </div>
       <div class="row my-3">
