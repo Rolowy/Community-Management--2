@@ -172,10 +172,22 @@
 
     </div>
 
-
-
   </div>
 </div>
 
+<div class="row">
+<mat-form-field appearance="outline" fxFlex>
+  <mat-label>Rachunek Bankowy</mat-label>
+  <input matInput mask="00 0000 0000 0000 0000 0000 0000" [showMaskTyped]="true" placeholder="Rachunek Bankowy" formControlName="bankaccount" placeholder="61 1090 1014 0000 0712 1981 2874"/>
+</mat-form-field>
 
-{{authService.users | json}}
+<mat-form-field appearance="outline" fxFlex>
+  <mat-label>Powierzchnia w m2</mat-label>
+  <input matInput mask="00,00||0,00||000,00" [showMaskTyped]="true" placeholder="Rachunek Bankowy" formControlName="bankaccount" placeholder="61 1090 1014 0000 0712 1981 2874"/>
+</mat-form-field>
+
+<input type="text" suffix=" zł" mask="00,00" />
+
+
+<app-input></app-input>
+</div>

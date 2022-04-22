@@ -17,8 +17,6 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./payments-edit.component.scss']
 })
 export class PaymentsEditComponent implements OnInit {
-  users:any;
-
   form = [
     { label: 'WPŁATA'},
     { label: 'OBCIĄŻENIE'}
@@ -36,12 +34,11 @@ export class PaymentsEditComponent implements OnInit {
   public dialogRef: MatDialogRef<PaymentsEditComponent>,
     private fb: FormBuilder,
     private afs: Firestore,
-    private authService: AuthService,
+    public authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data:Payment,
   ) {}
 
   ngOnInit() {
-    this.users = this.authService.getUsers();
   }
 
   selectUser(event: any) {

@@ -7,7 +7,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-
+import { NgxMaskModule } from 'ngx-mask';
 import { AuthService } from './shared/auth.service';
 
 import { MaterialModule } from './material/material.module';
@@ -42,6 +42,7 @@ import { PaymentsDeleteComponent } from './components/admin/payments/payments-de
 import { UserRaportsViewComponent } from './components/user/user-raports-view/user-raports-view.component';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { ChangepasswordComponent } from './components/user/changepassword/changepassword.component';
+import { InputComponent } from './components/functions/input/input.component';
 
 registerLocaleData(pl);
 
@@ -69,6 +70,7 @@ registerLocaleData(pl);
     PaymentsDeleteComponent,
     UserRaportsViewComponent,
     ChangepasswordComponent,
+    InputComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,7 +84,7 @@ registerLocaleData(pl);
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    provideStorage(() => getStorage()),
+    NgxMaskModule.forRoot()
   ],
   exports: [
   ],

@@ -31,11 +31,11 @@ export class RaportsAddComponent implements OnInit {
     { label: 'szt'},
   ]
 
-  constructor(private fb: FormBuilder, public asf: Firestore, private authService: AuthService, private router: Router) {}
+  constructor(private fb: FormBuilder, public asf: Firestore, public authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.combiner();
-    this.users = this.getUser();
+    this.users = this.authService.users;
     this.addOtherStatus(); //wymuszenie wykorzystania przynajmniej jednego pola - mini hack
   }
 
@@ -44,10 +44,6 @@ export class RaportsAddComponent implements OnInit {
       this.form.value.sum = 0;
       value.otherStatus.map((result:any) => {this.form.value.sum = this.form.value.sum + result.price * result.amount});
     });
-  }
-
-  async getUser() {
-    return await this.authService.getUsers();
   }
 
   get otherStatus() {
