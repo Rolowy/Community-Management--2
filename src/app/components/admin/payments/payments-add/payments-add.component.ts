@@ -36,11 +36,7 @@ export class PaymentsAddComponent implements OnInit {
     public authService: AuthService) { }
 
   ngOnInit() {
-    this.users = this.getUser();
-  }
-
-  async getUser() {
-    return await this.authService.getUsers();
+    this.users = this.authService.users;
   }
 
   selectUser(event: any) {

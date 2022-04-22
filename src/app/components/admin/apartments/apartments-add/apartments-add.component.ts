@@ -14,14 +14,16 @@ import { Firestore } from '@angular/fire/firestore';
 })
 export class ApartmentsAddComponent implements OnInit {
   rate = new FormControl('', Validators.required)
+  area = new FormControl('', Validators.required)
+  postcode = new FormControl('', Validators.required)
 
   firstFormGroup: FormGroup = this._formBuilder.group({
     owner: new FormControl('', Validators.required),
     street: new FormControl('', Validators.required),
     buildingnumber: new FormControl(''),
     apartmentnumber: new FormControl('', Validators.required),
-    postcode: new FormControl('', [Validators.required, Validators.pattern("[0-9]{2}-[0-9]{3}")]),
-    area: new FormControl('', [Validators.required, Validators.pattern('([0-9]*\.?[0-9]{2})|[0-9]')]),
+    postcode: this.postcode,
+    area: this.area,
     rate: this.rate
   });
 

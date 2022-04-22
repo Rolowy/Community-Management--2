@@ -37,31 +37,13 @@
         </div>
         <div class="row">
           <div class="col">
-            <mat-form-field class="my-2" appearance="outline">
-              <mat-label>Kod Pocztowy</mat-label>
-              <input matInput placeholder="Kod Pocztowy" formControlName="postcode" >
-              <mat-error *ngIf="firstFormGroup.controls['postcode'].hasError('required')">Kod Pocztowy jest wymagany</mat-error>
-              <mat-error *ngIf="firstFormGroup.controls['postcode'].hasError('pattern')">Kod Pocztowy nie jest prawidłowy (XX-XXX)</mat-error>
-
-            </mat-form-field>
+            <app-input title="Kod Pocztowy" [control]="postcode" [minLength]=6 [maxLength]=6 format="00-000"></app-input>
           </div>
           <div class="col">
-            <mat-form-field class="my-2" appearance="outline">
-              <mat-label>Powierzchnia (m2)</mat-label>
-              <input matInput placeholder="X.XX" formControlName="area" min="0.01" step="0.01">
-              <mat-error *ngIf="firstFormGroup.controls['area'].hasError('required')">Powierzchnia jest wymagana</mat-error>
-              <mat-error *ngIf="firstFormGroup.controls['area'].hasError('pattern')">Niepoprawnie wprowadzone pole</mat-error>
-            </mat-form-field>
+            <app-input title="Powierzchnia (m2)" class="my-2" [minLength]=5 [maxLength]=5 [control]="area" [dropSpecial]=false format="000,00||00,00||0,00" placeholder="X.XX"></app-input>
           </div>
           <div class="col">
-            <app-input title="Stawka (za m2)" class="my-2" [minLength]=5 [maxLength]=5 [control]="rate" format="00,00|0,00" placeholder="X.XX"></app-input>
-
-            <!-- <mat-form-field class="my-2" appearance="outline">
-              <mat-label>Stawka (za m2)</mat-label>
-              <input matInput placeholder="X.XX" formControlName="rate" min="0.01" step="0.01">
-              <mat-error *ngIf="firstFormGroup.controls['rate'].hasError('required')">Stawka jest wymagana</mat-error>
-              <mat-error *ngIf="firstFormGroup.controls['rate'].hasError('pattern')">Niepoprawnie wprowadzone pole</mat-error>
-            </mat-form-field> -->
+            <app-input title="Stawka (za m2)" class="my-2" [minLength]=5 [maxLength]=5 [control]="rate" [dropSpecial]=false format="000,00||00,00||0,00" placeholder="X.XX"></app-input>
           </div>
         </div>
   

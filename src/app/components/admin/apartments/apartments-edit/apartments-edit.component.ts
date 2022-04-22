@@ -14,6 +14,9 @@ import { Firestore } from '@angular/fire/firestore';
   styleUrls: ['./apartments-edit.component.scss']
 })
 export class ApartmentsEditComponent implements OnInit {
+  postcode = new FormControl('', Validators.required)
+  area = new FormControl('', Validators.required)
+  rate = new FormControl('', Validators.required)
   users: any;
 
   form: FormGroup = this.fb.group({
@@ -21,9 +24,9 @@ export class ApartmentsEditComponent implements OnInit {
     apartmentnumber: new FormControl('', Validators.required),
     buildingnumber: new FormControl(''),
     street: new FormControl('', Validators.required),
-    postcode: new FormControl('', Validators.required),
-    area: new FormControl('', Validators.required),
-    rate: new FormControl('', Validators.required)
+    postcode: this.postcode,
+    area: this.area,
+    rate: this.rate
   })
 
   constructor(
@@ -35,7 +38,7 @@ export class ApartmentsEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.users = this.authService.getUsers();
+    this.users = this.authService.users;
   }
 
   onNoClick(): void {
