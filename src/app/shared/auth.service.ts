@@ -19,7 +19,7 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 
-import { addDoc, deleteDoc, doc, getDoc, getDocs, limit, updateDoc } from "firebase/firestore";
+import { addDoc, deleteDoc, doc, DocumentData, getDoc, getDocs, limit, updateDoc } from "firebase/firestore";
 
 import { User } from '../_interface/user';
 
@@ -40,8 +40,7 @@ export class AuthService {
   userID: string = '';
   userMod = new BehaviorSubject<boolean>(false);
   isLogged = new BehaviorSubject<boolean>(false);
-  
-  unsubscribe:any;
+
   users = new BehaviorSubject<User[]>([]);
 
   totalprice = new BehaviorSubject<number>(0);
@@ -79,26 +78,16 @@ export class AuthService {
       } else {
         localStorage.clear();
       }
-
-
     });
 
-    console.log('wywołanie');
-
-    //const q = query(collection(this.afs, "users"), where("moderator", "!=", true));
-    //onSnapshot((q), (doc:any) => {
-    //  return doc.data as User[];
-    //});
-
-  const q = query(collection(this.afs, "users"), where("moderator", "!=", true));
-  onSnapshot(q, (querySnapshot) => {
-    let tabl:any = [];
-    querySnapshot.forEach((doc) => {
-        tabl.push({...doc.data(), id:doc.id});
+    const q = query(collection(this.afs, "users"), where("moderator", "!=", true));
+    onSnapshot(q, (querySnapshot) => {
+      let users:any = [];
+      querySnapshot.forEach((doc) => {
+        users.push({...doc.data(), id:doc.id});
+      });
+      this.users.next(users);
     });
-    console.log(tabl)
-  });
-
   }
 
   calcOfTheLoad() {
@@ -188,7 +177,7 @@ export class AuthService {
     });
   }
 
-  async getUser_LastPayment() {
+  async getUser_LastPayment(): Promise<Raports[]>  {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const q = query(collection(this.afs, "payments"), where("user.uid", "==", user.uid), where('status', '==', 'WPŁATA'), limit(3));
     const querySnapshot = await getDocs(q);
@@ -197,7 +186,7 @@ export class AuthService {
     });
   }
 
-  async getUser_LastBurden() {
+  async getUser_LastBurden(): Promise<Raports[]> {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     const q = query(collection(this.afs, "payments"), where("user.uid", "==", user.uid), where('status', '==', 'OBCIĄŻENIE'), limit(3));
@@ -207,7 +196,7 @@ export class AuthService {
     });
   }
 
-  async getUser_Premises() {
+  async getUser_Premises(): Promise<Apartment[]> {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     const q = query(collection(this.afs, "apartments"), where("owner.uid", "==", user.uid));
@@ -217,7 +206,7 @@ export class AuthService {
     });
   }
 
-  async getUser_Info(uid: string) {
+  async getUser_Info(uid: string): Promise<Apartment[]> {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     const q = query(collection(this.afs, "apartments"), where("owner", "==", user.uid));
@@ -227,7 +216,7 @@ export class AuthService {
     });
   }
 
-  async getUser_LastRaport() {
+  async getUser_LastRaport(): Promise<Raports[]>  {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     const q = query(collection(this.afs, "raports"), where("user.uid", "==", user.uid), limit(1));
@@ -237,7 +226,7 @@ export class AuthService {
     });
   }
 
-  async addRaport(model: Raports) {
+  async addRaport(model: Raports): Promise<DocumentData> {
     return addDoc(collection(this.afs, 'raports'), model);
   }
 
@@ -315,7 +304,7 @@ export class AuthService {
     console.log('Nie znaleziono użytkownika');
   }
 
-  async login(form: any) {
+  async login(form: any): Promise<void> {
     await signInWithEmailAndPassword(this.auth, form.email, form.password).then((user) => {
       this.router.navigate(['dashboard']);
     }).catch(error => {
@@ -324,21 +313,11 @@ export class AuthService {
     });
   }
 
-  async logout() {
+  async logout(): Promise<void>  {
     await signOut(this.auth).then(() => {
       this.isLogged.next(false);
       this.router.navigate(['login']);
     })
-  }
-
-  async getUsers() {
-    const q = await query(collection(this.afs, "users"), where("moderator", "!=", true));
-    const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map(el => {
-      const data = el.data() as User;
-      data.uid = el.id;
-      return data;
-    });
   }
 
   async getApartments(uid: string) {
