@@ -30,7 +30,7 @@ export class ApartmentsEditComponent implements OnInit {
     public dialogRef: MatDialogRef<ApartmentsEditComponent>,
     private fb: FormBuilder,
     private afs: Firestore,
-    private authService: AuthService,
+    public authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data:Apartment,
   ) {}
 

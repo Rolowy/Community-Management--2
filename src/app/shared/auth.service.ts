@@ -40,6 +40,9 @@ export class AuthService {
   userID: string = '';
   userMod = new BehaviorSubject<boolean>(false);
   isLogged = new BehaviorSubject<boolean>(false);
+  
+  unsubscribe:any;
+  users = new BehaviorSubject<User[]>([]);
 
   totalprice = new BehaviorSubject<number>(0);
   userInfo = new BehaviorSubject<User>({
@@ -79,6 +82,22 @@ export class AuthService {
 
 
     });
+
+    console.log('wywołanie');
+
+    //const q = query(collection(this.afs, "users"), where("moderator", "!=", true));
+    //onSnapshot((q), (doc:any) => {
+    //  return doc.data as User[];
+    //});
+
+  const q = query(collection(this.afs, "users"), where("moderator", "!=", true));
+  onSnapshot(q, (querySnapshot) => {
+    let tabl:any = [];
+    querySnapshot.forEach((doc) => {
+        tabl.push({...doc.data(), id:doc.id});
+    });
+    console.log(tabl)
+  });
 
   }
 

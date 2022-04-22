@@ -7,7 +7,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Użytkownik</mat-label>
               <mat-select formControlName="user" (selectionChange)="selectUser($event)" placeholder="Wybierz użytkownika" required>
-                <mat-option *ngFor="let user of users | async" [value]="user.uid">{{user.name}} {{user.lastname}}</mat-option>
+                <mat-option *ngFor="let user of authService.users | async" [value]="user.uid">{{user.name}} {{user.lastname}}</mat-option>
               </mat-select>
               <mat-hint>Wybierz użytkownika</mat-hint>
             </mat-form-field>
