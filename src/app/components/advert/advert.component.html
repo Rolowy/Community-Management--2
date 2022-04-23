@@ -1,0 +1,16 @@
+<div class="container-fluid mt-5" fxFlex fxLayout="column">
+<div *ngIf="authService.userMod" fxFlex fxLayout="row" fxLayoutAlign="center center">
+    <button mat-raised-button (click)="addAdvert()">Dodaj Ogłoszenie</button>
+</div>
+<div *ngFor="let adv of adverts | async" fxLayout.xs="column" fxLayout="row wrap" fxLayoutGap="10px" ngClass.gt-xs="ml-10">
+    <nz-card style="width:100%;" nzTitle="{{adv.title}}" [nzExtra]="extraTemplate">
+        <p>{{adv.desc}}</p>
+      </nz-card>
+      <ng-template #extraTemplate>
+        {{adv.createdAt.seconds*1000 | date: 'dd/MM/YYYY'}}
+      </ng-template>
+  </div>
+<div class="container my-5" *ngIf="(len | async) == 0">
+    <nz-empty [nzNotFoundContent]="null"></nz-empty>
+</div>
+</div>

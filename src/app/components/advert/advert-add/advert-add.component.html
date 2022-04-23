@@ -1,0 +1,39 @@
+<mat-card fxflex fxLayout="column" fxLayoutGap="20">
+    <mat-card-title fxLayout="row" fxFlex fxLayoutGap="20">
+      <div class="banner" fxFlex>Nowe Ogłoszenie:</div>
+       </mat-card-title>
+  
+    <div class="example-container mt-3" fxFlex>
+      <form [formGroup]="form" (ngSubmit)="SaveUser()">
+        <mat-card-content>
+          <div class="row mt-4">
+  
+            <div class="col-6">
+              <mat-form-field appearance="outline">
+                <mat-label>Tytuł:</mat-label>
+                <input matInput type="text" formControlName="title" placeholder="Tytuł Ogłoszenia" />
+              </mat-form-field>
+            </div>
+  
+            <div class="col-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Treść Ogłoszenia</mat-label>
+                    <textarea matInput formControlName="desc"></textarea>
+                  </mat-form-field>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-12 text-center">
+              <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+                Zaakceptuj zmiany
+              </button>
+            </div>
+          </div>
+  
+        </mat-card-content>
+  
+      </form>
+    </div>
+  </mat-card>
+  

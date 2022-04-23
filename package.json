@@ -28,6 +28,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.23",
     "ng-zorro-antd": "^13.1.1",
+    "ng2-currency-mask": "^13.0.3",
     "ngx-mask": "^13.1.10",
     "pdfmake": "^0.2.5",
     "zone.js": "~0.11.4"

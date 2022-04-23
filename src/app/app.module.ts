@@ -44,6 +44,10 @@ import { PremisesComponent } from './components/admin/premises/premises.componen
 import { PremisesAddComponent } from './components/admin/premises/premises-add/premises-add.component';
 import { PremisesDeleteComponent } from './components/admin/premises/premises-delete/premises-delete.component';
 import { PremisesEditComponent } from './components/admin/premises/premises-edit/premises-edit.component';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { AdvertComponent } from './components/advert/advert.component';
+import { AdvertAddComponent } from './components/advert/advert-add/advert-add.component';
+import { AdvertViewComponent } from './components/advert/advert-view/advert-view.component';
 
 registerLocaleData(pl);
 
@@ -73,6 +77,9 @@ registerLocaleData(pl);
     PremisesAddComponent,
     PremisesDeleteComponent,
     PremisesEditComponent,
+    AdvertComponent,
+    AdvertAddComponent,
+    AdvertViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,7 +94,8 @@ registerLocaleData(pl);
     ReactiveFormsModule,
     HttpClientModule,
     InputMaskModule.forRoot({ inputSelector: 'input', isAsync: true }),
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    CurrencyMaskModule
   ],
   exports: [
   ],

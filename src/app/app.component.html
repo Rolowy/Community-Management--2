@@ -54,6 +54,9 @@
         <a [routerLink]="['/']" mat-button>
           <mat-icon aria-hidden="false" aria-label="bento">bento</mat-icon> Panel
         </a>
+        <a [routerLink]="['/advert']" mat-button>
+          <mat-icon aria-hidden="false" aria-label="logout">markunread</mat-icon> Ogłoszenia
+        </a>
         <a (click)="authService.logout()" mat-button>
           <mat-icon aria-hidden="false" aria-label="logout">logout</mat-icon> Wyloguj
         </a>
@@ -94,6 +97,9 @@
             <mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Moje Rozliczenia
           </a>
         </ng-template>
+        <a [routerLink]="['/advert']" mat-button>
+          <mat-icon aria-hidden="false" aria-label="logout">markunread</mat-icon> Ogłoszenia
+        </a>
         <a (click)="authService.logout()" mat-button>
           <mat-icon aria-hidden="false" aria-label="logout">logout</mat-icon> Wyloguj
         </a>

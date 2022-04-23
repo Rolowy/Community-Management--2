@@ -14,6 +14,7 @@ import { UserRaportsComponent } from './components/user/user-raports/user-raport
 import { GuardGuard } from './shared/guard.guard';
 import { ModeratorGuard } from './shared/moderator.guard';
 import { UserGuard } from './shared/user.guard';
+import { AdvertComponent } from './components/advert/advert.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'user/raports/:id', component: UserRaportsViewComponent},
   {path: 'users', component: UsersComponent, canActivate: [GuardGuard, ModeratorGuard] },
   {path: 'dashboard', component: DashboardComponent, canActivate: [GuardGuard] },
+  {path: 'advert', component: AdvertComponent, canActivate: [GuardGuard] },
 
   {path: 'premises', component: PremisesComponent, canActivate: [GuardGuard, ModeratorGuard]},
   {path:'', redirectTo:'/dashboard', pathMatch:'full'},
