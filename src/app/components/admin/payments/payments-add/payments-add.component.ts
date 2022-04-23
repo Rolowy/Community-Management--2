@@ -6,6 +6,7 @@ import { User } from 'src/app/_interface/user';
 
 import { MatDialogRef } from '@angular/material/dialog';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Payment } from 'src/app/_interface/payment';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 export class PaymentsAddComponent implements OnInit {
   users:any;
 
-  price = new FormControl('', Validators.required)
+  amount = new FormControl('', Validators.required)
 
   form = [
     { label: 'WPŁATA'},
@@ -25,7 +26,7 @@ export class PaymentsAddComponent implements OnInit {
 
   firstFormGroup: FormGroup = this._formBuilder.group({
     user: new FormControl('', Validators.required),
-    price: this.price,
+    amount: this.amount,
     status: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     createdAt: new FormControl('')
@@ -48,7 +49,7 @@ export class PaymentsAddComponent implements OnInit {
   createPayment() {
     this.firstFormGroup.value.createdAt = new Date;
 
-    this.authService.addPayment(this.firstFormGroup.value).then(() => {
+    this.authService.addPayment(this.firstFormGroup.value as Payment).then(() => {
       this.authService.viewMessageSuccess('Pomyślnie dodano nową płatność.');
       this.dialogRef.close();
     }).catch(error => {

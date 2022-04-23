@@ -1,8 +1,8 @@
     <mat-form-field appearance="outline" fxFlex>
-        <mat-label>Test</mat-label>
+        <mat-label>{{title}}</mat-label>
         <input matInput #input
-        [inputMask]="dateInputMask"
-        [formControl]="dateFC"
-        placeholder="m2 0.00"/>
-        <mat-error *ngIf="dateFC.hasError('required')">Pole  jest wymagane</mat-error>
+        [inputMask]="InputMask"
+        [formControl]="control"
+        />
+        <mat-error *ngIf="control.hasError('required')">Pole {{title}} jest wymagane</mat-error>
     </mat-form-field>

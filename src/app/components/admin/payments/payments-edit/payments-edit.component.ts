@@ -6,10 +6,7 @@ import { User } from 'src/app/_interface/user';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Payment } from 'src/app/_interface/payment';
-import { collection, getDocs } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
-import { formatDate } from '@angular/common';
-
 
 @Component({
   selector: 'app-payments-edit',
@@ -17,7 +14,7 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./payments-edit.component.scss']
 })
 export class PaymentsEditComponent implements OnInit {
-  amount = new FormControl('', Validators.required)
+  amount = new FormControl('', [Validators.required])
 
   form = [
     { label: 'WPŁATA'},
@@ -25,7 +22,6 @@ export class PaymentsEditComponent implements OnInit {
   ]
 
   firstFormGroup: FormGroup = this.fb.group({
-    user: new FormControl(this.data.user.uid, Validators.required),
     amount: this.amount,
     status: new FormControl(this.data.status, Validators.required),
     date: new FormControl(new Date(this.data.date.seconds*1000), Validators.required)
@@ -43,13 +39,10 @@ export class PaymentsEditComponent implements OnInit {
   ngOnInit() {
   }
 
-  selectUser(event: any) {
-    this.firstFormGroup.value.user = event.value;
-  }
-
   editPayment() {
     this.data.date = new Date();
-    this.authService.updateByUID(this.data, 'payments');
+    this.data.amount = this.amount.value;
+    this.authService.update(this.data, 'payments');
     this.dialogRef.close();
   }
 }

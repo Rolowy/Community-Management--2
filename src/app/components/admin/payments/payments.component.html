@@ -24,12 +24,12 @@
 
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Imię </th>
-            <td mat-cell *matCellDef="let element">{{element.name}}</td>
+            <td mat-cell *matCellDef="let element">{{element.user.name}}</td>
           </ng-container>
 
           <ng-container matColumnDef="lastname">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwisko </th>
-            <td mat-cell *matCellDef="let element">{{element.lastname}}</td>
+            <td mat-cell *matCellDef="let element">{{element.user.lastname}}</td>
           </ng-container>
 
           <ng-container matColumnDef="amount">

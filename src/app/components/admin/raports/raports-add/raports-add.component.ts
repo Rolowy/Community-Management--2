@@ -37,6 +37,13 @@ export class RaportsAddComponent implements OnInit {
     this.combiner();
     this.users = this.authService.users;
     this.addOtherStatus(); //wymuszenie wykorzystania przynajmniej jednego pola - mini hack
+    this.addControl('testowy');
+
+    console.log(this.form.controls['testowy'].value)
+  }
+
+  addControl(name:string) {
+    this.form.addControl(name, this.fb.control('test', Validators.required));
   }
 
   combiner() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { createMask } from '@ngneat/input-mask';
 
@@ -9,20 +9,30 @@ import { createMask } from '@ngneat/input-mask';
 })
 
 export class Input2Component implements OnInit {
-  dateInputMask = createMask({
+  @Input() title:string = ''
+  @Input() control: FormControl = new FormControl('', Validators.required)
+  @Input() placeholder:string = '0'
+  @Input() prefix:string = ''
+  @Input() value:any
+
+  InputMask = createMask({
     alias: 'numeric',
-    groupSeparator: ',',
+    groupSeparator: '',
     digits: 2,
+    min: 0.01,
     digitsOptional: false,
-    prefix: 'm2 ',
-    placeholder: '0',
+    prefix: this.prefix,
+    placeholder: this.placeholder
   });
 
-  dateFC = new FormControl('', Validators.required);
-  
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
+    if(this.value != null)
+    {
+      this.control.setValue(this.value);
+    }
   }
 
 }

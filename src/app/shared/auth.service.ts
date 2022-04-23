@@ -231,12 +231,7 @@ export class AuthService {
   }
 
   async delete(uid: string, collection: string) {
-    await deleteDoc(doc(this.afs, collection, uid)).then(() => {
-      this.viewMessageSuccess('Pomyślnie usunięto dane.');
-    }).catch(error => {
-      this.viewMessageError('Wystąpił błąd podczas usuwania danych..');
-      console.log(error);
-    })
+    return await deleteDoc(doc(this.afs, collection, uid))
   }
 
   async updateByUID(data: any, collection: string) {
@@ -249,6 +244,7 @@ export class AuthService {
   }
 
   async update(data: any, collection: string) {
+      console.log(data);
     return updateDoc(doc(this.afs, collection, `${data.uid}`), data).then(() => {
       this.viewMessageSuccess('Zaktualizowano dane poprawnie.')
     }).catch(error => {

@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Apartment } from 'src/app/_interface/apartment';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Firestore } from '@angular/fire/firestore';
 
 
 @Component({
-  selector: 'app-apartments-add',
-  templateUrl: './apartments-add.component.html',
-  styleUrls: ['./apartments-add.component.scss']
+  selector: 'app-premises-add',
+  templateUrl: './premises-add.component.html',
+  styleUrls: ['./premises-add.component.scss']
 })
-export class ApartmentsAddComponent implements OnInit {
+export class PremisesAddComponent implements OnInit {
   rate = new FormControl('', Validators.required)
   area = new FormControl('', Validators.required)
   postcode = new FormControl('', Validators.required)
@@ -20,7 +19,7 @@ export class ApartmentsAddComponent implements OnInit {
   firstFormGroup: FormGroup = this._formBuilder.group({
     owner: new FormControl('', Validators.required),
     street: new FormControl('', Validators.required),
-    buildingnumber: new FormControl(''),
+    buildingnumber: new FormControl('', Validators.min(1)),
     apartmentnumber: new FormControl('', Validators.required),
     postcode: this.postcode,
     area: this.area,
@@ -28,10 +27,9 @@ export class ApartmentsAddComponent implements OnInit {
   });
 
   constructor(private _formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<ApartmentsAddComponent>,
+    public dialogRef: MatDialogRef<PremisesAddComponent>,
     public afs: Firestore,
-    public authService: AuthService,
-    private toast: MatSnackBar) { }
+    public authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -43,8 +41,6 @@ export class ApartmentsAddComponent implements OnInit {
   createBuilding() {
     const model: Apartment = {
       owner: this.firstFormGroup.value.owner,
-      name: this.firstFormGroup.value.owner.name,
-      lastname: this.firstFormGroup.value.owner.lastname,
       street: this.firstFormGroup.value.street,
       buildingnumber: this.firstFormGroup.value.buildingnumber,
       apartmentnumber: this.firstFormGroup.value.apartmentnumber,
@@ -54,8 +50,8 @@ export class ApartmentsAddComponent implements OnInit {
     };
 
     this.authService.addApartment(model).then(() => {
-      this.authService.viewMessageSuccess('Pomyślnie dodano nowy lokal');
       this.dialogRef.close();
+      this.authService.viewMessageSuccess('Pomyślnie dodano nowy lokal');
     }).catch(error => {
       this.authService.viewMessageError('Wystąpił błąd podczas dodawania lokalu.')
       console.log(error);

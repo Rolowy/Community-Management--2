@@ -67,7 +67,7 @@
     
             <ng-container matColumnDef="bankaccount">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Indywidualny Numer Konta </th>
-              <td mat-cell *matCellDef="let element">{{element.bankaccount}}</td>
+              <td mat-cell *matCellDef="let element">{{element.bankaccount | mask: "00 0000 0000 0000 0000 0000 0000"}}</td>
               <ng-template #noadmin>Nie</ng-template>
           </ng-container>
     

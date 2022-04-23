@@ -8,7 +8,7 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class InputComponent implements OnInit {
   @Input() title:string = ''
-  @Input() ngModel:any = '';
+  @Input() setValue:any
   @Input() maxLength:number = 50
   @Input() minLength:number = 1
   @Input() dropSpecial:boolean = true
@@ -21,6 +21,7 @@ export class InputComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.control.setValue(this.setValue);
   }
 
 }

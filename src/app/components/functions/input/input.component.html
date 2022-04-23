@@ -1,7 +1,6 @@
 <mat-form-field appearance="outline" fxFlex>
     <mat-label>{{title}}</mat-label>
-    <input matInput #input [formControl]="control" [(ngModel)]="ngModel" [showMaskTyped]="masktyped" [minLength]="minLength" [type]="type" [dropSpecialCharacters]="dropSpecial" [placeholder]="placeholder" [mask]='format'/>
-    <mat-hint align="end">{{input.value?.length || 0}}/{{maxLength}}</mat-hint>
+    <input matInput #input [formControl]="control" [showMaskTyped]="masktyped" [minLength]="minLength" [type]="type" [dropSpecialCharacters]="dropSpecial" [placeholder]="placeholder" [mask]='format'/>
     <mat-error *ngIf="control.hasError('required')">Pole {{title}} jest wymagane</mat-error>
     <mat-error *ngIf="control.hasError('minlength')">Minimum {{minLength}} znaków</mat-error>
     <mat-error *ngIf="control.hasError('maxlength')">Maksymalnie {{maxLength}} znaków</mat-error>

@@ -11,6 +11,8 @@ import { doc, Firestore, updateDoc} from '@angular/fire/firestore';
   styleUrls: ['./users-edit.component.scss']
 })
 export class UsersEditComponent implements OnInit {
+  pack:User;
+
   postcode = new FormControl('', Validators.required)
   phone = new FormControl('')
   bankaccount = new FormControl('', Validators.required)
@@ -34,10 +36,16 @@ export class UsersEditComponent implements OnInit {
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data:User,
   ) {
+    this.pack = data;
   }
 
   ngOnInit() {
-
+    this.form.patchValue({
+      name: this.data.name,
+      lastname: this.data.lastname,
+      address: this.data.address,
+      city: this.data.city
+    })
   }
 
 

@@ -19,13 +19,9 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UsersComponent } from './components/admin/users/users.component';
-import { ApartmentsComponent } from './components/admin/apartments/apartments.component';
 import { UsersEditComponent } from './components/admin/users/users-edit/users-edit.component';
 import { UsersDeleteComponent } from './components/admin/users/users-delete/users-delete.component';
 import { UsersAddComponent } from './components/admin/users/users-add/users-add.component';
-import { ApartmentsAddComponent } from './components/admin/apartments/apartments-add/apartments-add.component';
-import { ApartmentsDeleteComponent } from './components/admin/apartments/apartments-delete/apartments-delete.component';
-import { ApartmentsEditComponent } from './components/admin/apartments/apartments-edit/apartments-edit.component';
 import { RaportsComponent } from './components/admin/raports/raports.component';
 import { RaportsAddComponent } from './components/admin/raports/raports-add/raports-add.component';
 import { RaportsDeleteComponent } from './components/admin/raports/raports-delete/raports-delete.component';
@@ -44,6 +40,10 @@ import { ChangepasswordComponent } from './components/user/changepassword/change
 import { InputComponent } from './components/functions/input/input.component';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { Input2Component } from './components/functions/input2/input2.component';
+import { PremisesComponent } from './components/admin/premises/premises.component';
+import { PremisesAddComponent } from './components/admin/premises/premises-add/premises-add.component';
+import { PremisesDeleteComponent } from './components/admin/premises/premises-delete/premises-delete.component';
+import { PremisesEditComponent } from './components/admin/premises/premises-edit/premises-edit.component';
 
 registerLocaleData(pl);
 
@@ -54,13 +54,9 @@ registerLocaleData(pl);
     DashboardComponent,
     RegisterComponent,
     UsersComponent,
-    ApartmentsComponent,
     UsersEditComponent,
     UsersDeleteComponent,
     UsersAddComponent,
-    ApartmentsAddComponent,
-    ApartmentsDeleteComponent,
-    ApartmentsEditComponent,
     RaportsComponent,
     RaportsAddComponent,
     RaportsDeleteComponent,
@@ -73,6 +69,10 @@ registerLocaleData(pl);
     ChangepasswordComponent,
     InputComponent,
     Input2Component,
+    PremisesComponent,
+    PremisesAddComponent,
+    PremisesDeleteComponent,
+    PremisesEditComponent,
   ],
   imports: [
     BrowserModule,

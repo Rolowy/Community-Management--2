@@ -40,10 +40,10 @@
             <app-input title="Kod Pocztowy" [control]="postcode" [minLength]=6 [maxLength]=6 format="00-000"></app-input>
           </div>
           <div class="col">
-            <app-input title="Powierzchnia (m2)" class="my-2" [minLength]=5 [maxLength]=5 [control]="area" [dropSpecial]=false format="000,00||00,00||0,00" placeholder="X.XX"></app-input>
+            <app-input2 [control]="area" title="Powierzchnia (m2)"></app-input2>
           </div>
           <div class="col">
-            <app-input title="Stawka (za m2)" class="my-2" [minLength]=5 [maxLength]=5 [control]="rate" [dropSpecial]=false format="000,00||00,00||0,00" placeholder="X.XX"></app-input>
+            <app-input2 [control]="rate" title="Stawka (za m2)"></app-input2>
           </div>
         </div>
   
