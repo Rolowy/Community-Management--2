@@ -40,9 +40,10 @@ import { PaymentsAddComponent } from './components/admin/payments/payments-add/p
 import { PaymentsEditComponent } from './components/admin/payments/payments-edit/payments-edit.component';
 import { PaymentsDeleteComponent } from './components/admin/payments/payments-delete/payments-delete.component';
 import { UserRaportsViewComponent } from './components/user/user-raports-view/user-raports-view.component';
-import { provideStorage,getStorage } from '@angular/fire/storage';
 import { ChangepasswordComponent } from './components/user/changepassword/changepassword.component';
 import { InputComponent } from './components/functions/input/input.component';
+import { InputMaskModule } from '@ngneat/input-mask';
+import { Input2Component } from './components/functions/input2/input2.component';
 
 registerLocaleData(pl);
 
@@ -71,6 +72,7 @@ registerLocaleData(pl);
     UserRaportsViewComponent,
     ChangepasswordComponent,
     InputComponent,
+    Input2Component,
   ],
   imports: [
     BrowserModule,
@@ -84,6 +86,7 @@ registerLocaleData(pl);
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    InputMaskModule.forRoot({ inputSelector: 'input', isAsync: true }),
     NgxMaskModule.forRoot()
   ],
   exports: [
