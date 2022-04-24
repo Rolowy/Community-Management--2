@@ -1,6 +1,6 @@
 <div class="container-fluid mt-5" fxFlex fxLayout="column" fxLayoutGap="30">
 <div *ngIf="authService.userMod | async" fxFlex fxLayout="row" fxLayoutAlign="center center">
-    <button mat-raised-button (click)="addAdvert()">Dodaj Ogłoszenie</button>
+    <button mat-raised-button fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" (click)="addAdvert()">Dodaj Ogłoszenie</button>
 </div>
 <div *ngFor="let adv of adverts | async" fxLayout.xs="column" fxLayout="row wrap" fxLayoutGap="10px" ngClass.gt-xs="ml-10">
     <nz-card style="width:100%;" nzTitle="{{adv.title}}" [nzExtra]="extraTemplate">
