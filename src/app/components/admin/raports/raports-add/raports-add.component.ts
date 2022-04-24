@@ -37,6 +37,13 @@ export class RaportsAddComponent implements OnInit {
     this.combiner();
     this.users = this.authService.users;
     this.addOtherStatus(); //wymuszenie wykorzystania przynajmniej jednego pola - mini hack
+    this.addControl('testowy');
+
+    console.log(this.form.controls['testowy'].value)
+  }
+
+  addControl(name:string) {
+    this.form.addControl(name, this.fb.control('test', Validators.required));
   }
 
   combiner() {
@@ -64,8 +71,8 @@ export class RaportsAddComponent implements OnInit {
   addOtherStatus() {
     this.otherStatus.push(this.fb.group({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      price: new FormControl('', Validators.required),
-      amount: new FormControl('', Validators.required),
+      price: new FormControl('', [Validators.required, Validators.min(0.01)]),
+      amount: new FormControl('', [Validators.required, Validators.min(0.01)]),
       converter: new FormControl('', Validators.required),
     }));
   }

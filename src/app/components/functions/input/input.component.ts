@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -7,15 +7,21 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./input.component.scss']
 })
 export class InputComponent implements OnInit {
-  title:string = '';
-  @Input() control: FormControl = new FormControl()
-  @Input() type = 'text'
-  @Input() placeholder = ''
-  @Input() format = ''
+  @Input() title:string = ''
+  @Input() setValue:any
+  @Input() maxLength:number = 50
+  @Input() minLength:number = 1
+  @Input() dropSpecial:boolean = true
+  @Input() control: FormControl = new FormControl('', [Validators.minLength(this.minLength), Validators.maxLength(this.maxLength)])
+  @Input() masktyped:boolean = false;
+  @Input() type:string = 'text'
+  @Input() placeholder:string = ''
+  @Input() format:string = ''
 
   constructor() { }
 
   ngOnInit(): void {
+    this.control.setValue(this.setValue);
   }
 
 }

@@ -13,6 +13,8 @@ import { Config } from 'src/app/_interface/config';
 export class DashboardComponent implements OnInit {
   config:any;
 
+  test = new FormControl('')
+
   form:FormGroup = this.fb.group({
     name: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),

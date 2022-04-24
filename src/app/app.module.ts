@@ -19,13 +19,9 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UsersComponent } from './components/admin/users/users.component';
-import { ApartmentsComponent } from './components/admin/apartments/apartments.component';
 import { UsersEditComponent } from './components/admin/users/users-edit/users-edit.component';
 import { UsersDeleteComponent } from './components/admin/users/users-delete/users-delete.component';
 import { UsersAddComponent } from './components/admin/users/users-add/users-add.component';
-import { ApartmentsAddComponent } from './components/admin/apartments/apartments-add/apartments-add.component';
-import { ApartmentsDeleteComponent } from './components/admin/apartments/apartments-delete/apartments-delete.component';
-import { ApartmentsEditComponent } from './components/admin/apartments/apartments-edit/apartments-edit.component';
 import { RaportsComponent } from './components/admin/raports/raports.component';
 import { RaportsAddComponent } from './components/admin/raports/raports-add/raports-add.component';
 import { RaportsDeleteComponent } from './components/admin/raports/raports-delete/raports-delete.component';
@@ -40,9 +36,19 @@ import { PaymentsAddComponent } from './components/admin/payments/payments-add/p
 import { PaymentsEditComponent } from './components/admin/payments/payments-edit/payments-edit.component';
 import { PaymentsDeleteComponent } from './components/admin/payments/payments-delete/payments-delete.component';
 import { UserRaportsViewComponent } from './components/user/user-raports-view/user-raports-view.component';
-import { provideStorage,getStorage } from '@angular/fire/storage';
 import { ChangepasswordComponent } from './components/user/changepassword/changepassword.component';
 import { InputComponent } from './components/functions/input/input.component';
+import { InputMaskModule } from '@ngneat/input-mask';
+import { Input2Component } from './components/functions/input2/input2.component';
+import { PremisesComponent } from './components/admin/premises/premises.component';
+import { PremisesAddComponent } from './components/admin/premises/premises-add/premises-add.component';
+import { PremisesDeleteComponent } from './components/admin/premises/premises-delete/premises-delete.component';
+import { PremisesEditComponent } from './components/admin/premises/premises-edit/premises-edit.component';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { AdvertComponent } from './components/advert/advert.component';
+import { AdvertAddComponent } from './components/advert/advert-add/advert-add.component';
+import { AdvertViewComponent } from './components/advert/advert-view/advert-view.component';
+import { AdvertEditComponent } from './components/advert/advert-edit/advert-edit.component';
 
 registerLocaleData(pl);
 
@@ -53,13 +59,9 @@ registerLocaleData(pl);
     DashboardComponent,
     RegisterComponent,
     UsersComponent,
-    ApartmentsComponent,
     UsersEditComponent,
     UsersDeleteComponent,
     UsersAddComponent,
-    ApartmentsAddComponent,
-    ApartmentsDeleteComponent,
-    ApartmentsEditComponent,
     RaportsComponent,
     RaportsAddComponent,
     RaportsDeleteComponent,
@@ -71,6 +73,15 @@ registerLocaleData(pl);
     UserRaportsViewComponent,
     ChangepasswordComponent,
     InputComponent,
+    Input2Component,
+    PremisesComponent,
+    PremisesAddComponent,
+    PremisesDeleteComponent,
+    PremisesEditComponent,
+    AdvertComponent,
+    AdvertAddComponent,
+    AdvertViewComponent,
+    AdvertEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,7 +95,9 @@ registerLocaleData(pl);
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxMaskModule.forRoot()
+    InputMaskModule.forRoot({ inputSelector: 'input', isAsync: true }),
+    NgxMaskModule.forRoot(),
+    CurrencyMaskModule
   ],
   exports: [
   ],

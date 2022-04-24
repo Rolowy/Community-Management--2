@@ -1,23 +1,22 @@
-<mat-card class="example-card">
-    <mat-card-title>Profil {{data.name}} {{data.lastname}}</mat-card-title>
+<mat-card fxflex fxLayout="column" fxLayoutGap="20">
+    <mat-card-title fxLayout="row" fxFlex fxLayoutGap="20">
+      <div class="banner" fxFlex>Użytkownik:</div>
+      <div class="banner" fxFlex="60">{{data.name}} {{data.lastname}}</div>
+       </mat-card-title>
   
-    <div class="example-container mt-3">
+    <div class="example-container mt-3" fxFlex>
       <form [formGroup]="form" (ngSubmit)="SaveUser()" autocomplete="on">
         <mat-card-content>
-  
           <div class="row mt-4">
   
             <div class="col-6">
               <mat-form-field appearance="outline">
                 <mat-label>Imię:</mat-label>
-                <input matInput type="text" [(ngModel)]="data.name" formControlName="name" placeholder="Imię" />
+                <input matInput type="text" formControlName="name" placeholder="Imię" />
                 <mat-icon matSuffix>badge</mat-icon>
                 <mat-hint>Imię</mat-hint>
   
-                <mat-error *ngIf="(form.get('login'))?.errors?.['required']">Login jest wymagany</mat-error>
-                <mat-error *ngIf="(form.get('login')?.errors?.['minLength'])">
-                  Login musi mięć więcej niż 6 znaków.
-                </mat-error>
+                <mat-error *ngIf="form.controls['name'].hasError('required')">Imię jest wymagane</mat-error>
   
               </mat-form-field>
             </div>
@@ -25,7 +24,7 @@
             <div class="col-6">
               <mat-form-field appearance="outline">
                 <mat-label>Nazwisko:</mat-label>
-                <input matInput type="text" [(ngModel)]="data.lastname" formControlName="lastname"
+                <input matInput type="text" formControlName="lastname"
                   placeholder="Nazwisko" />
                 <mat-icon matSuffix>badge</mat-icon>
                 <mat-hint>Nazwisko</mat-hint>
@@ -46,7 +45,7 @@
             <div class="col-6">
               <mat-form-field appearance="outline">
                 <mat-label>Adres:</mat-label>
-                <input matInput type="text" [(ngModel)]="data.address" formControlName="address" placeholder="Adres" />
+                <input matInput type="text"  formControlName="address" placeholder="Adres" />
                 <mat-icon matSuffix>approval</mat-icon>
                 <mat-hint>Adres</mat-hint>
   
@@ -59,13 +58,7 @@
             </div>
   
             <div class="col-6">
-              <mat-form-field appearance="outline">
-                <mat-label>Kod Pocztowy:</mat-label>
-                <input matInput type="text" [(ngModel)]="data.postcode" formControlName="postcode"
-                  placeholder="Kod Pocztowy" />
-                <mat-icon matSuffix>signpost</mat-icon>
-                <mat-hint>Kod Pocztowy</mat-hint>
-              </mat-form-field>
+              <app-input title="Kod Pocztowy" [setValue]="pack.postcode" [control]="postcode" [minLength]=6 [maxLength]=6 format="00-000"></app-input>
             </div>
   
   
@@ -75,7 +68,7 @@
             <div class="col-6">
               <mat-form-field appearance="outline">
                 <mat-label>Miasto:</mat-label>
-                <input matInput type="text" [(ngModel)]="data.city" formControlName="city" placeholder="Miasto" />
+                <input matInput type="text" formControlName="city" placeholder="Miasto" />
                 <mat-icon matSuffix>cottage</mat-icon>
                 <mat-hint>Miasto</mat-hint>
   
@@ -86,43 +79,15 @@
   
               </mat-form-field>
             </div>
-  
+            
             <div class="col-6">
-              <mat-form-field appearance="outline">
-                <mat-label>Kontakt Telefoniczny:</mat-label>
-                <input matInput type="text" [(ngModel)]="data.phone" formControlName="phone"
-                  placeholder="Kontakt Telefoniczny" />
-                <mat-icon matSuffix>call</mat-icon>
-                <mat-hint>Kontakt Telefoniczny</mat-hint>
-  
-                <mat-error *ngIf="(form.get('login'))?.errors?.['required']">Login jest wymagany</mat-error>
-                <mat-error *ngIf="(form.get('login')?.errors?.['minLength'])">
-                  Login musi mięć więcej niż 6 znaków.
-                </mat-error>
-  
-              </mat-form-field>
+              <app-input title="Telefon Kontaktowy" [setValue]="pack.phone" [control]="phone" [minLength]=11 [maxLength]=11 format="000-000-000"></app-input>
             </div>
-  
-  
-  
-  
+
           </div>
   
-  
-          <div class="row">
-            <div class="col-12">
-              <mat-form-field appearance="outline" class="fullwidth">
-                <mat-label>Rachunek Bankowy:</mat-label>
-                  <input matInput type="text" [(ngModel)]="data.bankaccount" formControlName="bankaccount"
-                  placeholder="Rachunek Bankowy" />
-                <mat-icon matSuffix>account_balance</mat-icon>
-                <mat-hint>Rachunek Bankowy</mat-hint>
-              </mat-form-field>
-            </div>
-  
-          </div>
-  
-  
+            <app-input title="Rachunek Bankowy" class="fullwidth" [setValue]="pack.bankaccount" [control]="bankaccount" [minLength]=32 [maxLength]=32 format="00 0000 0000 0000 0000 0000 0000"></app-input>
+
           <div class="row mt-3">
             <div class="col-6">
               <mat-slide-toggle formControlName="moderator">Uprawnienia Moderatora</mat-slide-toggle>
@@ -130,7 +95,7 @@
           </div>
   
           <div class="row">
-            <div class="col-12 text-right">
+            <div class="col-12 text-center">
               <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
                 Zaakceptuj zmiany
               </button>
@@ -141,8 +106,5 @@
   
       </form>
     </div>
-    <mat-card-footer>
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </mat-card-footer>
   </mat-card>
   

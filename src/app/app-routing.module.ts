@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ApartmentsComponent } from './components/admin/apartments/apartments.component';
 import { PaymentsComponent } from './components/admin/payments/payments.component';
 import { RaportsAddComponent } from './components/admin/raports/raports-add/raports-add.component';
 import { RaportsComponent } from './components/admin/raports/raports.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
+import { PremisesComponent } from './components/admin/premises/premises.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserRaportsViewComponent } from './components/user/user-raports-view/user-raports-view.component';
 import { UserRaportsComponent } from './components/user/user-raports/user-raports.component';
@@ -14,6 +14,7 @@ import { UserRaportsComponent } from './components/user/user-raports/user-raport
 import { GuardGuard } from './shared/guard.guard';
 import { ModeratorGuard } from './shared/moderator.guard';
 import { UserGuard } from './shared/user.guard';
+import { AdvertComponent } from './components/advert/advert.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -24,8 +25,10 @@ const routes: Routes = [
   {path: 'user/raports', component: UserRaportsComponent, canActivate: [UserGuard] },
   {path: 'user/raports/:id', component: UserRaportsViewComponent},
   {path: 'users', component: UsersComponent, canActivate: [GuardGuard, ModeratorGuard] },
-  {path: 'apartments', component: ApartmentsComponent, canActivate: [GuardGuard, ModeratorGuard] },
   {path: 'dashboard', component: DashboardComponent, canActivate: [GuardGuard] },
+  {path: 'advert', component: AdvertComponent, canActivate: [GuardGuard] },
+
+  {path: 'premises', component: PremisesComponent, canActivate: [GuardGuard, ModeratorGuard]},
   {path:'', redirectTo:'/dashboard', pathMatch:'full'},
   {path: '**', component: LoginComponent}
 ];

@@ -58,12 +58,7 @@
             </mat-form-field>
           </div>
           <div class="col">
-            <mat-form-field appearance="outline">
-              <mat-label>Kod Pocztowy</mat-label>
-              <input matInput placeholder="Kod Pocztowy" formControlName="postcode">
-              <mat-error *ngIf="secondFormGroup.controls['postcode'].hasError('required')">Kod Pocztowy jest wymagany</mat-error> 
-              <mat-hint>XX-XXX</mat-hint>
-            </mat-form-field>
+            <app-input title="Kod Pocztowy" [control]="postcode" [minLength]=6 [maxLength]=6 format="00-000"></app-input>
           </div>
         </div>
         <div class="row my-2">
@@ -76,24 +71,14 @@
           </div>
   
           <div class="col ">
-            <mat-form-field appearance="outline">
-              <mat-label>Telefon Kontaktowy</mat-label>
-              <input matInput placeholder="Telefon Kontaktowy" formControlName="phone">
-              <mat-hint>XXX-XXX-XXX</mat-hint>
-              <mat-error *ngIf="secondFormGroup.controls['phone'].hasError('pattern')">Telefon jest nieprawidłowy</mat-error>
-            </mat-form-field>
+            <app-input title="Telefon Kontaktowy" [minLength]=11 [maxLength]=11 [control]="phone" [dropSpecial]=false format="000-000-000||000-00-00"></app-input>
           </div>
   
         </div>
   
         <div class="row my-2">
           <div class="col ">
-            <mat-form-field appearance="outline" fxFlex>
-              <mat-label>Rachunek Bankowy</mat-label>
-              <input matInput placeholder="Rachunek Bankowy" formControlName="bankaccount" placeholder="61 1090 1014 0000 0712 1981 2874"/>
-              <mat-hint>XX XXXX XXXX XXXX XXXX XXXX XXXX</mat-hint>
-              <mat-error *ngIf="secondFormGroup.controls['bankaccount'].hasError('required')">Rachunek Bankowy jest wymagany</mat-error>
-            </mat-form-field>
+            <app-input title="Rachunek Bankowy" [control]="bankaccount" [minLength]=32 [maxLength]=32 format="00 0000 0000 0000 0000 0000 0000"></app-input>
           </div>
         </div>
   

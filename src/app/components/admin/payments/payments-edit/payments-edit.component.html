@@ -2,39 +2,21 @@
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Edytuj Płatność</ng-template>
-      <div class="row my-3">
-        <div class="col">
+      <div class="row">
+          <div class="col-6">
+            <app-input2 [control]="amount" title="Kwota" [value]="data.amount"></app-input2> 
+          </div>
+          <div class="col-6">
             <mat-form-field appearance="outline">
-              <mat-label>Użytkownik</mat-label>
-              <mat-select formControlName="user" (selectionChange)="selectUser($event)" placeholder="Wybierz użytkownika" required>
-                <mat-option *ngFor="let user of authService.users | async" [value]="user.uid">{{user.name}} {{user.lastname}}</mat-option>
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="status" [(ngModel)]="data.status">
+                <mat-option *ngFor="let f of form" [value]="f.label">
+                  {{f.label}}
+                </mat-option>
               </mat-select>
-              <mat-hint>Wybierz użytkownika</mat-hint>
+              <mat-hint>Rodzaj Płatności</mat-hint>
             </mat-form-field>
           </div>
-          <div class="col">
-            <mat-form-field appearance="outline" floatLabel="always">
-              <mat-label>Kwota</mat-label>
-              <input formControlName="amount" [(ngModel)]="data.amount" matInput type="number" step="0.01" min="0.00" oninput="validity.valid||(value='');" class="example-right-align" placeholder="0.00">
-              <span matPrefix>zł&nbsp;</span>
-              <mat-hint>Kwota</mat-hint>
-            </mat-form-field>
-            
-          </div>
-      </div>
-      <div class="row my-3">
-        <div class="col">
-          <mat-form-field appearance="outline">
-            <mat-label>Status</mat-label>
-            <mat-select formControlName="status" [(ngModel)]="data.status">
-              <mat-option *ngFor="let f of form" [value]="f.label">
-                {{f.label}}
-              </mat-option>
-            </mat-select>
-            <mat-hint>Rodzaj Płatności</mat-hint>
-          </mat-form-field>
-        </div>
-
       </div>
       <div class="row my-3">
         <div class="col">
@@ -49,13 +31,13 @@
       </div>
     </form>
     <div>
-      <button mat-raised-button color="primary" matStepperNext>Przejdź Dalej</button>
+      <button mat-raised-button matStepperNext>Przejdź Dalej</button>
     </div>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Finalizacja</ng-template>
     <div class="row my-4">
-      <nz-alert nzType="warning" nzMessage="Czy jesteś pewny, że chcesz edytować tą płatność ?"></nz-alert>
+      <p>Czy jesteś pewny, że chcesz zmodyfikować tą płatność ?</p>
     </div>
     <div fxLayout="row" fxLayoutGap="20">
       <button mat-raised-button matStepperPrevious>Cofnij</button>

@@ -13,6 +13,10 @@ import { Email } from 'src/app/validator/email';
 export class UsersAddComponent implements OnInit {
   visible_password = true;
 
+  bankaccount = new FormControl('', [Validators.required, Validators.minLength(26)])
+  postcode = new FormControl('', [Validators.required])
+  phone = new FormControl('')
+
   firstFormGroup: FormGroup = this.fb.group({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(5)])
@@ -22,9 +26,9 @@ export class UsersAddComponent implements OnInit {
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     lastname: new FormControl('', [Validators.required, Validators.minLength(3)]),
     address: new FormControl('', [Validators.required, Validators.minLength(5)]),
-    postcode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{2}-[0-9]{3}')]),
-    bankaccount: new FormControl('', [Validators.required, Validators.pattern("[0-9]{2}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}")]),
-    phone: new FormControl('', Validators.pattern('^(\\d{3}[- ]?){2}\\d{3}$')),
+    postcode: this.postcode,
+    bankaccount: this.bankaccount,
+    phone: this.phone,
     city: new FormControl('', [Validators.required, Validators.minLength(3)])
   });
 

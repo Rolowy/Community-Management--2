@@ -9,9 +9,10 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { AuthService } from 'src/app/shared/auth.service';
 import { collection, Firestore } from '@angular/fire/firestore';
-import { ApartmentsAddComponent } from './apartments-add/apartments-add.component';
-import { ApartmentsDeleteComponent } from './apartments-delete/apartments-delete.component';
-import { ApartmentsEditComponent } from './apartments-edit/apartments-edit.component';
+import { PremisesAddComponent } from './premises-add/premises-add.component';
+import { PremisesDeleteComponent } from './premises-delete/premises-delete.component';
+import { PremisesEditComponent } from './premises-edit/premises-edit.component';
+
 import { Apartment } from 'src/app/_interface/apartment';
 import { onSnapshot } from 'firebase/firestore';
 
@@ -20,11 +21,11 @@ import { MatSort } from '@angular/material/sort';
 
 
 @Component({
-  selector: 'app-apartments',
-  templateUrl: './apartments.component.html',
-  styleUrls: ['./apartments.component.scss']
+  selector: 'app-premises',
+  templateUrl: './premises.component.html',
+  styleUrls: ['./premises.component.scss']
 })
-export class ApartmentsComponent implements OnInit {
+export class PremisesComponent implements OnInit {
   displayedColumns: string[] = ['street', 'ownername', 'ownerlastname', 'buildingnumber', 'apartmentnumber', 'area', 'rate', 'postcode', 'edit'];
   dataSource = new MatTableDataSource();
 
@@ -41,8 +42,8 @@ export class ApartmentsComponent implements OnInit {
     onSnapshot(querySnapshot, (querySnap) => {
     this.dataSource.data = querySnap.docs.map(el => {
         const data = el.data() as Apartment;
-        data.name = data.owner.name;
-        data.lastname = data.owner.lastname;
+        // data.name = data.owner.name;
+        // data.lastname = data.owner.lastname;
         data.uid = el.id;
         console.log(data);
         return data
@@ -82,20 +83,20 @@ export class ApartmentsComponent implements OnInit {
 
 
   public redirectToEdit = (el: Apartment) => {
-    const dialogRef = this.dialog.open(ApartmentsEditComponent, {
+    const dialogRef = this.dialog.open(PremisesEditComponent, {
       width: '500px;',
       data: el,
     });
   }
 
   public addApartment() {
-    const dialogRef = this.dialog.open(ApartmentsAddComponent, {
+    const dialogRef = this.dialog.open(PremisesAddComponent, {
       width: '500px;',
     });
   }
 
   public redirectToDelete = (el: Apartment) => {
-    const dialogRef = this.dialog.open(ApartmentsDeleteComponent, {
+    const dialogRef = this.dialog.open(PremisesDeleteComponent, {
       width: '800px;',
       data: el,
     });

@@ -10,14 +10,14 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-apartments-delete',
-  templateUrl: './apartments-delete.component.html',
-  styleUrls: ['./apartments-delete.component.scss']
+  selector: 'app-premises-delete',
+  templateUrl: './premises-delete.component.html',
+  styleUrls: ['./premises-delete.component.scss']
 })
-export class ApartmentsDeleteComponent implements OnInit {
+export class PremisesDeleteComponent implements OnInit {
 
   constructor(
-    public dialogRef: MatDialogRef<ApartmentsDeleteComponent>,
+    public dialogRef: MatDialogRef<PremisesDeleteComponent>,
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {}
