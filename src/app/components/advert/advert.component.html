@@ -1,5 +1,5 @@
-<div class="container-fluid mt-5" fxFlex fxLayout="column">
-<div *ngIf="authService.userMod" fxFlex fxLayout="row" fxLayoutAlign="center center">
+<div class="container-fluid mt-5" fxFlex fxLayout="column" fxLayoutGap="30">
+<div *ngIf="authService.userMod | async" fxFlex fxLayout="row" fxLayoutAlign="center center">
     <button mat-raised-button (click)="addAdvert()">Dodaj Ogłoszenie</button>
 </div>
 <div *ngFor="let adv of adverts | async" fxLayout.xs="column" fxLayout="row wrap" fxLayoutGap="10px" ngClass.gt-xs="ml-10">
@@ -8,6 +8,12 @@
       </nz-card>
       <ng-template #extraTemplate>
         {{adv.createdAt.seconds*1000 | date: 'dd/MM/YYYY'}}
+        <button *ngIf="authService.userMod | async" (click)="editAdvert(adv)" mat-icon-button color="primary">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button *ngIf="authService.userMod | async" (click)="delete(adv)" mat-icon-button color="warn">
+          <mat-icon>cancel</mat-icon>
+        </button>
       </ng-template>
   </div>
 <div class="container my-5" *ngIf="(len | async) == 0">

@@ -5,11 +5,11 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { Adverts } from 'src/app/_interface/adverts';
 
 @Component({
-  selector: 'app-advert-add',
-  templateUrl: './advert-add.component.html',
-  styleUrls: ['./advert-add.component.scss']
+  selector: 'app-advert-edit',
+  templateUrl: './advert-edit.component.html',
+  styleUrls: ['./advert-edit.component.scss']
 })
-export class AdvertAddComponent {
+export class AdvertEditComponent {
   form: FormGroup = this.fb.group({
     title: new FormControl('', [Validators.required, Validators.minLength(4)]),
     desc: new FormControl('', [Validators.required, Validators.minLength(4)])
@@ -17,11 +17,17 @@ export class AdvertAddComponent {
 
 
   constructor(
-    public dialogRef: MatDialogRef<AdvertAddComponent>,
+    public dialogRef: MatDialogRef<AdvertEditComponent>,
     private fb: FormBuilder,
-    private authService: AuthService  ) {}
+    private authService: AuthService,
+    @Inject(MAT_DIALOG_DATA) public data:Adverts,
+    ) {}
 
   ngOnInit() {
+    this.form.patchValue({
+      title: this.data.title,
+      desc: this.data.desc
+    })
   }
 
 
@@ -31,20 +37,15 @@ export class AdvertAddComponent {
 
 
   async saveAdvert() {
-    const data:Adverts = {
+    const data = {
+      uid: this.data.uid,
       user: this.authService.userInfo.getValue(),
       title: this.form.value.title,
       desc: this.form.value.desc,
       createdAt: new Date()
     };
 
-    this.authService.addAdvert(data).then(() => {
-      this.authService.viewMessageSuccess('Pomyślnie dodano ogłoszenie');
-    }).catch(error => {
-      this.authService.viewMessageError('Wystąpił błąd podczas dodawania ogłoszenia.')
-      console.log(error);
-    })
-
+    this.authService.update(data, 'adverts');
     this.dialogRef.close();
   }
 }

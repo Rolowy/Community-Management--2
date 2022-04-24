@@ -1,5 +1,5 @@
 export interface Adverts {
-    uid:string;
+    uid?:string;
     user:any;
     title:string;
     desc:string;

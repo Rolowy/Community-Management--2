@@ -1,0 +1,29 @@
+<div fxFlex fxLayout="column" fxLayoutGap="30">
+<div class="banner">Edytuj Ogłoszenie:</div>
+
+<form [formGroup]="form" fxFlex (ngSubmit)="saveAdvert()">
+    <mat-card-content fxFlex fxLayout="column">
+      <div class="row" fxFlex fxLayout="column">
+  
+          <mat-form-field fxFlex appearance="outline">
+            <mat-label>Tytuł:</mat-label>
+            <input matInput type="text" formControlName="title" placeholder="Tytuł Ogłoszenia" />
+          </mat-form-field>
+  
+  
+          <mat-form-field fxFlex appearance="outline">
+            <mat-label>Ogłoszenie</mat-label>
+            <textarea matInput formControlName="desc" placeholder="Treść ogłoszenia"></textarea>
+          </mat-form-field>
+      </div>
+  
+      <div class="row" fxFlex>
+        <div class="col-12 text-center">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+            Zaakceptuj zmiany
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+</form>
+</div>

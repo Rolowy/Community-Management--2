@@ -48,6 +48,7 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
 import { AdvertComponent } from './components/advert/advert.component';
 import { AdvertAddComponent } from './components/advert/advert-add/advert-add.component';
 import { AdvertViewComponent } from './components/advert/advert-view/advert-view.component';
+import { AdvertEditComponent } from './components/advert/advert-edit/advert-edit.component';
 
 registerLocaleData(pl);
 
@@ -80,6 +81,7 @@ registerLocaleData(pl);
     AdvertComponent,
     AdvertAddComponent,
     AdvertViewComponent,
+    AdvertEditComponent,
   ],
   imports: [
     BrowserModule,

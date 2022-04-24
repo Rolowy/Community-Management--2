@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Adverts } from 'src/app/_interface/adverts';
 import { AdvertAddComponent } from './advert-add/advert-add.component';
+import { AdvertEditComponent } from './advert-edit/advert-edit.component';
 
 @Component({
   selector: 'app-advert',
@@ -21,11 +22,23 @@ export class AdvertComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAdverts();
-    
   }
 
   addAdvert() {
-    this.dialog.open(AdvertAddComponent);
+    this.dialog.open(AdvertAddComponent, {
+      width: "500px"
+    });
+  }
+
+  editAdvert(el:Adverts) {
+    this.dialog.open(AdvertEditComponent, {
+      width: "500px",
+      data: el
+    });
+  }
+
+  delete(data:any) {
+    this.authService.delete(data.uid, 'adverts')
   }
 
 

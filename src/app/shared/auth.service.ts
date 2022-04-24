@@ -32,6 +32,7 @@ import { Raports } from '../_interface/raport';
 import { Payment } from '../_interface/payment';
 
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Adverts } from '../_interface/adverts';
 
 @Injectable({
   providedIn: 'root'
@@ -224,6 +225,10 @@ export class AuthService {
     return querySnapshot.docs.map(el => {
       return el.data() as Raports;
     });
+  }
+
+  async addAdvert(model: Adverts): Promise<DocumentData> {
+    return addDoc(collection(this.afs, 'adverts'), model);
   }
 
   async addRaport(model: Raports): Promise<DocumentData> {
