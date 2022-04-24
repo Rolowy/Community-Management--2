@@ -71,7 +71,8 @@
                   <div class="col">
                     <mat-form-field appearance="outline">
                       <mat-label>Usługa</mat-label>
-                      <input formControlName="name" matInput placeholder="Przykład (Zimna woda i ścieki)">
+                      <input formControlName="name" matInput placeholder="Przykład (Zimna woda i ścieki)" />
+                      <mat-error *ngIf="otherStatus.controls[i].get('name')?.hasError('required')">Nazwa usługi jest wymagana</mat-error>
                     </mat-form-field>
                   </div>
 

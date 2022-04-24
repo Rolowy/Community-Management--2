@@ -1,6 +1,5 @@
 <div *ngIf="authService.isLoggedIn">
   <div class="container my-4">
-
     <div *ngIf="authService.userInfo.getValue() as user">
       <div class="row m-2" *ngIf="!user.moderator">
         <div fxLayout="row" fxFlex="70" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30">

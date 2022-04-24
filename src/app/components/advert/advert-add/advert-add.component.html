@@ -2,22 +2,25 @@
   <mat-card-content fxFlex fxLayout="column">
     <div class="row" fxFlex fxLayout="column">
 
-        <mat-form-field fxFlex appearance="outline">
-          <mat-label>Tytuł:</mat-label>
-          <input matInput type="text" formControlName="title" placeholder="Tytuł Ogłoszenia" />
-        </mat-form-field>
+      <mat-form-field hintLabel="Maksymalnie 70 znaków" fxFlex appearance="outline">
+        <mat-label>Tytuł:</mat-label>
+        <input matInput #input maxlength="70" type="text" formControlName="title" placeholder="Tytuł Ogłoszenia" />
+        <mat-hint align="end">{{input.value?.length || 0}}/70</mat-hint>
+      </mat-form-field>
 
 
-        <mat-form-field fxFlex appearance="outline">
-          <mat-label>Ogłoszenie</mat-label>
-          <textarea matInput formControlName="desc" placeholder="Treść ogłoszenia"></textarea>
-        </mat-form-field>
+      <mat-form-field hintLabel="Maksymalnie 1000 znaków" fxFlex appearance="outline">
+        <mat-label>Ogłoszenie</mat-label>
+        <textarea matInput #input2 maxlength="1000" formControlName="desc" placeholder="Treść ogłoszenia"></textarea>
+        <mat-hint align="end">{{input2.value?.length || 0}}/1000</mat-hint>
+      </mat-form-field>
+
     </div>
 
     <div class="row" fxFlex>
       <div class="col-12 text-center">
         <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
-          Zaakceptuj zmiany
+           Zapisz
         </button>
       </div>
     </div>
