@@ -1,7 +1,11 @@
 <div *ngIf="authService.isLoggedIn">
   <div class="container my-4">
 
-    <div *ngIf="authService.userInfo | async as user">
+    <ng-template #loading>
+      Loading stuff...
+    </ng-template>
+
+    <ng-template #usertemplate *ngIf="authService.userInfo | async as user">
       <div class="row m-2" *ngIf="!user.moderator">
         <div fxLayout="row" fxFlex="70" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30">
           <div *ngIf="lastburden | async" fxLayout="row" fxFlex class="dashboard-panel col">
@@ -80,8 +84,9 @@
           </table>
         </div>
       </div>
-    </div>
-    <div *ngIf="authService.userMod | async">
+    </ng-template>
+
+    <ng-container *ngIf="authService.userMod | async else loading">
       <form [formGroup]="form" (ngSubmit)="saveCommunityName()" fxFlex fxLayout="column">
         <div fxLayout="column" fxFlex fxLayoutGap="20">
           <div class="row" fxLayout="row" fxLayout.md="column" fxLayout.sm ="column" fxLayout.xs="column" fxFlex fxLayoutGap="20">
@@ -170,7 +175,13 @@
 
       </form>
 
-    </div>
+    </ng-container>
+
+
+    
+    
+
+
 
   </div>
 </div>

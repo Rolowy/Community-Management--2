@@ -1,3 +1,4 @@
+<div *ngIf="loading | async else LOADING">
 <div *ngIf="authService.isLogged | async; else NOLOGGED" style="height: 100vh;">
   <mat-toolbar color="primary" class="p-2">
     <mat-toolbar-row>
@@ -113,4 +114,11 @@
 
 <ng-template #NOLOGGED>
   <router-outlet></router-outlet>
+</ng-template>
+</div>
+<ng-template #LOADING>
+  <div fxFlex fxLayout="column" fxLayoutGap="20" fxLayoutAlign="center center">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+  <h2>Ładowanie danych{{kropki}}</h2>
+  </div>
 </ng-template>

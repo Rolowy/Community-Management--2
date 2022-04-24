@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './shared/auth.service';
+import {BehaviorSubject} from 'rxjs';
+
 import {
   Event,
   NavigationCancel,
@@ -20,28 +22,14 @@ import { ChangepasswordComponent } from './components/user/changepassword/change
 })
 export class AppComponent {
   appname:string = environment.title;
-  loading = false;
+  loading = new BehaviorSubject<boolean>(false);
+  kropki = '...';
 
   constructor(private router: Router, public authService: AuthService, private dialog: MatDialog) {
-    this.router.events.subscribe((event: Event) => {
-      switch (true) {
-        case event instanceof NavigationStart: {
-          this.loading = true;
-          break;
-        }
-
-        case event instanceof NavigationEnd:
-        case event instanceof NavigationCancel:
-        case event instanceof NavigationError: {
-          this.loading = false;
-          break;
-        }
-        default: {
-          break;
-        }
-      }
-    });
-  }
+    this.loading.next(false);
+    setTimeout(() => { this.loading.next(true)}, 3000); // sztuczny delay do ładowania. przy korzystaniu w nawigacji za szybko chodzi :D
+    setInterval(() => { if(this.kropki.length == 3) { this.kropki = '..'} else { this.kropki = '...'}}, 1000)
+    }
 
   changePassword() {
     this.dialog.open(ChangepasswordComponent);

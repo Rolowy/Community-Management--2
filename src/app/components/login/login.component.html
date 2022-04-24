@@ -1,5 +1,5 @@
-<div class="loginform col" fxLayoutAlign="center center">
-  <mat-card fxFlex="100" fxFlex.md="50" fxFlex.sm="100" fxFlex.xl="40" fxFlex.lg="30" fxLayout="column" fxLayoutAlign="center">
+<div class="loginform" fxLayoutAlign="center center" ngStyle.lg="height: 100vh" ngStyle.xl="height: 100vh">
+  <mat-card fxFlex fxFlex.md="90" fxFlex.sm="90" fxFlex.lg="40" fxFlex.xl="30" fxLayout="column" fxLayoutAlign="center">
     <mat-card-title class="text-center">Logowanie</mat-card-title>
     <form [formGroup]="form" (ngSubmit)="login()" autocomplete="on">
       <mat-card-content fxLayout="column">

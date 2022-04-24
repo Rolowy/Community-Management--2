@@ -11,6 +11,7 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
     NzAlertModule,
     NzMessageModule,
     NzCardModule,
-    NzEmptyModule
+    NzEmptyModule,
+    NzSpinModule
   ]
 })
 export class NgzorroModule { }
