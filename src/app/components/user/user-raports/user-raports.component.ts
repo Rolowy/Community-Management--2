@@ -28,7 +28,7 @@ import { formatDate } from '@angular/common';
 export class UserRaportsComponent implements OnInit, AfterViewInit {
   uid: string;
 
-  displayedColumns: string[] = ['position', 'fullname', 'price', 'createdAt', 'scope', 'edit'];
+  displayedColumns: string[] = ['position', 'fullname', 'createdAt', 'scope', 'edit'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);

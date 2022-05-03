@@ -1,13 +1,9 @@
 <div *ngIf="authService.isLoggedIn">
   <div class="container my-4">
 
-    <ng-template #loading>
-      Loading stuff...
-    </ng-template>
-
-    <ng-template #usertemplate *ngIf="authService.userInfo | async as user">
+    <div *ngIf="authService.userInfo | async as user">
       <div class="row m-2" *ngIf="!user.moderator">
-        <div fxLayout="row" fxFlex="70" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30">
+        <div fxLayout="row" fxFlex fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30">
           <div *ngIf="lastburden | async" fxLayout="row" fxFlex class="dashboard-panel col">
             <div class="desc" fxFlex>
               <h2><span class="material-icons">
@@ -35,7 +31,35 @@
             </div>
           </div>
         </div>
-        <div fxLayout="row" fxFlex fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="30" *ngIf="!user.moderator">
+      </div>
+      <div class="row m-2 mt-5" *ngIf="!user.moderator">
+        <div fxLayout="row" fxFlex fxLayout.xs="column" fxLayoutGap="30" fxLayoutAlign="center">
+        <div class="dashboard-panel" fxLayout="column" fxFlex="70">
+          <h2><span class="material-icons">
+              door_front
+            </span> Twoje lokale</h2>
+          <table *ngIf="premises.length | async; else noItems" class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Lokal</th>
+                <th scope="col">Powierzchnia</th>
+                <th scope="col">Opłata za powierzchnie</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of premises | async; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{x.street | uppercase}} {{x.apartmentnumber}}/{{x.buildingnumber}}</td>
+                <td>{{x.area}} m2</td>
+                <td>{{getPrice(x.area, x.rate)}} zł</td>
+              </tr>
+            </tbody>
+          </table>
+          <ng-template #noItems><div class="noItems">Nie masz obecnie żadnych przypisanych lokali.</div></ng-template>
+        </div>
+
+        
           <div fxLayout="row" fxFlex="80" class="dashboard-panel col">
             <div class="desc" fxFlex>
               <h2><span class="material-icons">
@@ -58,35 +82,11 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="row m-2 mt-5" *ngIf="!user.moderator">
-        <div class="dashboard-panel" fxLayout="column" fxFlex="50">
-          <h2><span class="material-icons">
-              door_front
-            </span> Twoje lokale</h2>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Lokal</th>
-                <th scope="col">Powierzchnia</th>
-                <th scope="col">Opłata za powierzchnie</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let x of premises | async; let i = index">
-                <th scope="row">{{ i + 1 }}</th>
-                <td>{{x.street | uppercase}} {{x.apartmentnumber}}/{{x.buildingnumber}}</td>
-                <td>{{x.area}} m2</td>
-                <td>{{getPrice(x.area, x.rate)}} zł</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </ng-template>
 
-    <ng-container *ngIf="authService.userMod | async else loading">
+      </div>
+    </div>
+
+    <ng-container *ngIf="authService.userMod | async">
       <form [formGroup]="form" (ngSubmit)="saveCommunityName()" fxFlex fxLayout="column">
         <div fxLayout="column" fxFlex fxLayoutGap="20">
           <div class="row" fxLayout="row" fxLayout.md="column" fxLayout.sm ="column" fxLayout.xs="column" fxFlex fxLayoutGap="20">
@@ -100,12 +100,9 @@
                   <mat-label>Nazwa Wspólnoty</mat-label>
                   <input matInput formControlName="name" placeholder="Podaj nazwę wspólnoty">
                   <mat-icon matSuffix>description</mat-icon>
-                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na tą pełną nazwę wspólnoty będą generowane raporty
-                  </mat-hint>
-                  <mat-error *ngIf="form.hasError('name') && !form.hasError('required')">
-                    Proszę wpisać nazwę wspólnoty.
-                  </mat-error>
-
+                  <mat-hint>Pole jest wymagane do prawidłowego funkcjonowania aplikacji.</mat-hint>
+                  <mat-error *ngIf="form.controls['name'].hasError('required')">Nazwa wspólnoty jest wymagana.</mat-error>
+                  <mat-error *ngIf="form.controls['name'].hasError('minlength')">Pole musi mieć minimum 4 znaki.</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -120,12 +117,12 @@
                   <mat-label>Adres</mat-label>
                   <input matInput formControlName="address" placeholder="Podaj adres wspólnoty">
                   <mat-icon matSuffix>description</mat-icon>
-                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na ten adres będą generowane raporty
-                  </mat-hint>
+                  <mat-hint>Pole jest wymagane do prawidłowego funkcjonowania aplikacji.</mat-hint>
+                  <mat-error *ngIf="form.controls['address'].hasError('required')">Adres wspólnoty jest wymagany.</mat-error>
+                  <mat-error *ngIf="form.controls['address'].hasError('minlength')">Pole musi mieć minimum 4 znaki.</mat-error>
                 </mat-form-field>
               </div>
             </div>
-
           </div>
 
           <div class="row" fxLayout="row" fxLayout="row" fxLayout.md="column" fxLayout.sm ="column" fxLayout.xs="column" fxFlex fxLayoutGap="20">
@@ -139,9 +136,9 @@
                   <mat-label>Miasto</mat-label>
                   <input matInput formControlName="city" placeholder="Podaj miasto, w którym znajduję się wspólnota">
                   <mat-icon matSuffix>description</mat-icon>
-                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na te miasto będą generowane raporty
-                  </mat-hint>
-
+                  <mat-hint>Pole jest wymagane do prawidłowego funkcjonowania aplikacji.</mat-hint>
+                  <mat-error *ngIf="form.controls['city'].hasError('required')">Miasto wspólnoty jest wymagane.</mat-error>
+                  <mat-error *ngIf="form.controls['city'].hasError('minlength')">Pole musi mieć minimum 4 znaki.</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -153,14 +150,7 @@
                 </span>Kod Pocztowy</h2>
 
               <div class="ml-3" fxFlex>
-                <mat-form-field appearance="outline" fxFlex>
-                  <mat-label>Kod Pocztowy</mat-label>
-                  <input matInput formControlName="postcode" placeholder="Podaj kod pocztowy wspólnoty">
-                  <mat-icon matSuffix>description</mat-icon>
-                  <mat-hint>Wymaga prawidłowego funkcjonowania aplikacji<br />Na ten kod pocztowy będą generowane raporty
-                  </mat-hint>
-
-                </mat-form-field>
+                <app-input title="Kod Pocztowy" [control]="postcode" hint="Pole jest wymagane do prawidłowego funkcjonowania aplikacji." [minLength]=6 [maxLength]=6 format="00-000"></app-input>
               </div>
 
             </div>

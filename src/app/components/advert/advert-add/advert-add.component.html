@@ -1,11 +1,14 @@
 <form [formGroup]="form" (ngSubmit)="saveAdvert()">
   <mat-card-content fxFlex fxLayout="column">
-    <div class="row" fxFlex fxLayout="column">
+    <div class="row" fxFlex fxLayout="column" fxLayoutGap="20">
 
       <mat-form-field hintLabel="Maksymalnie 70 znaków" fxFlex appearance="outline">
         <mat-label>Tytuł:</mat-label>
         <input matInput #input maxlength="70" type="text" formControlName="title" placeholder="Tytuł Ogłoszenia" />
         <mat-hint align="end">{{input.value?.length || 0}}/70</mat-hint>
+        <mat-error *ngIf="form.controls['title'].hasError('required')">Ogłoszenie musi posiadać tytuł.</mat-error>
+        <mat-error *ngIf="form.controls['title'].hasError('minlength')">Muszą być minimum 4 znaki.</mat-error>
+        <mat-error *ngIf="form.controls['title'].hasError('maxlength')">Osiągnąłeś limit znaków dla tego pola.</mat-error>
       </mat-form-field>
 
 
@@ -13,6 +16,9 @@
         <mat-label>Ogłoszenie</mat-label>
         <textarea matInput #input2 maxlength="1000" formControlName="desc" placeholder="Treść ogłoszenia"></textarea>
         <mat-hint align="end">{{input2.value?.length || 0}}/1000</mat-hint>
+        <mat-error *ngIf="form.controls['desc'].hasError('required')">Ogłoszenie musi posiadać treść.</mat-error>
+        <mat-error *ngIf="form.controls['desc'].hasError('minlength')">Muszą być minimum 4 znaki.</mat-error>
+        <mat-error *ngIf="form.controls['desc'].hasError('maxlength')">Osiągnąłeś limit znaków dla tego pola.</mat-error>
       </mat-form-field>
 
     </div>

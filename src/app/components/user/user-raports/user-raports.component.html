@@ -14,7 +14,6 @@
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" matSort>
     
-          <!-- Position Column -->
           <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer Rozliczenia </th>
             <td mat-cell *matCellDef="let element">#{{element.number}}</td>
@@ -24,12 +23,7 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Wystawione na </th>
               <td mat-cell *matCellDef="let element"> {{element.user.name}} {{element.user.lastname}}</td>
             </ng-container>
-
-            <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Do zapłaty </th>
-              <td mat-cell *matCellDef="let element"> {{element.sum}} zł</td>
-            </ng-container>
-
+            
               <ng-container matColumnDef="createdAt">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Data wystawienia </th>
                 <td mat-cell *matCellDef="let element"> {{element.createdAt.seconds*1000 | date: 'dd/MM/YYYY'}}</td>
@@ -39,8 +33,6 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Okres </th>
                 <td mat-cell *matCellDef="let element"> {{element.startdate.seconds*1000 | date: 'dd/MM/YYYY'}} - {{element.enddate.seconds*1000 | date: 'dd/MM/YYYY'}}</td>
               </ng-container>
-
-              
 
               <ng-container matColumnDef="edit">
                   <th mat-header-cell *matHeaderCellDef></th>

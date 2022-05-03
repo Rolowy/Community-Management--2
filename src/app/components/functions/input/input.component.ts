@@ -11,6 +11,7 @@ export class InputComponent implements OnInit {
   @Input() setValue:any
   @Input() maxLength:number = 50
   @Input() minLength:number = 1
+  @Input() hint:any = '';
   @Input() dropSpecial:boolean = true
   @Input() control: FormControl = new FormControl('', [Validators.minLength(this.minLength), Validators.maxLength(this.maxLength)])
   @Input() masktyped:boolean = false;

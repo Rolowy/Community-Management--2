@@ -21,3 +21,14 @@
 mat-icon {
     font-size: 5em;
 }
+
+.noItems {
+    text-align: center !important;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    height: 100%;
+    font-size: 17px;
+    text-decoration: underline;
+}

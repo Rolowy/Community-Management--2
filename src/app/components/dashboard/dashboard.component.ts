@@ -13,13 +13,13 @@ import { Config } from 'src/app/_interface/config';
 export class DashboardComponent implements OnInit {
   config:any;
 
-  test = new FormControl('')
+  postcode = new FormControl('', [Validators.required])
 
   form:FormGroup = this.fb.group({
     name: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
     city: new FormControl('', Validators.required),
-    postcode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{2}-[0-9]{3}')])
+    postcode: this.postcode
   })
   
   lastraport:any;
@@ -51,6 +51,10 @@ export class DashboardComponent implements OnInit {
   getPrice(area:string, rate:string) {
     let sum = parseFloat(area) * parseFloat(rate);
     return sum.toFixed(2);
+  }
+
+  convert(value:string) {
+    return value
   }
 
   saveCommunityName() {

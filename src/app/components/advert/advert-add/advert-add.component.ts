@@ -11,8 +11,8 @@ import { Adverts } from 'src/app/_interface/adverts';
 })
 export class AdvertAddComponent {
   form: FormGroup = this.fb.group({
-    title: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    desc: new FormControl('', [Validators.required, Validators.minLength(4)])
+    title: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(71)]),
+    desc: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(1001)])
   })
 
 
