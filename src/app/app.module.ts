@@ -48,6 +48,7 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
 import { AdvertComponent } from './components/advert/advert.component';
 import { AdvertAddComponent } from './components/advert/advert-add/advert-add.component';
 import { AdvertEditComponent } from './components/advert/advert-edit/advert-edit.component';
+import { Email } from './validator/email';
 
 registerLocaleData(pl);
 
@@ -99,7 +100,7 @@ registerLocaleData(pl);
   ],
   exports: [
   ],
-  providers: [AuthService, { provide: NZ_I18N, useValue: pl_PL }],
+  providers: [AuthService, { provide: NZ_I18N, useValue: pl_PL }, Email],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

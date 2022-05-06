@@ -18,7 +18,7 @@ export class UsersAddComponent implements OnInit {
   phone = new FormControl('')
 
   firstFormGroup: FormGroup = this.fb.group({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.email], this.emailTaken.validate),
     password: new FormControl('', [Validators.required, Validators.minLength(5)])
   })
 
@@ -38,7 +38,8 @@ export class UsersAddComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
     public dialogRef: MatDialogRef<UsersAddComponent>,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    public emailTaken: Email) { }
 
   ngOnInit() {
   }
