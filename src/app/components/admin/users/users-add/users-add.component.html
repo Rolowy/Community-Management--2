@@ -37,13 +37,17 @@
             <mat-form-field appearance="outline">
               <mat-label>Imię</mat-label>
               <input matInput placeholder="Imię" formControlName="name">
-              <mat-error *ngIf="secondFormGroup.controls['name'].hasError('required')">Imię jest wymagane</mat-error>            </mat-form-field>
+              <mat-error *ngIf="secondFormGroup.controls['name'].hasError('required')">Imię jest wymagane</mat-error>
+              <mat-error *ngIf="secondFormGroup.controls['name'].hasError('minlength')">Imię musi mieć minimum 3 znaki</mat-error>
+
+            </mat-form-field>
           </div>
           <div class="col">
             <mat-form-field appearance="outline">
               <mat-label>Nazwisko</mat-label>
               <input matInput placeholder="Hasło" formControlName="lastname">
-              <mat-error *ngIf="secondFormGroup.controls['lastname'].hasError('required')">Nazwisko jest wymagane</mat-error> 
+              <mat-error *ngIf="secondFormGroup.controls['lastname'].hasError('required')">Nazwisko jest wymagane</mat-error>
+              <mat-error *ngIf="secondFormGroup.controls['lastname'].hasError('minlength')">Nazwisko musi mieć minimum 3 znaki</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -65,8 +69,11 @@
           <div class="col ">
             <mat-form-field appearance="outline">
               <mat-label>Miasto</mat-label>
+
               <input matInput placeholder="Miasto" formControlName="city">
-              <mat-error *ngIf="secondFormGroup.controls['city'].hasError('required')">Miasto jest wymagane</mat-error> 
+              <mat-error *ngIf="secondFormGroup.controls['city'].hasError('required')">Miasto jest wymagane</mat-error>
+              <mat-error *ngIf="secondFormGroup.controls['city'].hasError('minlength')">Miasto musi mieć minimum 3 znaki</mat-error>
+
             </mat-form-field>
           </div>
   

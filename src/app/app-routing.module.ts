@@ -17,20 +17,19 @@ import { UserGuard } from './shared/user.guard';
 import { AdvertComponent } from './components/advert/advert.component';
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: 'raports', component: RaportsComponent, canActivate: [GuardGuard, ModeratorGuard] },
-  {path: 'addraport', component: RaportsAddComponent, canActivate: [GuardGuard, ModeratorGuard] },
-  {path: 'payments', component: PaymentsComponent, canActivate: [GuardGuard, ModeratorGuard] },
-  {path: 'user/raports', component: UserRaportsComponent, canActivate: [GuardGuard] },
-  {path: 'user/raports/:id', component: UserRaportsViewComponent, canActivate: [GuardGuard]},
-  {path: 'users', component: UsersComponent, canActivate: [GuardGuard, ModeratorGuard] },
-  {path: 'dashboard', component: DashboardComponent, canActivate: [GuardGuard] },
-  {path: 'advert', component: AdvertComponent, canActivate: [GuardGuard]},
-
-  {path: 'premises', component: PremisesComponent, canActivate: [GuardGuard, ModeratorGuard]},
-  {path:'', redirectTo:'/dashboard', pathMatch:'full'},
-  {path: '**', component: LoginComponent}
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'raports', component: RaportsComponent, canActivate: [GuardGuard, ModeratorGuard] },
+  { path: 'addraport', component: RaportsAddComponent, canActivate: [GuardGuard, ModeratorGuard] },
+  { path: 'payments', component: PaymentsComponent, canActivate: [GuardGuard, ModeratorGuard] },
+  { path: 'user/raports', component: UserRaportsComponent, canActivate: [GuardGuard] },
+  { path: 'user/raports/:id', component: UserRaportsViewComponent, canActivate: [GuardGuard] },
+  { path: 'users', component: UsersComponent, canActivate: [GuardGuard, ModeratorGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [GuardGuard] },
+  { path: 'advert', component: AdvertComponent, canActivate: [GuardGuard] },
+  { path: 'premises', component: PremisesComponent, canActivate: [GuardGuard, ModeratorGuard] },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '**', component: LoginComponent }
 ];
 
 @NgModule({

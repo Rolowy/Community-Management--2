@@ -18,8 +18,8 @@ export class UsersEditComponent implements OnInit {
   bankaccount = new FormControl('', Validators.required)
 
   form: FormGroup = this.fb.group({
-    name: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    lastname: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    lastname: new FormControl('', [Validators.required, Validators.minLength(3)]),
     phone: this.phone,
     postcode: this.postcode,
     address: new FormControl('', [Validators.required, Validators.minLength(5)]),

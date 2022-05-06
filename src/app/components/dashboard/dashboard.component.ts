@@ -12,13 +12,12 @@ import { Config } from 'src/app/_interface/config';
 })
 export class DashboardComponent implements OnInit {
   config:any;
-
-  postcode = new FormControl('', [Validators.required])
+  postcode = new FormControl('', Validators.required)
 
   form:FormGroup = this.fb.group({
-    name: new FormControl('', Validators.required),
-    address: new FormControl('', Validators.required),
-    city: new FormControl('', Validators.required),
+    name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    address: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    city: new FormControl('', [Validators.required, Validators.minLength(3)]),
     postcode: this.postcode
   })
   

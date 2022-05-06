@@ -15,9 +15,8 @@
                 <input matInput type="text" formControlName="name" placeholder="Imię" />
                 <mat-icon matSuffix>badge</mat-icon>
                 <mat-hint>Imię</mat-hint>
-  
                 <mat-error *ngIf="form.controls['name'].hasError('required')">Imię jest wymagane</mat-error>
-  
+                <mat-error *ngIf="form.controls['name'].hasError('minlength')">Imię musi mieć minimum 3 znaki</mat-error>
               </mat-form-field>
             </div>
   
@@ -29,10 +28,8 @@
                 <mat-icon matSuffix>badge</mat-icon>
                 <mat-hint>Nazwisko</mat-hint>
   
-                <mat-error *ngIf="(form.get('login'))?.errors?.['required']">Login jest wymagany</mat-error>
-                <mat-error *ngIf="(form.get('login')?.errors?.['minLength'])">
-                  Login musi mięć więcej niż 6 znaków.
-                </mat-error>
+                <mat-error *ngIf="form.controls['lastname'].hasError('required')">Nazwisko jest wymagane</mat-error>
+                <mat-error *ngIf="form.controls['lastname'].hasError('minlength')">Nazwisko musi mieć minimum 3 znaki</mat-error>
   
               </mat-form-field>
             </div>
@@ -48,11 +45,8 @@
                 <input matInput type="text"  formControlName="address" placeholder="Adres" />
                 <mat-icon matSuffix>approval</mat-icon>
                 <mat-hint>Adres</mat-hint>
-  
-                <mat-error *ngIf="(form.get('login'))?.errors?.['required']">Login jest wymagany</mat-error>
-                <mat-error *ngIf="(form.get('login')?.errors?.['minLength'])">
-                  Login musi mięć więcej niż 6 znaków.
-                </mat-error>
+                <mat-error *ngIf="form.controls['address'].hasError('required')">Adres jest wymagany</mat-error>
+                <mat-error *ngIf="form.controls['address'].hasError('minlength')">Adres musi mieć minimum 5 znaków</mat-error>
   
               </mat-form-field>
             </div>
@@ -71,11 +65,9 @@
                 <input matInput type="text" formControlName="city" placeholder="Miasto" />
                 <mat-icon matSuffix>cottage</mat-icon>
                 <mat-hint>Miasto</mat-hint>
-  
-                <mat-error *ngIf="(form.get('login'))?.errors?.['required']">Login jest wymagany</mat-error>
-                <mat-error *ngIf="(form.get('login')?.errors?.['minLength'])">
-                  Login musi mięć więcej niż 6 znaków.
-                </mat-error>
+
+                <mat-error *ngIf="form.controls['city'].hasError('required')">Miasto jest wymagane</mat-error>
+                <mat-error *ngIf="form.controls['city'].hasError('minlength')">Miasto musi mieć minimum 3 znaki</mat-error>
   
               </mat-form-field>
             </div>

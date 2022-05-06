@@ -9,6 +9,8 @@
             <mat-label>Tytuł:</mat-label>
             <input matInput #input maxlength="70" type="text" formControlName="title" placeholder="Tytuł Ogłoszenia" />
             <mat-hint align="end">{{input.value?.length || 0}}/70</mat-hint>
+            <mat-error *ngIf="form.controls['title'].hasError('required')">Ogłoszenie musi posiadać tytuł.</mat-error>
+            <mat-error *ngIf="form.controls['title'].hasError('minlength')">Muszą być minimum 4 znaki.</mat-error>
           </mat-form-field>
   
   
@@ -16,6 +18,8 @@
             <mat-label>Ogłoszenie</mat-label>
             <textarea matInput #input2 maxlength="1000" formControlName="desc" placeholder="Treść ogłoszenia"></textarea>
             <mat-hint align="end">{{input2.value?.length || 0}}/1000</mat-hint>
+            <mat-error *ngIf="form.controls['title'].hasError('required')">Ogłoszenie musi posiadać treść.</mat-error>
+        <mat-error *ngIf="form.controls['title'].hasError('minlength')">Muszą być minimum 4 znaki.</mat-error>
           </mat-form-field>
       </div>
   
