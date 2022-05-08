@@ -31,8 +31,8 @@ export class UserRaportsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['position', 'fullname', 'createdAt', 'scope', 'edit'];
   dataSource = new MatTableDataSource();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthService, public afs: Firestore) {
     this.uid = this.authService.userID;
@@ -55,11 +55,12 @@ export class UserRaportsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   getRangeDisplayText = (page: number, pageSize: number, length: number) => {
-    const initialText = `Wyświetlonych płatności`;  // customize this line
+    const initialText = `Wyświetlonych płatności`;
     if (length == 0 || pageSize == 0) {
       return `${initialText} 0 z ${length}`;
     }
@@ -68,7 +69,7 @@ export class UserRaportsComponent implements OnInit, AfterViewInit {
     const endIndex = startIndex < length
       ? Math.min(startIndex + pageSize, length)
       : startIndex + pageSize;
-    return `${initialText} ${startIndex + 1} to ${endIndex} of ${length}`; // customize this line
+    return `${initialText} ${endIndex} z ${length}`;
   };
 
   ngAfterViewInit(): void {
@@ -94,23 +95,21 @@ export class UserRaportsComponent implements OnInit, AfterViewInit {
   }
 
 
-  public Converter(value:string) {
+  public Converter(value: string) {
     return value.replace(/ą/g, 'a').replace(/Ą/g, 'A').replace(/ć/g, 'c').replace(/Ć/g, 'C').replace(/ę/g, 'e').replace(/Ę/g, 'E').replace(/ł/g, 'l').replace(/Ł/g, 'L').replace(/ń/g, 'n').replace(/Ń/g, 'N').replace(/ó/g, 'o').replace(/Ó/g, 'O').replace(/ś/g, 's').replace(/Ś/g, 'S').replace(/ż/g, 'z').replace(/Ż/g, 'Z').replace(/ź/g, 'z').replace(/Ź/g, 'Z');
   }
 
-    
 
-  
-  public GeneratePDF(element:any) {
+  public GeneratePDF(element: any) {
     const doc = new jsPDF()
 
     doc.addFont("Amiri-Regular.ttf", "Amiri", "normal");
-		doc.setFont("Amiri");
-					
+    doc.setFont("Amiri");
+
 
     doc.setFontSize(15);
 
-    doc.text('Faktura #' + element.number , 90, 20);
+    doc.text('Faktura #' + element.number, 90, 20);
 
     let date = new Date();
 
@@ -125,7 +124,7 @@ export class UserRaportsComponent implements OnInit, AfterViewInit {
     doc.setFontSize(10);
     doc.text('19-300 Elk', 20, 45);
 
-    
+
     doc.setFontSize(10);
     doc.text('67', 120, 70);
     doc.setFontSize(10);
@@ -133,20 +132,20 @@ export class UserRaportsComponent implements OnInit, AfterViewInit {
     doc.setFontSize(10);
     doc.text('19-300, Ełk', 120, 80);
 
-    
+
     autoTable(doc, {
       head: [['Lokal', 'Cena jednostkowa', 'Kwota']],
       body: [
         ['David', 'david@example.com', 'Sweden'],
         ['Castille', 'castille@example.com', 'Spain'],
       ],
-      margin: {top: 100},
+      margin: { top: 100 },
     })
 
     autoTable(doc, {
       head: [['Suma']],
       body: [],
-      margin: {top: 120},
+      margin: { top: 120 },
     })
 
     doc.save('table.pdf')

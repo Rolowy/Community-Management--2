@@ -83,9 +83,9 @@ export class AuthService {
 
     const q = query(collection(this.afs, "users"), where("moderator", "!=", true));
     onSnapshot(q, (querySnapshot) => {
-      let users:any = [];
+      let users: any = [];
       querySnapshot.forEach((doc) => {
-        users.push({...doc.data(), id:doc.id});
+        users.push({ ...doc.data(), id: doc.id });
       });
       this.users.next(users);
     });
@@ -112,10 +112,9 @@ export class AuthService {
 
       })
 
-      sum =  obc - wpl;
-      
-      if(!isNaN(sum))
-      {
+      sum = obc - wpl;
+
+      if (!isNaN(sum)) {
         this.totalprice.next(sum);
       }
     })
@@ -178,7 +177,7 @@ export class AuthService {
     });
   }
 
-  async getUser_LastPayment(): Promise<Raports[]>  {
+  async getUser_LastPayment(): Promise<Raports[]> {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const q = query(collection(this.afs, "payments"), where("user.uid", "==", user.uid), where('status', '==', 'WPŁATA'), limit(3));
     const querySnapshot = await getDocs(q);
@@ -217,7 +216,7 @@ export class AuthService {
     });
   }
 
-  async getUser_LastRaport(): Promise<Raports[]>  {
+  async getUser_LastRaport(): Promise<Raports[]> {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     const q = query(collection(this.afs, "raports"), where("user.uid", "==", user.uid), limit(1));
@@ -249,7 +248,7 @@ export class AuthService {
   }
 
   async update(data: any, collection: string) {
-      console.log(data);
+    console.log(data);
     return updateDoc(doc(this.afs, collection, `${data.uid}`), data).then(() => {
       this.viewMessageSuccess('Zaktualizowano dane poprawnie.')
     }).catch(error => {
@@ -290,7 +289,7 @@ export class AuthService {
       this.viewMessageError('Email jest już w użytku.');
     })
   }
-  
+
   sendVerificationMail(): void {
     const user = this.auth.currentUser;
     if (user) {
@@ -314,7 +313,7 @@ export class AuthService {
     });
   }
 
-  async logout(): Promise<void>  {
+  async logout(): Promise<void> {
     await signOut(this.auth).then(() => {
       this.isLogged.next(false);
       this.router.navigate(['login']);

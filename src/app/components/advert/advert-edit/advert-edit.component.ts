@@ -20,8 +20,8 @@ export class AdvertEditComponent {
     public dialogRef: MatDialogRef<AdvertEditComponent>,
     private fb: FormBuilder,
     private authService: AuthService,
-    @Inject(MAT_DIALOG_DATA) public data:Adverts,
-    ) {}
+    @Inject(MAT_DIALOG_DATA) public data: Adverts,
+  ) { }
 
   ngOnInit() {
     this.form.patchValue({

@@ -1,5 +1,5 @@
 <div *ngIf="authService.isLoggedIn">
-  <div class="container my-4">
+  <div class="container my-4" fxFlex>
 
     <div *ngIf="authService.userInfo | async as user">
       <div class="row m-2" *ngIf="!user.moderator">
@@ -34,32 +34,32 @@
       </div>
       <div class="row m-2 mt-5" *ngIf="!user.moderator">
         <div fxLayout="row" fxFlex fxLayout.xs="column" fxLayoutGap="30" fxLayoutAlign="center">
-        <div class="dashboard-panel" fxLayout="column" fxFlex="70">
-          <h2><span class="material-icons">
-              door_front
-            </span> Twoje lokale</h2>
-          <table *ngIf="premises.length | async; else noItems" class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Lokal</th>
-                <th scope="col">Powierzchnia</th>
-                <th scope="col">Opłata za powierzchnie</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let x of premises | async; let i = index">
-                <th scope="row">{{ i + 1 }}</th>
-                <td>{{x.street | uppercase}} {{x.apartmentnumber}}/{{x.buildingnumber}}</td>
-                <td>{{x.area}} m2</td>
-                <td>{{getPrice(x.area, x.rate)}} zł</td>
-              </tr>
-            </tbody>
-          </table>
-          <ng-template #noItems><div class="noItems">Nie masz obecnie żadnych przypisanych lokali.</div></ng-template>
-        </div>
+          <div class="dashboard-panel" fxLayout="column" fxFlex="70">
+            <h2><span class="material-icons">
+                door_front
+              </span> Twoje lokale</h2>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Lokal</th>
+                  <th scope="col">Powierzchnia</th>
+                  <th scope="col">Opłata za powierzchnie</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of premises | async; let i = index">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>{{x.street | uppercase}} {{x.apartmentnumber}}/{{x.buildingnumber}}</td>
+                  <td>{{x.area}} m2</td>
+                  <td>{{getPrice(x.area, x.rate)}} zł</td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- <ng-template #noItems><div class="noItems">Nie masz obecnie żadnych przypisanych lokali.</div></ng-template> -->
+          </div>
 
-        
+
           <div fxLayout="row" fxFlex="80" class="dashboard-panel col">
             <div class="desc" fxFlex>
               <h2><span class="material-icons">
@@ -89,7 +89,8 @@
     <ng-container *ngIf="authService.userMod | async">
       <form [formGroup]="form" (ngSubmit)="saveCommunityName()" fxFlex fxLayout="column">
         <div fxLayout="column" fxFlex fxLayoutGap="20">
-          <div class="row" fxLayout="row" fxLayout.md="column" fxLayout.sm ="column" fxLayout.xs="column" fxFlex fxLayoutGap="20">
+          <div class="row" fxLayout="row" fxLayout.md="column" fxLayout.sm="column" fxLayout.xs="column" fxFlex
+            fxLayoutGap="20">
             <div class="dashboard-panel col" fxFlex fxLayout="column">
               <h2><span class="material-icons">
                   rate_review
@@ -101,8 +102,10 @@
                   <input matInput formControlName="name" placeholder="Podaj nazwę wspólnoty">
                   <mat-icon matSuffix>description</mat-icon>
                   <mat-hint>Pole jest wymagane do prawidłowego funkcjonowania aplikacji.</mat-hint>
-                  <mat-error *ngIf="form.controls['name'].hasError('required')">Nazwa wspólnoty jest wymagana.</mat-error>
-                  <mat-error *ngIf="form.controls['name'].hasError('minlength')">Pole musi mieć minimum 5 znaków.</mat-error>
+                  <mat-error *ngIf="form.controls['name'].hasError('required')">Nazwa wspólnoty jest wymagana.
+                  </mat-error>
+                  <mat-error *ngIf="form.controls['name'].hasError('minlength')">Pole musi mieć minimum 5 znaków.
+                  </mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -118,14 +121,17 @@
                   <input matInput formControlName="address" placeholder="Podaj adres wspólnoty">
                   <mat-icon matSuffix>description</mat-icon>
                   <mat-hint>Pole jest wymagane do prawidłowego funkcjonowania aplikacji.</mat-hint>
-                  <mat-error *ngIf="form.controls['address'].hasError('required')">Adres wspólnoty jest wymagany.</mat-error>
-                  <mat-error *ngIf="form.controls['address'].hasError('minlength')">Pole musi mieć minimum 5 znaków.</mat-error>
+                  <mat-error *ngIf="form.controls['address'].hasError('required')">Adres wspólnoty jest wymagany.
+                  </mat-error>
+                  <mat-error *ngIf="form.controls['address'].hasError('minlength')">Pole musi mieć minimum 5 znaków.
+                  </mat-error>
                 </mat-form-field>
               </div>
             </div>
           </div>
 
-          <div class="row" fxLayout="row" fxLayout="row" fxLayout.md="column" fxLayout.sm ="column" fxLayout.xs="column" fxFlex fxLayoutGap="20">
+          <div class="row" fxLayout="row" fxLayout="row" fxLayout.md="column" fxLayout.sm="column" fxLayout.xs="column"
+            fxFlex fxLayoutGap="20">
             <div class="dashboard-panel col" fxFlex fxLayout="column">
               <h2><span class="material-icons">
                   rate_review
@@ -137,8 +143,10 @@
                   <input matInput formControlName="city" placeholder="Podaj miasto, w którym znajduję się wspólnota">
                   <mat-icon matSuffix>description</mat-icon>
                   <mat-hint>Pole jest wymagane do prawidłowego funkcjonowania aplikacji.</mat-hint>
-                  <mat-error *ngIf="form.controls['city'].hasError('required')">Miasto wspólnoty jest wymagane.</mat-error>
-                  <mat-error *ngIf="form.controls['city'].hasError('minlength')">Pole musi mieć minimum 3 znaki.</mat-error>
+                  <mat-error *ngIf="form.controls['city'].hasError('required')">Miasto wspólnoty jest wymagane.
+                  </mat-error>
+                  <mat-error *ngIf="form.controls['city'].hasError('minlength')">Pole musi mieć minimum 3 znaki.
+                  </mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -150,7 +158,9 @@
                 </span>Kod Pocztowy</h2>
 
               <div class="ml-3" fxFlex>
-                <app-input title="Kod Pocztowy" [control]="postcode" hint="Pole jest wymagane do prawidłowego funkcjonowania aplikacji." [minLength]=6 [maxLength]=6 format="00-000"></app-input>
+                <app-input title="Kod Pocztowy" [control]="postcode"
+                  hint="Pole jest wymagane do prawidłowego funkcjonowania aplikacji." [minLength]=6 [maxLength]=6
+                  format="00-000"></app-input>
               </div>
 
             </div>
@@ -168,8 +178,8 @@
     </ng-container>
 
 
-    
-    
+
+
 
 
 

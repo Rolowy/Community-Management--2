@@ -1,86 +1,88 @@
-
 <div class="container my-5 bg" fxFlex fxLayout="column" *ngIf="(value | async) as data">
-<div class="my-5" fxFlex fxLayoutAlign="center center">
-    <button mat-flat-button color="primary" (click)="openPDF()"><span class="material-icons">picture_as_pdf</span>Eksportuj do PDF</button>
-</div>
-<div fxFlex fxLayout="column" id="Document">
+  <div class="my-5" fxFlex fxLayoutAlign="center center">
+    <button mat-flat-button color="primary" (click)="openPDF()"><span
+        class="material-icons">picture_as_pdf</span>Eksportuj do PDF</button>
+  </div>
+  <div fxFlex fxLayout="column" id="Document">
     <div class="row logo" fxFlex fxLayoutAlign="center center">To Mój<span class="logop2 ml-2">Dom</span></div>
-    <div class="row" fxLayout="row" >
-        
-    <div class="col-8" fxLayout="column" fxLayoutGap="10" *ngIf="(config | async) as con">
+    <div class="row" fxLayout="row">
+
+      <div class="col-8" fxLayout="column" fxLayoutGap="10" *ngIf="(config | async) as con">
         <div class="col">{{con.name}}</div>
         <div class="col">{{con.address}}</div>
         <div class="col">{{con.city}}, {{con.postcode}}</div>
-    </div>
-    
-    <div class="col" align="right">
+      </div>
+
+      <div class="col" align="right">
         <p>Numer Faktury: #{{data.number}}</p>
         <p>Data: {{data.createdAt.seconds*1000 | date: 'dd/MM/YYYY'}}</p>
-    </div>
+      </div>
     </div>
     <div class="row my-3" fxLayout="row-reverse">
-        <div class="col-3 " fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10">
-            <div class="col">Imie: {{data.user.name}}</div>
-            <div class="col">Nazwisko: {{data.user.lastname}}</div>
-            <div class="col">Ulica: {{data.apartment.street}} {{data.apartment.buildingnumber}}/{{data.apartment.apartmentnumber}}</div>
-        </div>
-        </div>
+      <div class="col-3 " fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10">
+        <div class="col">Imie: {{data.user.name}}</div>
+        <div class="col">Nazwisko: {{data.user.lastname}}</div>
+        <div class="col">Ulica: {{data.apartment.street}}
+          {{data.apartment.buildingnumber}}/{{data.apartment.apartmentnumber}}</div>
+      </div>
+    </div>
     <div class="row" fxFlex fxLayout="column" fxLayoutAlign="center center">
-        <h2>Kalkulacja opłat za lokal</h2>
-        <p>Opłata za okres {{data.startdate.seconds*1000 | date: 'dd/MM/YYYY'}} - {{data.enddate.seconds*1000 | date: 'dd/MM/YYYY'}}</p>
-    </div> 
-    
+      <h2>Kalkulacja opłat za lokal</h2>
+      <p>Opłata za okres {{data.startdate.seconds*1000 | date: 'dd/MM/YYYY'}} -
+        {{data.enddate.seconds*1000 | date: 'dd/MM/YYYY'}}</p>
+    </div>
+
 
     <div class="row my-5" fxLayout="row" fxLayoutAlign="center center">
-        <table mat-table [dataSource]="dataSource" fxFlex="80" class="mat-elevation-z8 demo-table">
-            <ng-container matColumnDef="index">
-              <th mat-header-cell *matHeaderCellDef> Pozycja </th>
-              <td mat-cell *matCellDef="let element; let i = index"> {{i}} </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Nazwa </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="amount">
-              <th mat-header-cell *matHeaderCellDef> Ilość </th>
-              <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="converter">
-                <th mat-header-cell *matHeaderCellDef> Jednostka </th>
-                <td mat-cell *matCellDef="let element"> {{element.converter}} </td>
-              </ng-container>
+      <table mat-table [dataSource]="dataSource" fxFlex="80" class="mat-elevation-z8 demo-table">
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef> Pozycja </th>
+          <td mat-cell *matCellDef="let element; let i = index"> {{i}} </td>
+        </ng-container>
 
-              <ng-container matColumnDef="unit">
-                <th mat-header-cell *matHeaderCellDef> Cena za jednostkę </th>
-                <td mat-cell *matCellDef="let element"> {{element.price}} zł</td>
-              </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nazwa </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
 
-              <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef> Suma </th>
-                <td mat-cell *matCellDef="let element"> {{(element.price * element.amount).toFixed(2)}} zł</td>
-              </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Ilość </th>
+          <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+        </ng-container>
 
-              <ng-container matColumnDef="total">
-                <td mat-footer-cell *matFooterCellDef colspan="100%">
-                    <div>Podsumowanie: <strong>{{sum | async}} zł</strong></div>
-                </td>
-              </ng-container>
-  
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            <tr mat-footer-row *matFooterRowDef="['total']" class="footer-row"></tr>
+        <ng-container matColumnDef="converter">
+          <th mat-header-cell *matHeaderCellDef> Jednostka </th>
+          <td mat-cell *matCellDef="let element"> {{element.converter}} </td>
+        </ng-container>
 
-          </table>
+        <ng-container matColumnDef="unit">
+          <th mat-header-cell *matHeaderCellDef> Cena za jednostkę </th>
+          <td mat-cell *matCellDef="let element"> {{element.price}} zł</td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Suma </th>
+          <td mat-cell *matCellDef="let element"> {{(element.price * element.amount).toFixed(2)}} zł</td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+          <td mat-footer-cell *matFooterCellDef colspan="100%">
+            <div>Podsumowanie: <strong>{{sum | async}} zł</strong></div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="['total']" class="footer-row"></tr>
+
+      </table>
     </div>
     <div class="footer" fxFlex="80" fxLayout="row">
       <div class="col">Numer Bankowy:</div>
       <div class="col">{{data.user.bankaccount}}</div>
       <div class="col">{{sum | async}} zł</div>
     </div>
-</div>
+  </div>
 </div>
 
 <!-- {{value | async | json}} -->

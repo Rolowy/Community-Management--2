@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ViewChild } from '@angular/core';
-import { MatPaginator} from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
@@ -28,8 +28,8 @@ export class PaymentsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'lastname', 'amount', 'status', 'date', 'edit'];
   dataSource = new MatTableDataSource;
 
-  @ViewChild(MatSort, {static:true}) sort!: MatSort;
-  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthService, public afs: Firestore) {
   }
@@ -44,7 +44,7 @@ export class PaymentsComponent implements OnInit {
         data.lastname = data.user.lastname;
         data.uid = el.id;
         data.index = index;
-        index+=1;
+        index += 1;
         return data
       })
     })

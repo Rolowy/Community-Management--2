@@ -1,12 +1,14 @@
 <mat-card class="example-card col-6">
-    <mat-card-title>Konto Moderatora - Rejestracja</mat-card-title>
-    <nz-alert class="my-4" nzType="error" nzMessage="Po utworzeniu konta proszę usunąć linijkę w kodzie, aby zablokować dostęp do tworzenia konta moderatora."></nz-alert>
+  <mat-card-title>Konto Moderatora - Rejestracja</mat-card-title>
+  <nz-alert class="my-4" nzType="error"
+    nzMessage="Po utworzeniu konta proszę usunąć linijkę w kodzie, aby zablokować dostęp do tworzenia konta moderatora.">
+  </nz-alert>
 
-  
-    <div class="example-container">
-      <form [formGroup]="form" (ngSubmit)="save()">
-        <mat-card-content>
-          <div class="col-12" fxLayoutGap="20">
+
+  <div class="example-container">
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <mat-card-content>
+        <div class="col-12" fxLayoutGap="20">
           <mat-form-field appearance="outline" fxFlex="50">
             <mat-label>Email:</mat-label>
             <input matInput type="email" formControlName="email" placeholder="Twój email" />
@@ -14,83 +16,79 @@
             <mat-error *ngIf="form.controls['email'].hasError('email')">Email jest nieprawidłowy.</mat-error>
             <mat-error *ngIf="form.controls['email'].hasError('pattern')">Nieprawidłowo wpisany adres email.</mat-error>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline" fxFlex="50">
             <mat-label>Hasło:</mat-label>
             <input matInput type="password" placeholder="Twoje hasło" formControlName="password" />
             <mat-icon matSuffix>lock</mat-icon>
             <mat-error *ngIf="form.controls['password'].hasError('required')">Hasło jest wymagane.</mat-error>
-            <mat-error *ngIf="form.controls['password'].hasError('minlength')">Hasło wymaga minimum 5 znaków.</mat-error>
+            <mat-error *ngIf="form.controls['password'].hasError('minlength')">Hasło wymaga minimum 5 znaków.
+            </mat-error>
           </mat-form-field>
         </div>
-  
-  
-  
+
+
+
         <div class="col-12" fxLayoutGap="20">
           <mat-form-field appearance="outline" fxFlex="50">
             <mat-label>Imię:</mat-label>
             <input matInput type="text" placeholder="Twoje hasło" formControlName="name" />
             <mat-icon matSuffix>perm_contact_calendar</mat-icon>
             <mat-error *ngIf="form.controls['name'].hasError('required')">Imię jest wymagane.</mat-error>
-            <mat-error *ngIf="form.controls['name'].hasError('minlength')">Za krótkie imię (minimum 3 znaki)</mat-error>  
+            <mat-error *ngIf="form.controls['name'].hasError('minlength')">Za krótkie imię (minimum 3 znaki)</mat-error>
           </mat-form-field>
-  
-     
-        <mat-form-field appearance="outline" fxFlex="50">
+
+
+          <mat-form-field appearance="outline" fxFlex="50">
             <mat-label>Nazwisko:</mat-label>
             <input matInput type="text" placeholder="Nazwisko" formControlName="lastname" />
             <mat-icon matSuffix>perm_contact_calendar</mat-icon>
             <mat-error *ngIf="form.controls['lastname'].hasError('required')">Nazwisko jest wymagane.</mat-error>
-            <mat-error *ngIf="form.controls['lastname'].hasError('minlength')">Za krótkie nazwisko (minimum 3 znaki)</mat-error>  
-  
+            <mat-error *ngIf="form.controls['lastname'].hasError('minlength')">Za krótkie nazwisko (minimum 3 znaki)
+            </mat-error>
+
           </mat-form-field>
-  
+
         </div>
-  
+
         <div class="col-12" fxLayoutGap="20">
           <mat-form-field appearance="outline" fxFlex="50">
             <mat-label>Adres:</mat-label>
             <input matInput type="text" placeholder="Adres" formControlName="address" />
             <mat-icon matSuffix>confirmation_number</mat-icon>
             <mat-error *ngIf="form.controls['address'].hasError('required')">Adres jest wymagany.</mat-error>
-            <mat-error *ngIf="form.controls['address'].hasError('minlength')">Za krótki adres (minimum 5 znaków)</mat-error>
+            <mat-error *ngIf="form.controls['address'].hasError('minlength')">Za krótki adres (minimum 5 znaków)
+            </mat-error>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline" fxFlex="50">
             <mat-label>Miasto:</mat-label>
             <input matInput type="text" placeholder="Miasto" formControlName="city" />
             <mat-icon matSuffix>apartment</mat-icon>
             <mat-error *ngIf="form.controls['city'].hasError('required')">Miasto jest wymagane.</mat-error>
-            <mat-error *ngIf="form.controls['city'].hasError('minlength')">Za krótka nazwa miasta (minimum 3 znaki)</mat-error>  
-          </mat-form-field>
-  
-        </div>
-  
-        <div class="col-12" fxLayoutGap="20">
-          <mat-form-field appearance="outline" fxFlex="50">
-            <mat-label>Kod Pocztowy:</mat-label>
-            <input matInput type="text" placeholder="Kod Pocztowy" formControlName="postcode" />
-            <mat-icon matSuffix>signpost</mat-icon>
-            <mat-error *ngIf="form.controls['postcode'].hasError('required')">Kod Pocztowy jest wymagany.</mat-error>
-            <mat-error *ngIf="form.controls['postcode'].hasError('pattern')">Zastosuj się do schematu: XX-XXX</mat-error>    
-          </mat-form-field>
-          
-  
-          <mat-form-field appearance="outline" fxFlex="50">
-            <mat-label>Telefon:</mat-label>
-            <input matInput type="text" placeholder="Telefon" formControlName="phone" />
-            <mat-icon matSuffix>phone</mat-icon>
-            <mat-error *ngIf="form.controls['phone'].hasError('pattern')">Zastosuj się do schematu: XXX-XXX-XXX | XXX XXX XXX</mat-error> 
+            <mat-error *ngIf="form.controls['city'].hasError('minlength')">Za krótka nazwa miasta (minimum 3 znaki)
+            </mat-error>
           </mat-form-field>
 
         </div>
-          <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Zarejestruj się
-          </button>
-        </mat-card-content>
-      </form>
-    </div>
-    <mat-card-footer>
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </mat-card-footer>
-  </mat-card>
-  
+
+        <div class="col-12" fxLayoutGap="20" fxLayout="row">
+          <div class="col">
+            <app-input title="Kod Pocztowy" [control]="postcode" [minLength]=6 [maxLength]=6 format="00-000">
+            </app-input>
+          </div>
+
+          <div class="col">
+            <app-input title="Telefon Kontaktowy" [minLength]=11 [maxLength]=11 [control]="phone" [dropSpecial]=false
+              format="000-000-000||000-00-00"></app-input>
+          </div>
+        </div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Zarejestruj się
+        </button>
+      </mat-card-content>
+    </form>
+  </div>
+  <mat-card-footer>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>

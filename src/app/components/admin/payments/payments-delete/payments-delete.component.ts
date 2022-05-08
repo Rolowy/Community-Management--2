@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared/auth.service';
 
 export interface DialogData {
-  uid:string;
+  uid: string;
 }
 
 @Component({
@@ -17,7 +17,7 @@ export class PaymentsDeleteComponent implements OnInit {
     public dialogRef: MatDialogRef<PaymentsDeleteComponent>,
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) {}
+  ) { }
 
   onConfirm(): void {
     this.authService.delete(this.data.uid, 'payments');

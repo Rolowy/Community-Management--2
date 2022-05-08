@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { User } from 'src/app/_interface/user';
 import { AuthService } from 'src/app/shared/auth.service';
-import { doc, Firestore, updateDoc} from '@angular/fire/firestore';
+import { doc, Firestore, updateDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-users-edit',
@@ -11,7 +11,7 @@ import { doc, Firestore, updateDoc} from '@angular/fire/firestore';
   styleUrls: ['./users-edit.component.scss']
 })
 export class UsersEditComponent implements OnInit {
-  pack:User;
+  pack: User;
 
   postcode = new FormControl('', Validators.required)
   phone = new FormControl('')
@@ -34,7 +34,7 @@ export class UsersEditComponent implements OnInit {
     private fb: FormBuilder,
     public afs: Firestore,
     private authService: AuthService,
-    @Inject(MAT_DIALOG_DATA) public data:User,
+    @Inject(MAT_DIALOG_DATA) public data: User,
   ) {
     this.pack = data;
   }

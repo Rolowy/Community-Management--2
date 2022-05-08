@@ -29,7 +29,7 @@ export class PremisesEditComponent implements OnInit {
     public dialogRef: MatDialogRef<PremisesEditComponent>,
     private _formBuilder: FormBuilder,
     public authService: AuthService,
-    @Inject(MAT_DIALOG_DATA) public data:Apartment,
+    @Inject(MAT_DIALOG_DATA) public data: Apartment,
   ) {
   }
 
@@ -49,7 +49,7 @@ export class PremisesEditComponent implements OnInit {
     const model: Apartment = {
       uid: this.data.uid,
       owner: this.data.owner,
-      apartmentnumber:this.firstFormGroup.value.apartmentnumber,
+      apartmentnumber: this.firstFormGroup.value.apartmentnumber,
       buildingnumber: this.firstFormGroup.value.buildingnumber,
       street: this.firstFormGroup.value.street,
       postcode: this.firstFormGroup.value.postcode,

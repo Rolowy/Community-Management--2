@@ -8,7 +8,8 @@
         <mat-hint align="end">{{input.value?.length || 0}}/70</mat-hint>
         <mat-error *ngIf="form.controls['title'].hasError('required')">Ogłoszenie musi posiadać tytuł.</mat-error>
         <mat-error *ngIf="form.controls['title'].hasError('minlength')">Muszą być minimum 4 znaki.</mat-error>
-        <mat-error *ngIf="form.controls['title'].hasError('maxlength')">Osiągnąłeś limit znaków dla tego pola.</mat-error>
+        <mat-error *ngIf="form.controls['title'].hasError('maxlength')">Osiągnąłeś limit znaków dla tego pola.
+        </mat-error>
       </mat-form-field>
 
 
@@ -18,7 +19,8 @@
         <mat-hint align="end">{{input2.value?.length || 0}}/1000</mat-hint>
         <mat-error *ngIf="form.controls['desc'].hasError('required')">Ogłoszenie musi posiadać treść.</mat-error>
         <mat-error *ngIf="form.controls['desc'].hasError('minlength')">Muszą być minimum 4 znaki.</mat-error>
-        <mat-error *ngIf="form.controls['desc'].hasError('maxlength')">Osiągnąłeś limit znaków dla tego pola.</mat-error>
+        <mat-error *ngIf="form.controls['desc'].hasError('maxlength')">Osiągnąłeś limit znaków dla tego pola.
+        </mat-error>
       </mat-form-field>
 
     </div>
@@ -26,7 +28,7 @@
     <div class="row" fxFlex>
       <div class="col-12 text-center">
         <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
-           Zapisz
+          Zapisz
         </button>
       </div>
     </div>

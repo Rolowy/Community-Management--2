@@ -2,15 +2,15 @@
 
   <div class="row my-4" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="20">
     <div fxFlex="60" fxLayoutAlign="center">
-        <mat-form-field class="search-panel" fxFlex="50" fxFlex.sm fxFlex.xs>
-          <input #box matInput type="text" (keyup)="doFilter(box.value)" placeholder="Wyszukaj..">
-        </mat-form-field>
-      </div>
-      <div fxFlex fxLayoutAlign="center center">
-        <a mat-raised-button color="primary" fxFlex.sm fxFlex.xs (click)="addPayment()">
-          <mat-icon aria-hidden="false" aria-label="person_add">account_balance_wallet</mat-icon> Dodaj Płatność
-        </a>
-      </div>
+      <mat-form-field class="search-panel" fxFlex="50" fxFlex.sm fxFlex.xs>
+        <input #box matInput type="text" (keyup)="doFilter(box.value)" placeholder="Wyszukaj..">
+      </mat-form-field>
+    </div>
+    <div fxFlex fxLayoutAlign="center center">
+      <a mat-raised-button color="primary" fxFlex.sm fxFlex.xs (click)="addPayment()">
+        <mat-icon aria-hidden="false" aria-label="person_add">account_balance_wallet</mat-icon> Dodaj Płatność
+      </a>
+    </div>
   </div>
 
 

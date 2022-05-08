@@ -3,10 +3,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared/auth.service';
 
 export interface DialogData {
-  number:number;
-  user:any;
-  uid:string;
-  createdAt:any
+  number: number;
+  user: any;
+  uid: string;
+  createdAt: any
 }
 
 @Component({
@@ -20,7 +20,7 @@ export class RaportsDeleteComponent implements OnInit {
     public dialogRef: MatDialogRef<RaportsDeleteComponent>,
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) {}
+  ) { }
 
 
   onConfirm(): void {
@@ -31,7 +31,7 @@ export class RaportsDeleteComponent implements OnInit {
       this.authService.viewMessageError('Wystąpił błąd poczas usuwania raportu');
       console.log(error);
     })
-    
+
   }
 
   ngOnInit(): void {

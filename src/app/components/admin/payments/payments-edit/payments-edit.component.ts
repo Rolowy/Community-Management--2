@@ -17,24 +17,24 @@ export class PaymentsEditComponent implements OnInit {
   amount = new FormControl('', [Validators.required])
 
   form = [
-    { label: 'WPŁATA'},
-    { label: 'OBCIĄŻENIE'}
+    { label: 'WPŁATA' },
+    { label: 'OBCIĄŻENIE' }
   ]
 
   firstFormGroup: FormGroup = this.fb.group({
     amount: this.amount,
     status: new FormControl(this.data.status, Validators.required),
-    date: new FormControl(new Date(this.data.date.seconds*1000), Validators.required)
+    date: new FormControl(new Date(this.data.date.seconds * 1000), Validators.required)
   });
 
 
   constructor(
-  public dialogRef: MatDialogRef<PaymentsEditComponent>,
+    public dialogRef: MatDialogRef<PaymentsEditComponent>,
     private fb: FormBuilder,
     private afs: Firestore,
     public authService: AuthService,
-    @Inject(MAT_DIALOG_DATA) public data:Payment,
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: Payment,
+  ) { }
 
   ngOnInit() {
   }

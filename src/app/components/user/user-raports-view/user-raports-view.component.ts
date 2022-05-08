@@ -44,18 +44,18 @@ export class UserRaportsViewComponent implements OnInit {
     if (docSnap.exists()) {
       const data = docSnap.data() as Raports;
       this.value.next({ ...data });
-      
-      data.otherStatus.unshift({name: "Opłata za lokal", amount: this.parseToPrice(data.apartment.area), converter: "m2", price: this.parseToPrice(data.apartment.rate)});  
+
+      data.otherStatus.unshift({ name: "Opłata za lokal", amount: this.parseToPrice(data.apartment.area), converter: "m2", price: this.parseToPrice(data.apartment.rate) });
       this.dataSource = data.otherStatus;
       //console.log("Document data:", docSnap.data());
-      const totalprice = data.otherStatus.reduce((acc:number, val:any) => {acc += parseFloat(val.price)*parseFloat(val.amount); return acc}, 0);
+      const totalprice = data.otherStatus.reduce((acc: number, val: any) => { acc += parseFloat(val.price) * parseFloat(val.amount); return acc }, 0);
       this.sum.next(totalprice.toFixed(2));
     } else {
       console.log("No such document!");
     }
   }
 
-  public openPDF(): void { 
+  public openPDF(): void {
     let DATA: any = document.getElementById('Document');
     html2canvas(DATA).then((canvas) => {
       let fileWidth = 208;
@@ -70,7 +70,7 @@ export class UserRaportsViewComponent implements OnInit {
 
 
 
-  parseToPrice(value:string) {
+  parseToPrice(value: string) {
     value = value.replace(',', '.');
     return parseFloat(value).toFixed(2);
   }

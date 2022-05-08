@@ -11,14 +11,14 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class LoginComponent implements OnInit {
   visible_password: boolean = true;
-  loading:boolean = false;
+  loading: boolean = false;
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(5)])
   });
 
-  constructor(private authService: AuthService, private router:Router, private dialog: MatDialog) {
+  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog) {
     if (this.authService.isLoggedIn) {
       this.router.navigate(['dashboard']);
     }
@@ -29,6 +29,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.loading = true;
-    setTimeout(() => { this.loading=false; this.authService.login(this.form.value); }, 3000);
+    setTimeout(() => { this.loading = false; this.authService.login(this.form.value); }, 3000);
   }
 }

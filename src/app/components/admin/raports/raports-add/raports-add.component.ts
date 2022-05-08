@@ -10,10 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./raports-add.component.scss']
 })
 export class RaportsAddComponent implements OnInit {
-  users:any;
-  apartments:any;
+  users: any;
+  apartments: any;
 
-  form:FormGroup = this.fb.group({
+  form: FormGroup = this.fb.group({
     number: new FormControl('', [Validators.required]),
     user: new FormControl('', [Validators.required]),
     apartment: new FormControl('', [Validators.required]),
@@ -23,15 +23,15 @@ export class RaportsAddComponent implements OnInit {
     otherStatus: this.fb.array([]),
     sum: new FormControl(''),
   })
-  
+
 
   converter = [
-    { label: 'm2'},
-    { label: 'm3'},
-    { label: 'szt'},
+    { label: 'm2' },
+    { label: 'm3' },
+    { label: 'szt' },
   ]
 
-  constructor(private fb: FormBuilder, public asf: Firestore, public authService: AuthService, private router: Router) {}
+  constructor(private fb: FormBuilder, public asf: Firestore, public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.combiner();
@@ -42,14 +42,14 @@ export class RaportsAddComponent implements OnInit {
     console.log(this.form.controls['testowy'].value)
   }
 
-  addControl(name:string) {
+  addControl(name: string) {
     this.form.addControl(name, this.fb.control('test', Validators.required));
   }
 
   combiner() {
     this.form.valueChanges.subscribe((value) => {
       this.form.value.sum = 0;
-      value.otherStatus.map((result:any) => {this.form.value.sum = this.form.value.sum + result.price * result.amount});
+      value.otherStatus.map((result: any) => { this.form.value.sum = this.form.value.sum + result.price * result.amount });
     });
   }
 
@@ -57,14 +57,14 @@ export class RaportsAddComponent implements OnInit {
     return this.form.get('otherStatus') as FormArray
   }
 
-  userSelected(event:any) {
-    this.apartments = this.authService.getApartments(event.value.uid).catch(error =>{ 
+  userSelected(event: any) {
+    this.apartments = this.authService.getApartments(event.value.uid).catch(error => {
       this.authService.viewMessageError('Wystąpił błąd podczas pobierania lokali użytkownika');
       console.log(error);
     });
   }
 
-  buildingSelected(event:any) {
+  buildingSelected(event: any) {
     this.form.value.apartment = event.value;
   }
 
@@ -77,19 +77,19 @@ export class RaportsAddComponent implements OnInit {
     }));
   }
 
-  removeOtherStatus(i:number) {
+  removeOtherStatus(i: number) {
     this.otherStatus.removeAt(i);
   }
 
   SaveRaport() {
     this.form.value.createdAt = new Date;
-      this.authService.addRaport(this.form.value).then(() => {
-        this.router.navigate(['/raports']);
-        this.authService.viewMessageSuccess('Pomyślnie dodatkowy nowy raport');
-      }).catch(error => {
-        this.authService.viewMessageError('Wystąpił błąd podczas wysyłania żądania.')
-        console.log(error);
-      })
+    this.authService.addRaport(this.form.value).then(() => {
+      this.router.navigate(['/raports']);
+      this.authService.viewMessageSuccess('Pomyślnie dodatkowy nowy raport');
+    }).catch(error => {
+      this.authService.viewMessageError('Wystąpił błąd podczas wysyłania żądania.')
+      console.log(error);
+    })
   }
 }
 

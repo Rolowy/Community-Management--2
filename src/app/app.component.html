@@ -1,124 +1,125 @@
 <div *ngIf="loading | async else LOADING">
-<div *ngIf="authService.isLogged | async; else NOLOGGED" style="height: 100vh;">
-  <mat-toolbar color="primary" class="p-2">
-    <mat-toolbar-row>
-      <button mat-icon-button fxShow="true" (click)="sidenav.toggle()" fxHide.gt-sm>
-        <mat-icon>menu</mat-icon>
-      </button>
-      <img src="assets/images/home.png" alt="Logo" class="image-logo">
-      <a class="logo" [routerLink]="['/dashboard']">{{appname}}</a>
-      <span class="menu-spacer"></span>
-      <div fxShow="true" fxHide.lt-md>
+  <div *ngIf="authService.isLogged | async; else NOLOGGED" style="height: 100vh;">
+    <mat-toolbar color="primary" class="p-2">
+      <mat-toolbar-row>
+        <button mat-icon-button fxShow="true" (click)="sidenav.toggle()" fxHide.gt-sm>
+          <mat-icon>menu</mat-icon>
+        </button>
+        <img src="assets/images/home.png" alt="Logo" class="image-logo">
+        <a class="logo" [routerLink]="['/dashboard']">{{appname}}</a>
+        <span class="menu-spacer"></span>
+        <div fxShow="true" fxHide.lt-md>
 
-        <a routerLinkActive="active" mat-button [matMenuTriggerFor]="user" class="online_status">
-          <mat-icon class="online_status mr-1" aria-hidden="false" aria-label="sensor_occupied">sensor_occupied
-          </mat-icon> Zalogowany: {{authService.userInfo.getValue().name}} {{authService.userInfo.getValue().lastname}}
-        </a>
-        <mat-menu #user="matMenu">
-          <!-- <a mat-menu-item (click)="deleteUserComp()"><mat-icon aria-hidden="false" aria-label="sync_lock">delete</mat-icon>Usuń Konto</a>  -->
-          <a mat-menu-item (click)="changePassword()">
-            <mat-icon aria-hidden="false" aria-label="sync_lock">sync_lock</mat-icon> Zmiana Hasła
+          <a routerLinkActive="active" mat-button [matMenuTriggerFor]="user" class="online_status">
+            <mat-icon class="online_status mr-1" aria-hidden="false" aria-label="sensor_occupied">sensor_occupied
+            </mat-icon> Zalogowany: {{authService.userInfo.getValue().name}}
+            {{authService.userInfo.getValue().lastname}}
           </a>
-        </mat-menu>
-
-
-        <span *ngIf="authService.userMod | async; else NoMod">
-
-          <a routerLinkActive="active" mat-button [matMenuTriggerFor]="raports">
-            <mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Raporty
-          </a>
-          <mat-menu #raports="matMenu">
-            <a mat-menu-item [routerLink]="['raports']">
-              <mat-icon aria-hidden="false" aria-label="speaker_notes">speaker_notes</mat-icon> Raporty
-            </a>
-            <a mat-menu-item [routerLink]="['addraport']">
-              <mat-icon aria-hidden="false" aria-label="post_add">post_add</mat-icon> Dodaj Raport
+          <mat-menu #user="matMenu">
+            <!-- <a mat-menu-item (click)="deleteUserComp()"><mat-icon aria-hidden="false" aria-label="sync_lock">delete</mat-icon>Usuń Konto</a>  -->
+            <a mat-menu-item (click)="changePassword()">
+              <mat-icon aria-hidden="false" aria-label="sync_lock">sync_lock</mat-icon> Zmiana Hasła
             </a>
           </mat-menu>
-          <a routerLinkActive="active" [routerLink]="['premises']" mat-button>
-            <mat-icon aria-hidden="false" aria-label="domain">domain</mat-icon> Lokale
-          </a>
-
-          <a routerLinkActive="active" [routerLink]="['users']" mat-button>
-            <mat-icon aria-hidden="false" aria-label="supervisor_account">supervisor_account</mat-icon> Użytkownicy
-          </a>
-          <a routerLinkActive="active" [routerLink]="['payments']" mat-button>
-            <mat-icon aria-hidden="false" aria-label="payments">payments</mat-icon> Płatności
-          </a>
-        </span>
-        <ng-template #NoMod>
-          <a routerLinkActive="active" [routerLink]="['user/raports']" mat-button>
-            <mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Moje Rozliczenia
-          </a>
-        </ng-template>
-
-        <a [routerLink]="['/']" mat-button>
-          <mat-icon aria-hidden="false" aria-label="bento">bento</mat-icon> Panel
-        </a>
-        <a [routerLink]="['/advert']" mat-button>
-          <mat-icon aria-hidden="false" aria-label="logout">markunread</mat-icon> Ogłoszenia
-        </a>
-        <a (click)="authService.logout()" mat-button>
-          <mat-icon aria-hidden="false" aria-label="logout">logout</mat-icon> Wyloguj
-        </a>
-      </div>
-    </mat-toolbar-row>
-  </mat-toolbar>
-
-  <mat-sidenav-container>
-    <mat-sidenav #sidenav>
-      <mat-nav-list>
-        <span *ngIf="authService.userMod | async; else NoMod"></span>
-        <a routerLinkActive="active" ref="/" mat-list-item>
-          <mat-icon aria-hidden="false" aria-label="bento">bento</mat-icon> Ustawienia
-        </a>
-        <a routerLinkActive="active" [routerLink]="['raports']" mat-list-item>
-          <mat-icon aria-hidden="false" aria-label="speaker_notes">speaker_notes</mat-icon> Raporty
-        </a>
-        <a routerLinkActive="active" [routerLink]="['addraport']" mat-list-item>
-          <mat-icon aria-hidden="false" aria-label="post_add">post_add</mat-icon> Dodaj Raport
-        </a>
-
-        <a routerLinkActive="active" [routerLink]="['apartments']" mat-list-item>
-          <mat-icon aria-hidden="false" aria-label="domain">domain</mat-icon> Lokale
-        </a>
-        <a routerLinkActive="active" [routerLink]="['users']" mat-list-item>
-          <mat-icon aria-hidden="false" aria-label="supervisor_account">supervisor_account</mat-icon> Użytkownicy
-        </a>
-        <a routerLinkActive="active" [routerLink]="['payments']" mat-list-item>
-          <mat-icon aria-hidden="false" aria-label="payments">payments</mat-icon> Płatności
-        </a>
 
 
-        <ng-template #NoMod>
+          <span *ngIf="authService.userMod | async; else NoMod">
+
+            <a routerLinkActive="active" mat-button [matMenuTriggerFor]="raports">
+              <mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Raporty
+            </a>
+            <mat-menu #raports="matMenu">
+              <a mat-menu-item [routerLink]="['raports']">
+                <mat-icon aria-hidden="false" aria-label="speaker_notes">speaker_notes</mat-icon> Raporty
+              </a>
+              <a mat-menu-item [routerLink]="['addraport']">
+                <mat-icon aria-hidden="false" aria-label="post_add">post_add</mat-icon> Dodaj Raport
+              </a>
+            </mat-menu>
+            <a routerLinkActive="active" [routerLink]="['premises']" mat-button>
+              <mat-icon aria-hidden="false" aria-label="domain">domain</mat-icon> Lokale
+            </a>
+
+            <a routerLinkActive="active" [routerLink]="['users']" mat-button>
+              <mat-icon aria-hidden="false" aria-label="supervisor_account">supervisor_account</mat-icon> Użytkownicy
+            </a>
+            <a routerLinkActive="active" [routerLink]="['payments']" mat-button>
+              <mat-icon aria-hidden="false" aria-label="payments">payments</mat-icon> Płatności
+            </a>
+          </span>
+          <ng-template #NoMod>
+            <a routerLinkActive="active" [routerLink]="['user/raports']" mat-button>
+              <mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Moje Rozliczenia
+            </a>
+          </ng-template>
+
           <a [routerLink]="['/']" mat-button>
             <mat-icon aria-hidden="false" aria-label="bento">bento</mat-icon> Panel
           </a>
-          <a routerLinkActive="active" [routerLink]="['user/raports']" mat-list-item>
-            <mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Moje Rozliczenia
+          <a [routerLink]="['/advert']" mat-button>
+            <mat-icon aria-hidden="false" aria-label="logout">markunread</mat-icon> Ogłoszenia
           </a>
-        </ng-template>
-        <a [routerLink]="['/advert']" mat-button>
-          <mat-icon aria-hidden="false" aria-label="logout">markunread</mat-icon> Ogłoszenia
-        </a>
-        <a (click)="authService.logout()" mat-button>
-          <mat-icon aria-hidden="false" aria-label="logout">logout</mat-icon> Wyloguj
-        </a>
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+          <a (click)="authService.logout()" mat-button>
+            <mat-icon aria-hidden="false" aria-label="logout">logout</mat-icon> Wyloguj
+          </a>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
 
-<ng-template #NOLOGGED>
-  <router-outlet></router-outlet>
-</ng-template>
+    <mat-sidenav-container>
+      <mat-sidenav #sidenav>
+        <mat-nav-list>
+          <span *ngIf="authService.userMod | async; else NoMod"></span>
+          <a routerLinkActive="active" ref="/" mat-list-item>
+            <mat-icon aria-hidden="false" aria-label="bento">bento</mat-icon> Ustawienia
+          </a>
+          <a routerLinkActive="active" [routerLink]="['raports']" mat-list-item>
+            <mat-icon aria-hidden="false" aria-label="speaker_notes">speaker_notes</mat-icon> Raporty
+          </a>
+          <a routerLinkActive="active" [routerLink]="['addraport']" mat-list-item>
+            <mat-icon aria-hidden="false" aria-label="post_add">post_add</mat-icon> Dodaj Raport
+          </a>
+
+          <a routerLinkActive="active" [routerLink]="['apartments']" mat-list-item>
+            <mat-icon aria-hidden="false" aria-label="domain">domain</mat-icon> Lokale
+          </a>
+          <a routerLinkActive="active" [routerLink]="['users']" mat-list-item>
+            <mat-icon aria-hidden="false" aria-label="supervisor_account">supervisor_account</mat-icon> Użytkownicy
+          </a>
+          <a routerLinkActive="active" [routerLink]="['payments']" mat-list-item>
+            <mat-icon aria-hidden="false" aria-label="payments">payments</mat-icon> Płatności
+          </a>
+
+
+          <ng-template #NoMod>
+            <a [routerLink]="['/']" mat-button>
+              <mat-icon aria-hidden="false" aria-label="bento">bento</mat-icon> Panel
+            </a>
+            <a routerLinkActive="active" [routerLink]="['user/raports']" mat-list-item>
+              <mat-icon aria-hidden="false" aria-label="ballot">ballot</mat-icon> Moje Rozliczenia
+            </a>
+          </ng-template>
+          <a [routerLink]="['/advert']" mat-button>
+            <mat-icon aria-hidden="false" aria-label="logout">markunread</mat-icon> Ogłoszenia
+          </a>
+          <a (click)="authService.logout()" mat-button>
+            <mat-icon aria-hidden="false" aria-label="logout">logout</mat-icon> Wyloguj
+          </a>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+
+  <ng-template #NOLOGGED>
+    <router-outlet></router-outlet>
+  </ng-template>
 </div>
 <ng-template #LOADING>
   <div fxFlex fxLayout="column" fxLayoutGap="20" fxLayoutAlign="center center">
-  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
-  <h2>Ładowanie danych{{kropki}}</h2>
+    <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+    <h2>Ładowanie danych{{kropki}}</h2>
   </div>
 </ng-template>

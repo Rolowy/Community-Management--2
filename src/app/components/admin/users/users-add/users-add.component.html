@@ -1,160 +1,164 @@
 <mat-stepper orientation="vertical" [linear]="true" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Podstawowe Dane</ng-template>
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="my-2" appearance="outline">
-              <mat-label>Adres Email</mat-label>
-              <input matInput placeholder="Email" formControlName="email">
-              <mat-error *ngIf="firstFormGroup.controls['email'].hasError('required')">Email jest wymagany</mat-error>
-              <mat-error *ngIf="firstFormGroup.controls['email'].hasError('email')">Nieprawidłowo wpisany adres email</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col">
-            
-        <mat-form-field class="my-2" appearance="outline">
-          <mat-label>Hasło </mat-label>
-          <input matInput [type]="visible_password ? 'password' : 'text'" placeholder="Twoje hasło" formControlName="password" />
-          <mat-icon (click)="visible_password=!visible_password" matSuffix>
-            {{ visible_password ? 'visibility' : 'visibility_off' }}
-          </mat-icon>
-          <mat-error *ngIf="firstFormGroup.controls['password'].hasError('required')">Hasło jest wymagane</mat-error>
-          <mat-error *ngIf="firstFormGroup.controls['password'].hasError('minlength')">Hasło jest zbyt krótkie</mat-error>
-        </mat-form-field>
-          </div>
-        </div>
-        <div>
-          <button mat-button matStepperNext>Przejdź dalej</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Rozszerzenie użytkownika</ng-template>
-        <div class="row my-2">
-          <div class="col">
-            <mat-form-field appearance="outline">
-              <mat-label>Imię</mat-label>
-              <input matInput placeholder="Imię" formControlName="name">
-              <mat-error *ngIf="secondFormGroup.controls['name'].hasError('required')">Imię jest wymagane</mat-error>
-              <mat-error *ngIf="secondFormGroup.controls['name'].hasError('minlength')">Imię musi mieć minimum 3 znaki</mat-error>
-
-            </mat-form-field>
-          </div>
-          <div class="col">
-            <mat-form-field appearance="outline">
-              <mat-label>Nazwisko</mat-label>
-              <input matInput placeholder="Hasło" formControlName="lastname">
-              <mat-error *ngIf="secondFormGroup.controls['lastname'].hasError('required')">Nazwisko jest wymagane</mat-error>
-              <mat-error *ngIf="secondFormGroup.controls['lastname'].hasError('minlength')">Nazwisko musi mieć minimum 3 znaki</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-  
-        <div class="row my-2">
-          <div class="col ">
-            <mat-form-field appearance="outline">
-              <mat-label>Adres</mat-label>
-              <input matInput placeholder="Adres" formControlName="address">
-              <mat-error *ngIf="secondFormGroup.controls['address'].hasError('minlength')">Minimum 5 znaków</mat-error> 
-              <mat-error *ngIf="secondFormGroup.controls['address'].hasError('required')">Adres jest wymagany</mat-error> 
-            </mat-form-field>
-          </div>
-          <div class="col">
-            <app-input title="Kod Pocztowy" [control]="postcode" [minLength]=6 [maxLength]=6 format="00-000"></app-input>
-          </div>
-        </div>
-        <div class="row my-2">
-          <div class="col ">
-            <mat-form-field appearance="outline">
-              <mat-label>Miasto</mat-label>
-
-              <input matInput placeholder="Miasto" formControlName="city">
-              <mat-error *ngIf="secondFormGroup.controls['city'].hasError('required')">Miasto jest wymagane</mat-error>
-              <mat-error *ngIf="secondFormGroup.controls['city'].hasError('minlength')">Miasto musi mieć minimum 3 znaki</mat-error>
-
-            </mat-form-field>
-          </div>
-  
-          <div class="col ">
-            <app-input title="Telefon Kontaktowy" [minLength]=11 [maxLength]=11 [control]="phone" [dropSpecial]=false format="000-000-000||000-00-00"></app-input>
-          </div>
-  
-        </div>
-  
-        <div class="row my-2">
-          <div class="col ">
-            <app-input title="Rachunek Bankowy" [control]="bankaccount" [minLength]=32 [maxLength]=32 format="00 0000 0000 0000 0000 0000 0000"></app-input>
-          </div>
-        </div>
-  
-        
-  
-  
-  
-  
-        <div>
-          <button mat-button matStepperPrevious>Cofnij</button>
-          <button mat-button matStepperNext>Przejdź Dalej</button>
-        </div>
-  
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="threeFormGroup">
-      <form [formGroup]="threeFormGroup">
-        <ng-template matStepLabel>Uprawnienia Moderatora</ng-template>
-        <div class="row my-4">
-          <div class="col">
-            <mat-slide-toggle formControlName="moderator">Uprawnienia Moderatora</mat-slide-toggle>
-          </div>
-        </div>
-  
-        <div>
-          <button mat-button matStepperPrevious>Cofnij</button>
-          <button mat-button matStepperNext>Przejdź Dalej</button>
-        </div>
-      </form>
-    </mat-step>
-  
-    <mat-step>
-      <ng-template matStepLabel>Weryfikacja Danych</ng-template>
-  
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Podstawowe Dane</ng-template>
       <div class="row">
-        <mat-list>
-          <div class="col">
-            <mat-list-item>Email: {{firstFormGroup.value.email}} </mat-list-item>
-            <mat-list-item>Hasło: {{firstFormGroup.value.password}} </mat-list-item>
-          </div>
-          <div class="col">
-            <mat-list-item>Imię: {{secondFormGroup.value.name}} </mat-list-item>
-            <mat-list-item>Nazwisko: {{secondFormGroup.value.lastname}} </mat-list-item>
-            <mat-list-item>Adres: {{secondFormGroup.value.address}} </mat-list-item>
-            <mat-list-item>Kod Pocztowy: {{secondFormGroup.value.postcode}} </mat-list-item>
-          </div>
-          <div class="col">
-            <mat-list-item *ngIf="threeFormGroup.value.moderator; else NoMod">Uprawnienia Moderatora: Tak</mat-list-item>
-            <ng-template #NoMod>Uprawnienia Moderatora: Nie</ng-template>
-          </div>
-        </mat-list>
-  
+        <div class="col">
+          <mat-form-field class="my-2" appearance="outline">
+            <mat-label>Adres Email</mat-label>
+            <input matInput placeholder="Email" formControlName="email">
+            <mat-error *ngIf="firstFormGroup.controls['email'].hasError('required')">Email jest wymagany</mat-error>
+            <mat-error *ngIf="firstFormGroup.controls['email'].hasError('email')">Nieprawidłowo wpisany adres email
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+
+          <mat-form-field class="my-2" appearance="outline">
+            <mat-label>Hasło </mat-label>
+            <input matInput [type]="visible_password ? 'password' : 'text'" placeholder="Twoje hasło"
+              formControlName="password" />
+            <mat-icon (click)="visible_password=!visible_password" matSuffix>
+              {{ visible_password ? 'visibility' : 'visibility_off' }}
+            </mat-icon>
+            <mat-error *ngIf="firstFormGroup.controls['password'].hasError('required')">Hasło jest wymagane</mat-error>
+            <mat-error *ngIf="firstFormGroup.controls['password'].hasError('minlength')">Hasło jest zbyt krótkie
+            </mat-error>
+          </mat-form-field>
+        </div>
       </div>
-  
+      <div>
+        <button mat-button matStepperNext>Przejdź dalej</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Rozszerzenie użytkownika</ng-template>
+      <div class="row my-2">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Imię</mat-label>
+            <input matInput placeholder="Imię" formControlName="name">
+            <mat-error *ngIf="secondFormGroup.controls['name'].hasError('required')">Imię jest wymagane</mat-error>
+            <mat-error *ngIf="secondFormGroup.controls['name'].hasError('minlength')">Imię musi mieć minimum 3 znaki
+            </mat-error>
+
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Nazwisko</mat-label>
+            <input matInput placeholder="Hasło" formControlName="lastname">
+            <mat-error *ngIf="secondFormGroup.controls['lastname'].hasError('required')">Nazwisko jest wymagane
+            </mat-error>
+            <mat-error *ngIf="secondFormGroup.controls['lastname'].hasError('minlength')">Nazwisko musi mieć minimum 3
+              znaki</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row my-2">
+        <div class="col ">
+          <mat-form-field appearance="outline">
+            <mat-label>Adres</mat-label>
+            <input matInput placeholder="Adres" formControlName="address">
+            <mat-error *ngIf="secondFormGroup.controls['address'].hasError('minlength')">Minimum 5 znaków</mat-error>
+            <mat-error *ngIf="secondFormGroup.controls['address'].hasError('required')">Adres jest wymagany</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <app-input title="Kod Pocztowy" [control]="postcode" [minLength]=6 [maxLength]=6 format="00-000"></app-input>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col ">
+          <mat-form-field appearance="outline">
+            <mat-label>Miasto</mat-label>
+
+            <input matInput placeholder="Miasto" formControlName="city">
+            <mat-error *ngIf="secondFormGroup.controls['city'].hasError('required')">Miasto jest wymagane</mat-error>
+            <mat-error *ngIf="secondFormGroup.controls['city'].hasError('minlength')">Miasto musi mieć minimum 3 znaki
+            </mat-error>
+
+          </mat-form-field>
+        </div>
+
+        <div class="col ">
+          <app-input title="Telefon Kontaktowy" [minLength]=11 [maxLength]=11 [control]="phone" [dropSpecial]=false
+            format="000-000-000||000-00-00"></app-input>
+        </div>
+
+      </div>
+
+      <div class="row my-2">
+        <div class="col ">
+          <app-input title="Rachunek Bankowy" [control]="bankaccount" [minLength]=32 [maxLength]=32
+            format="00 0000 0000 0000 0000 0000 0000"></app-input>
+        </div>
+      </div>
+
+
       <div>
         <button mat-button matStepperPrevious>Cofnij</button>
         <button mat-button matStepperNext>Przejdź Dalej</button>
       </div>
-    </mat-step>
-  
-    <mat-step>
-      <ng-template matStepLabel>Finalizacja</ng-template>
+
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="threeFormGroup">
+    <form [formGroup]="threeFormGroup">
+      <ng-template matStepLabel>Uprawnienia Moderatora</ng-template>
       <div class="row my-4">
-        <p>Czy utworzyć konto dla użytkownika {{secondFormGroup.value.name}} {{secondFormGroup.value.lastname}} ?</p>
+        <div class="col">
+          <mat-slide-toggle formControlName="moderator">Uprawnienia Moderatora</mat-slide-toggle>
+        </div>
       </div>
+
       <div>
         <button mat-button matStepperPrevious>Cofnij</button>
-        <button mat-button color="warn" (click)="createUser()">Utwórz Konto</button>
+        <button mat-button matStepperNext>Przejdź Dalej</button>
       </div>
-    </mat-step>
-  </mat-stepper>
-  
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Weryfikacja Danych</ng-template>
+
+    <div class="row">
+      <mat-list>
+        <div class="col">
+          <mat-list-item>Email: {{firstFormGroup.value.email}} </mat-list-item>
+          <mat-list-item>Hasło: {{firstFormGroup.value.password}} </mat-list-item>
+        </div>
+        <div class="col">
+          <mat-list-item>Imię: {{secondFormGroup.value.name}} </mat-list-item>
+          <mat-list-item>Nazwisko: {{secondFormGroup.value.lastname}} </mat-list-item>
+          <mat-list-item>Adres: {{secondFormGroup.value.address}} </mat-list-item>
+          <mat-list-item>Kod Pocztowy: {{secondFormGroup.value.postcode}} </mat-list-item>
+        </div>
+        <div class="col">
+          <mat-list-item *ngIf="threeFormGroup.value.moderator; else NoMod">Uprawnienia Moderatora: Tak</mat-list-item>
+          <ng-template #NoMod>Uprawnienia Moderatora: Nie</ng-template>
+        </div>
+      </mat-list>
+
+    </div>
+
+    <div>
+      <button mat-button matStepperPrevious>Cofnij</button>
+      <button mat-button matStepperNext>Przejdź Dalej</button>
+    </div>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Finalizacja</ng-template>
+    <div class="row my-4">
+      <p>Czy utworzyć konto dla użytkownika {{secondFormGroup.value.name}} {{secondFormGroup.value.lastname}} ?</p>
+    </div>
+    <div>
+      <button mat-button matStepperPrevious>Cofnij</button>
+      <button mat-button color="warn" (click)="createUser()">Utwórz Konto</button>
+    </div>
+  </mat-step>
+</mat-stepper>

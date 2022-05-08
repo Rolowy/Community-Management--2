@@ -19,11 +19,11 @@ import { UsersAddComponent } from './users-add/users-add.component';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['position', 'name', 'lastname','bankaccount', 'address', 'city', 'postcode', 'email', 'phone', 'admin', 'edit'];
+  displayedColumns: string[] = ['position', 'name', 'lastname', 'bankaccount', 'address', 'city', 'postcode', 'email', 'phone', 'admin', 'edit'];
   dataSource = new MatTableDataSource();
 
-  @ViewChild(MatSort, {static:true}) sort!: MatSort;
-  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthService, public afs: Firestore) { }
 
@@ -34,7 +34,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   getRangeDisplayText = (page: number, pageSize: number, length: number) => {
-    const initialText = `Wyświetlonych użytkowników`; 
+    const initialText = `Wyświetlonych użytkowników`;
     if (length == 0 || pageSize == 0) {
       return `${initialText} 0 z ${length}`;
     }
@@ -47,22 +47,21 @@ export class UsersComponent implements OnInit, AfterViewInit {
   };
 
   ngAfterViewInit(): void {
-    if(this.paginator)
-    {
+    if (this.paginator) {
       this.paginator._intl.itemsPerPageLabel = "Liczba Stron";
       this.paginator._intl.getRangeLabel = this.getRangeDisplayText;
     }
   }
 
-  getDocuments(col:string) {
+  getDocuments(col: string) {
     const querySnapshot = collection(this.afs, col);
     onSnapshot(querySnapshot, (querySnap) => {
-    this.dataSource.data = querySnap.docs.map(el => {
+      this.dataSource.data = querySnap.docs.map(el => {
         const data = el.data() as User;
         data.uid = el.id;
         return data
       })
-  })
+    })
   }
 
   doFilter = (value: string) => {
@@ -90,7 +89,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     });
   }
 
-  resetpassword(email:string) {
+  resetpassword(email: string) {
     this.authService.resetPassword(email);
   }
 }

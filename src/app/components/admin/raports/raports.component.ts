@@ -18,11 +18,11 @@ import { RaportsDeleteComponent } from './raports-delete/raports-delete.componen
   styleUrls: ['./raports.component.scss']
 })
 export class RaportsComponent implements OnInit {
-  displayedColumns: string[] = ['number','owner','apartment', 'createdAt', 'scope', 'edit'];
+  displayedColumns: string[] = ['number', 'owner', 'apartment', 'createdAt', 'scope', 'edit'];
   dataSource = new MatTableDataSource();
 
-  @ViewChild(MatSort, {static:true}) sort!: MatSort;
-  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthService, public afs: Firestore) { }
 
@@ -32,19 +32,19 @@ export class RaportsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  getDocuments(col:string) {
+  getDocuments(col: string) {
     const querySnapshot = collection(this.afs, col);
     onSnapshot(querySnapshot, (querySnap) => {
-    this.dataSource.data = querySnap.docs.map(el => {
+      this.dataSource.data = querySnap.docs.map(el => {
         const data = el.data() as Raports;
         data.fullname = data.user.name;
         data.uid = el.id;
         return data
       })
-  })
+    })
   }
 
-  redirectToDelete(raportData:Raports) {
+  redirectToDelete(raportData: Raports) {
     this.dialog.open(RaportsDeleteComponent, {
       data: raportData,
     })

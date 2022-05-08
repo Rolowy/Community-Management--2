@@ -3,20 +3,20 @@
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Edytuj Płatność</ng-template>
       <div class="row">
-          <div class="col-6">
-            <app-input2 [control]="amount" title="Kwota" [value]="data.amount"></app-input2> 
-          </div>
-          <div class="col-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Status</mat-label>
-              <mat-select formControlName="status" [(ngModel)]="data.status">
-                <mat-option *ngFor="let f of form" [value]="f.label">
-                  {{f.label}}
-                </mat-option>
-              </mat-select>
-              <mat-hint>Rodzaj Płatności</mat-hint>
-            </mat-form-field>
-          </div>
+        <div class="col-6">
+          <app-input2 [control]="amount" title="Kwota" [value]="data.amount"></app-input2>
+        </div>
+        <div class="col-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status" [(ngModel)]="data.status">
+              <mat-option *ngFor="let f of form" [value]="f.label">
+                {{f.label}}
+              </mat-option>
+            </mat-select>
+            <mat-hint>Rodzaj Płatności</mat-hint>
+          </mat-form-field>
+        </div>
       </div>
       <div class="row my-3">
         <div class="col">

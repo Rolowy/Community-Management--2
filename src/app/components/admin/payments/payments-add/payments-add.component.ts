@@ -15,13 +15,13 @@ import { Payment } from 'src/app/_interface/payment';
   styleUrls: ['./payments-add.component.scss']
 })
 export class PaymentsAddComponent implements OnInit {
-  users:any;
+  users: any;
 
   amount = new FormControl('', Validators.required)
 
   form = [
-    { label: 'WPŁATA'},
-    { label: 'OBCIĄŻENIE'}
+    { label: 'WPŁATA' },
+    { label: 'OBCIĄŻENIE' }
   ]
 
   firstFormGroup: FormGroup = this._formBuilder.group({

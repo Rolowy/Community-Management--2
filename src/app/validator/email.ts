@@ -7,7 +7,7 @@ export class Email implements AsyncValidator {
     constructor() {
     }
 
-    validate(control: AbstractControl) : Promise<ValidationErrors | null> {
+    validate(control: AbstractControl): Promise<ValidationErrors | null> {
         const auth = getAuth();
         return fetchSignInMethodsForEmail(auth, control.value).then(response => response.length ? { email: true } : null)
     }

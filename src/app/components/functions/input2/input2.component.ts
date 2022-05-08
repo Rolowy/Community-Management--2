@@ -9,11 +9,11 @@ import { createMask } from '@ngneat/input-mask';
 })
 
 export class Input2Component implements OnInit {
-  @Input() title:string = ''
+  @Input() title: string = ''
   @Input() control: FormControl = new FormControl('', Validators.required)
-  @Input() placeholder:string = '0'
-  @Input() prefix:string = ''
-  @Input() value:any
+  @Input() placeholder: string = '0'
+  @Input() prefix: string = ''
+  @Input() value: any
 
   InputMask = createMask({
     alias: 'numeric',
@@ -29,8 +29,7 @@ export class Input2Component implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.value != null)
-    {
+    if (this.value != null) {
       this.control.setValue(this.value);
     }
   }

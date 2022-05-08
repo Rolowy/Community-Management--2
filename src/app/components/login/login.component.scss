@@ -25,9 +25,11 @@ mat-card {
 }
 
 @keyframes spinner {
-  to {transform: rotate(360deg);}
+  to {
+    transform: rotate(360deg);
+  }
 }
- 
+
 .spinner:before {
   content: '';
   box-sizing: border-box;

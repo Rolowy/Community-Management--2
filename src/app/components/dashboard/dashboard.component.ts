@@ -11,23 +11,23 @@ import { Config } from 'src/app/_interface/config';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  config:any;
+  config: any;
   postcode = new FormControl('', Validators.required)
 
-  form:FormGroup = this.fb.group({
+  form: FormGroup = this.fb.group({
     name: new FormControl('', [Validators.required, Validators.minLength(5)]),
     address: new FormControl('', [Validators.required, Validators.minLength(5)]),
     city: new FormControl('', [Validators.required, Validators.minLength(3)]),
     postcode: this.postcode
   })
-  
-  lastraport:any;
-  lastpayments:any;
-  lastburden:any;
-  premises:any;
+
+  lastraport: any;
+  lastpayments: any;
+  lastburden: any;
+  premises: any;
 
   constructor(public authService: AuthService,
-    private fb: FormBuilder) {}
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.authService.getConfig().then(data => {
@@ -47,12 +47,12 @@ export class DashboardComponent implements OnInit {
     this.premises = this.authService.getUser_Premises();
   }
 
-  getPrice(area:string, rate:string) {
+  getPrice(area: string, rate: string) {
     let sum = parseFloat(area) * parseFloat(rate);
     return sum.toFixed(2);
   }
 
-  convert(value:string) {
+  convert(value: string) {
     return value
   }
 

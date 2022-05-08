@@ -1,8 +1,5 @@
     <mat-form-field appearance="outline" fxFlex>
         <mat-label>{{title}}</mat-label>
-        <input matInput #input
-        [inputMask]="InputMask"
-        [formControl]="control"
-        />
+        <input matInput #input [inputMask]="InputMask" [formControl]="control" />
         <mat-error *ngIf="control.hasError('required')">Pole {{title}} jest wymagane</mat-error>
     </mat-form-field>

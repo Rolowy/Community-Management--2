@@ -19,7 +19,7 @@ export class AdvertAddComponent {
   constructor(
     public dialogRef: MatDialogRef<AdvertAddComponent>,
     private fb: FormBuilder,
-    private authService: AuthService  ) {}
+    private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -31,7 +31,7 @@ export class AdvertAddComponent {
 
 
   async saveAdvert() {
-    const data:Adverts = {
+    const data: Adverts = {
       user: this.authService.userInfo.getValue(),
       title: this.form.value.title,
       desc: this.form.value.desc,

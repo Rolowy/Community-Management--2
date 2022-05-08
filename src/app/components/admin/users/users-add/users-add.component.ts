@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/_interface/user'; 
+import { User } from 'src/app/_interface/user';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Email } from 'src/app/validator/email';
 
@@ -22,7 +22,7 @@ export class UsersAddComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(5)])
   })
 
-  secondFormGroup:FormGroup = this.fb.group({
+  secondFormGroup: FormGroup = this.fb.group({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     lastname: new FormControl('', [Validators.required, Validators.minLength(3)]),
     address: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -32,7 +32,7 @@ export class UsersAddComponent implements OnInit {
     city: new FormControl('', [Validators.required, Validators.minLength(3)])
   });
 
-  threeFormGroup:FormGroup = this.fb.group({
+  threeFormGroup: FormGroup = this.fb.group({
     moderator: [false, Validators.required]
   });
 
