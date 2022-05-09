@@ -10,6 +10,7 @@
             <mat-error *ngIf="firstFormGroup.controls['email'].hasError('required')">Email jest wymagany</mat-error>
             <mat-error *ngIf="firstFormGroup.controls['email'].hasError('email')">Nieprawidłowo wpisany adres email
             </mat-error>
+            <mat-error *ngIf="firstFormGroup.controls['email'].hasError('duplicate')">Ten email jest już używany.</mat-error>
           </mat-form-field>
         </div>
         <div class="col">
@@ -85,7 +86,7 @@
         </div>
 
         <div class="col ">
-          <app-input title="Telefon Kontaktowy" [minLength]=11 [maxLength]=11 [control]="phone" [dropSpecial]=false
+          <app-input title="Telefon Kontaktowy" [control]="phone" [minLength]=11 [maxLength]=11 [dropSpecial]=false
             format="000-000-000||000-00-00"></app-input>
         </div>
 
@@ -97,6 +98,8 @@
             format="00 0000 0000 0000 0000 0000 0000"></app-input>
         </div>
       </div>
+
+      {{phone.value}}
 
 
       <div>
@@ -120,35 +123,6 @@
         <button mat-button matStepperNext>Przejdź Dalej</button>
       </div>
     </form>
-  </mat-step>
-
-  <mat-step>
-    <ng-template matStepLabel>Weryfikacja Danych</ng-template>
-
-    <div class="row">
-      <mat-list>
-        <div class="col">
-          <mat-list-item>Email: {{firstFormGroup.value.email}} </mat-list-item>
-          <mat-list-item>Hasło: {{firstFormGroup.value.password}} </mat-list-item>
-        </div>
-        <div class="col">
-          <mat-list-item>Imię: {{secondFormGroup.value.name}} </mat-list-item>
-          <mat-list-item>Nazwisko: {{secondFormGroup.value.lastname}} </mat-list-item>
-          <mat-list-item>Adres: {{secondFormGroup.value.address}} </mat-list-item>
-          <mat-list-item>Kod Pocztowy: {{secondFormGroup.value.postcode}} </mat-list-item>
-        </div>
-        <div class="col">
-          <mat-list-item *ngIf="threeFormGroup.value.moderator; else NoMod">Uprawnienia Moderatora: Tak</mat-list-item>
-          <ng-template #NoMod>Uprawnienia Moderatora: Nie</ng-template>
-        </div>
-      </mat-list>
-
-    </div>
-
-    <div>
-      <button mat-button matStepperPrevious>Cofnij</button>
-      <button mat-button matStepperNext>Przejdź Dalej</button>
-    </div>
   </mat-step>
 
   <mat-step>

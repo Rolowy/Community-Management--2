@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Raports } from 'src/app/_interface/raport';
 import { AuthService } from 'src/app/shared/auth.service';
-import { collection, Firestore, getDocs, onSnapshot } from '@angular/fire/firestore';
+import { collection, Firestore, onSnapshot } from '@angular/fire/firestore';
 import { RaportsDeleteComponent } from './raports-delete/raports-delete.component';
 
 

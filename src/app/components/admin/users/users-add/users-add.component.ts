@@ -15,7 +15,7 @@ export class UsersAddComponent implements OnInit {
 
   bankaccount = new FormControl('', [Validators.required, Validators.minLength(26)])
   postcode = new FormControl('', [Validators.required])
-  phone = new FormControl('')
+  phone = new FormControl(' ')
 
   firstFormGroup: FormGroup = this.fb.group({
     email: new FormControl('', [Validators.required, Validators.email], this.emailTaken.validate),
@@ -44,7 +44,9 @@ export class UsersAddComponent implements OnInit {
   ngOnInit() {
   }
 
-  async createUser() {
+  createUser() {
+    console.log(this.phone.value);
+
     const userData: User = {
       email: this.firstFormGroup.value.email,
       password: this.firstFormGroup.value.password,
@@ -57,6 +59,8 @@ export class UsersAddComponent implements OnInit {
       phone: this.secondFormGroup.value.phone,
       moderator: this.threeFormGroup.value.moderator
     };
+
+    console.log(userData);
     this.authService.register(userData);
     this.dialogRef.close();
   }

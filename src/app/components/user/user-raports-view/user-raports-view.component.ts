@@ -47,11 +47,10 @@ export class UserRaportsViewComponent implements OnInit {
 
       data.otherStatus.unshift({ name: "Opłata za lokal", amount: this.parseToPrice(data.apartment.area), converter: "m2", price: this.parseToPrice(data.apartment.rate) });
       this.dataSource = data.otherStatus;
-      //console.log("Document data:", docSnap.data());
       const totalprice = data.otherStatus.reduce((acc: number, val: any) => { acc += parseFloat(val.price) * parseFloat(val.amount); return acc }, 0);
       this.sum.next(totalprice.toFixed(2));
     } else {
-      console.log("No such document!");
+      console.log("Nie odnaleziono dokumentu.");
     }
   }
 
@@ -81,11 +80,9 @@ export class UserRaportsViewComponent implements OnInit {
 
     if (docSnap.exists()) {
       const data = docSnap.data() as Config;
-      console.log(data);
       this.config.next(data);
-      //console.log("config data:", docSnap.data());
     } else {
-      console.log("No such document!");
+      console.log("Nie odnaleziono dokumentu.");
     }
   }
 

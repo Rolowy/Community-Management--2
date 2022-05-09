@@ -43,7 +43,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     const endIndex = startIndex < length
       ? Math.min(startIndex + pageSize, length)
       : startIndex + pageSize;
-    return `${initialText} ${startIndex + 1} z ${endIndex} na ${length}`;
+    return `${initialText} ${endIndex} z ${length}`;
   };
 
   ngAfterViewInit(): void {

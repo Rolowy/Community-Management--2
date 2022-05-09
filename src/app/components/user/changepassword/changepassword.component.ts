@@ -9,18 +9,14 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class ChangepasswordComponent implements OnInit {
   validateForm!: FormGroup;
-
   oldpasswordVisible = false;
   newpasswordVisible = false;
-
-  submitForm(): void {
-    console.log('submit', this.validateForm.value);
-    this.authService.changePassword(this.validateForm.value.oldPassword, this.validateForm.value.newpassword);
-  }
-
-
   newpassword?: string;
   oldpassword?: string;
+
+  submitForm(): void {
+    this.authService.changePassword(this.validateForm.value.oldPassword, this.validateForm.value.newpassword);
+  }
 
   constructor(private fb: FormBuilder, private authService: AuthService) { }
 
@@ -30,6 +26,4 @@ export class ChangepasswordComponent implements OnInit {
       newpassword: [null, [Validators.required]]
     });
   }
-
-
 }

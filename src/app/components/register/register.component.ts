@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
 import { User } from 'src/app/_interface/user';
 import { Email } from 'src/app/validator/email';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-register',
@@ -28,13 +31,14 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     public authService: AuthService,
+    public afs: Firestore,
+    public auth: Auth,
     public router: Router,
     public emailTaken: Email
   ) { }
 
 
   ngOnInit() {
-
   }
 
   save() {
@@ -50,6 +54,36 @@ export class RegisterComponent implements OnInit {
       moderator: true,
     }
 
-    this.authService.register(userData);
+    this.registerMod(userData)
+  }
+
+
+  registerMod(form:User) {
+      const user = createUserWithEmailAndPassword(this.auth, form.email, form.password).then(async (user) => {
+        if (user) {
+          const userData: User = {
+            uid: user.user.uid,
+            email: user.user.email,
+            verifyemail: user.user.emailVerified,
+            name: form.name,
+            moderator: form.moderator,
+            lastname: form.lastname,
+            city: form.city,
+            address: form.address,
+            postcode: form.postcode,
+            phone: form.phone,
+            firstmod: true
+          }
+          console.log(userData);
+          await setDoc(doc(this.afs, "users", `${user.user.uid}`), userData).then(() => {
+            this.authService.sendVerificationMail(user);
+            this.authService.logout();
+          }).catch(error => {
+            this.authService.viewMessageError('Wystąpił błąd podczas dodawania konta.');
+            console.log(error);
+          })
+        }
+      })
+    
   }
 }

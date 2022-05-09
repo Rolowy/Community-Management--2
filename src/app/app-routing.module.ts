@@ -13,7 +13,6 @@ import { UserRaportsComponent } from './components/user/user-raports/user-raport
 
 import { GuardGuard } from './shared/guard.guard';
 import { ModeratorGuard } from './shared/moderator.guard';
-import { UserGuard } from './shared/user.guard';
 import { AdvertComponent } from './components/advert/advert.component';
 
 const routes: Routes = [

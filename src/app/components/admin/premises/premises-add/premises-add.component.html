@@ -59,27 +59,6 @@
     </form>
   </mat-step>
   <mat-step>
-    <ng-template matStepLabel>Weryfikacja Danych</ng-template>
-
-    <div class="row">
-      <mat-list>
-        <div class="col">
-          <mat-list-item>Ulica: {{firstFormGroup.value.street}} </mat-list-item>
-          <mat-list-item>Number Budynku: {{firstFormGroup.value.buildingnumber}} </mat-list-item>
-          <mat-list-item>Numer Lokalu: {{firstFormGroup.value.apartmentnumber}} </mat-list-item>
-          <mat-list-item>Kod Pocztowy: {{firstFormGroup.value.postcode}} </mat-list-item>
-        </div>
-      </mat-list>
-
-    </div>
-
-    <div>
-      <button mat-button matStepperPrevious>Cofnij</button>
-      <button mat-button matStepperNext>Przejdź Dalej</button>
-    </div>
-  </mat-step>
-
-  <mat-step>
     <ng-template matStepLabel>Finalizacja</ng-template>
     <div class="row my-4">
       <p>Czy utworzyć nowy bydunek ?</p>

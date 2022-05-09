@@ -10,5 +10,6 @@ export interface User {
     address: string;
     postcode: string;
     city: string;
-    phone?: string;
+    firstmod?: boolean;
+    phone: string;
 }

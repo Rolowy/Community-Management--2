@@ -10,10 +10,9 @@
         <span class="menu-spacer"></span>
         <div fxShow="true" fxHide.lt-md>
 
-          <a routerLinkActive="active" mat-button [matMenuTriggerFor]="user" class="online_status">
+          <a *ngIf="authService.userInfo | async as userinfo" routerLinkActive="active" mat-button [matMenuTriggerFor]="user" class="online_status">
             <mat-icon class="online_status mr-1" aria-hidden="false" aria-label="sensor_occupied">sensor_occupied
-            </mat-icon> Zalogowany: {{authService.userInfo.getValue().name}}
-            {{authService.userInfo.getValue().lastname}}
+            </mat-icon> Zalogowany: {{userinfo.name}} {{userinfo.lastname}}
           </a>
           <mat-menu #user="matMenu">
             <!-- <a mat-menu-item (click)="deleteUserComp()"><mat-icon aria-hidden="false" aria-label="sync_lock">delete</mat-icon>Usuń Konto</a>  -->
@@ -70,7 +69,7 @@
       <mat-sidenav #sidenav>
         <mat-nav-list>
           <span *ngIf="authService.userMod | async; else NoMod"></span>
-          <a routerLinkActive="active" ref="/" mat-list-item>
+          <a routerLinkActive="active" ref="/dashboard" mat-list-item>
             <mat-icon aria-hidden="false" aria-label="bento">bento</mat-icon> Ustawienia
           </a>
           <a routerLinkActive="active" [routerLink]="['raports']" mat-list-item>

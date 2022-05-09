@@ -1,5 +1,5 @@
 <div *ngIf="authService.isLoggedIn">
-  <div class="container my-4" fxFlex>
+  <div class="container my-4">
 
     <div *ngIf="authService.userInfo | async as user">
       <div class="row m-2" *ngIf="!user.moderator">

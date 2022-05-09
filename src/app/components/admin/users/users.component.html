@@ -90,7 +90,7 @@
                   <mat-icon>edit</mat-icon>
                   <span>Edytuj</span>
                 </button>
-                <button mat-menu-item (click)="redirectToDelete(element)">
+                <button *ngIf="!element.firstmod" mat-menu-item (click)="redirectToDelete(element)">
                   <mat-icon>delete</mat-icon>
                   <span>Usuń</span>
                 </button>

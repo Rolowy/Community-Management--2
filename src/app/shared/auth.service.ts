@@ -275,23 +275,23 @@ export class AuthService {
           postcode: form.postcode,
           phone: form.phone
         }
+        getAuth().updateCurrentUser(originalUser);
+
+        console.log(userData);
 
         await setDoc(doc(this.afs, "users", `${user.user.uid}`), userData).then(() => {
-          this.sendVerificationMail();
+          this.sendVerificationMail(user);
         }).catch(error => {
           this.viewMessageError('Wystąpił błąd podczas dodawania konta.');
           console.log(error);
         })
 
-        getAuth().updateCurrentUser(originalUser);
       }
-    }).catch(error => {
-      this.viewMessageError('Email jest już w użytku.');
     })
   }
 
-  sendVerificationMail(): void {
-    const user = this.auth.currentUser;
+  sendVerificationMail(user:any): void {
+    user = this.auth.currentUser;
     if (user) {
       sendEmailVerification(user).then(() => {
         this.viewMessageSuccess('Wysłano email z potwierdzeniem.');
@@ -306,7 +306,14 @@ export class AuthService {
 
   async login(form: any): Promise<void> {
     await signInWithEmailAndPassword(this.auth, form.email, form.password).then((user) => {
+      if(!user.user.emailVerified)
+      {
+        this.logout();
+        this.viewMessageError('Twoje konto nie jest aktywne');
+      }
+      else{
       this.router.navigate(['dashboard']);
+      }
     }).catch(error => {
       this.viewMessageError('Nie udało się zalogować.');
       console.log(error);
@@ -350,26 +357,26 @@ export class AuthService {
     }
   }
 
-  changePassword2(oldPassword: string, newPassword: string) {
-    const auth = getAuth();
-    const user = auth.currentUser;
+  // changePassword2(oldPassword: string, newPassword: string) {
+  //   const auth = getAuth();
+  //   const user = auth.currentUser;
 
-    if (user) {
-      let credential = EmailAuthProvider.credential(
-        this.userInfo.value.email,
-        oldPassword
-      );
+  //   if (user) {
+  //     let credential = EmailAuthProvider.credential(
+  //       this.userInfo.value.email,
+  //       oldPassword
+  //     );
 
-      reauthenticateWithCredential(auth.currentUser, credential)
-        .then(result => {
-          updatePassword(user, newPassword).then(() => {
-            return this.viewMessageSuccess('Zmieniono hasło pomyślnie');
-          }).catch(error => {
-            return this.viewMessageError('Wystąpił błąd, prosimy o ponowne zalogowanie się.')
-          })
-        })
-    }
-  }
+  //     reauthenticateWithCredential(auth.currentUser, credential)
+  //       .then(result => {
+  //         updatePassword(user, newPassword).then(() => {
+  //           return this.viewMessageSuccess('Zmieniono hasło pomyślnie');
+  //         }).catch(error => {
+  //           return this.viewMessageError('Wystąpił błąd, prosimy o ponowne zalogowanie się.')
+  //         })
+  //       })
+  //   }
+  // }
 
   async resetPassword(email: string) {
     await sendPasswordResetEmail(this.auth, email).then(() => {

@@ -42,10 +42,7 @@ export class PremisesComponent implements OnInit {
     onSnapshot(querySnapshot, (querySnap) => {
     this.dataSource.data = querySnap.docs.map(el => {
         const data = el.data() as Apartment;
-        // data.name = data.owner.name;
-        // data.lastname = data.owner.lastname;
         data.uid = el.id;
-        console.log(data);
         return data
       })
   })
@@ -58,7 +55,7 @@ export class PremisesComponent implements OnInit {
   }
 
   getRangeDisplayText = (page: number, pageSize: number, length: number) => {
-    const initialText = `Wyświetlonych lokali`;  // customize this line
+    const initialText = `Wyświetlonych lokali`;
     if (length == 0 || pageSize == 0) {
       return `${initialText} 0 z ${length}`;
     }
@@ -67,7 +64,7 @@ export class PremisesComponent implements OnInit {
     const endIndex = startIndex < length
       ? Math.min(startIndex + pageSize, length)
       : startIndex + pageSize;
-    return `${initialText} ${startIndex + 1} z ${endIndex} na ${length}`; // customize this line
+    return `${initialText} ${startIndex + 1} z ${endIndex} na ${length}`;
   };
 
   ngAfterViewInit(): void {

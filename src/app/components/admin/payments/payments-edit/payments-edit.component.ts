@@ -2,7 +2,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/_interface/user';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Payment } from 'src/app/_interface/payment';

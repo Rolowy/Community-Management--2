@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
-import { User } from 'src/app/_interface/user';
-
 import { MatDialogRef } from '@angular/material/dialog';
-import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { Payment } from 'src/app/_interface/payment';
 
 
