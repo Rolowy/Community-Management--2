@@ -15,7 +15,7 @@ export class UsersAddComponent implements OnInit {
 
   bankaccount = new FormControl('', [Validators.required, Validators.minLength(26)])
   postcode = new FormControl('', [Validators.required])
-  phone = new FormControl(' ')
+  phone = new FormControl('', Validators.required);
 
   firstFormGroup: FormGroup = this.fb.group({
     email: new FormControl('', [Validators.required, Validators.email], this.emailTaken.validate),

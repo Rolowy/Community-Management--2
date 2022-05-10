@@ -275,12 +275,12 @@ export class AuthService {
           postcode: form.postcode,
           phone: form.phone
         }
-        getAuth().updateCurrentUser(originalUser);
 
         console.log(userData);
 
         await setDoc(doc(this.afs, "users", `${user.user.uid}`), userData).then(() => {
           this.sendVerificationMail(user);
+          getAuth().updateCurrentUser(originalUser);
         }).catch(error => {
           this.viewMessageError('Wystąpił błąd podczas dodawania konta.');
           console.log(error);

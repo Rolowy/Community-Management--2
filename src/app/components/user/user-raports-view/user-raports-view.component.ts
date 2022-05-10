@@ -19,9 +19,7 @@ import html2canvas from 'html2canvas';
 export class UserRaportsViewComponent implements OnInit {
   displayedColumns: string[] = ['index', 'name', 'amount', 'converter', 'unit', 'price'];
   displayedColumnsApartment: string[] = ['index', 'name', 'amount', 'converter', 'unit', 'price'];
-
   dataSource: any;
-
   value = new BehaviorSubject<Raports>({} as any);
   config = new BehaviorSubject<Config>({} as any);
   sum = new BehaviorSubject(0);
@@ -45,10 +43,14 @@ export class UserRaportsViewComponent implements OnInit {
       const data = docSnap.data() as Raports;
       this.value.next({ ...data });
 
+      if(data.premises == true)
+      {
       data.otherStatus.unshift({ name: "Opłata za lokal", amount: this.parseToPrice(data.apartment.area), converter: "m2", price: this.parseToPrice(data.apartment.rate) });
+      }
       this.dataSource = data.otherStatus;
       const totalprice = data.otherStatus.reduce((acc: number, val: any) => { acc += parseFloat(val.price) * parseFloat(val.amount); return acc }, 0);
       this.sum.next(totalprice.toFixed(2));
+
     } else {
       console.log("Nie odnaleziono dokumentu.");
     }

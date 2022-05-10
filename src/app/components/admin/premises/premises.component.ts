@@ -64,7 +64,7 @@ export class PremisesComponent implements OnInit {
     const endIndex = startIndex < length
       ? Math.min(startIndex + pageSize, length)
       : startIndex + pageSize;
-    return `${initialText} ${startIndex + 1} z ${endIndex} na ${length}`;
+    return `${initialText} ${endIndex} na ${length}`;
   };
 
   ngAfterViewInit(): void {

@@ -12,7 +12,7 @@
 
           <a *ngIf="authService.userInfo | async as userinfo" routerLinkActive="active" mat-button [matMenuTriggerFor]="user" class="online_status">
             <mat-icon class="online_status mr-1" aria-hidden="false" aria-label="sensor_occupied">sensor_occupied
-            </mat-icon> Zalogowany: {{userinfo.name}} {{userinfo.lastname}}
+            </mat-icon>{{userinfo.name}} {{userinfo.lastname}}
           </a>
           <mat-menu #user="matMenu">
             <!-- <a mat-menu-item (click)="deleteUserComp()"><mat-icon aria-hidden="false" aria-label="sync_lock">delete</mat-icon>Usuń Konto</a>  -->

@@ -1,5 +1,6 @@
-<div class="container-fluid mt-5">
+<div class="container mt-5">
 
+  
   <div class="row my-4" fxFlexLayout="row" fxFlexLayout.xs="column" fxLayoutGap.xs="20">
     <div fxFlex="60" fxLayoutAlign="center">
       <mat-form-field class="search-panel" fxFlex="50" fxFlex.xs>
@@ -45,6 +46,11 @@
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell text-center" [attr.colspan]="displayedColumns.length">
+              Nie zostały jeszcze opublikowane żadne rozliczenia
+            </td>
+          </tr>
 
         </table>
 

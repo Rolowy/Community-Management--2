@@ -23,7 +23,7 @@
         <div class="col">Imie: {{data.user.name}}</div>
         <div class="col">Nazwisko: {{data.user.lastname}}</div>
         <div class="col">Ulica: {{data.apartment.street}}
-          {{data.apartment.buildingnumber}}/{{data.apartment.apartmentnumber}}</div>
+          <span *ngIf="data.apartment.buildingnumber">{{data.apartment.buildingnumber}}/</span>{{data.apartment.apartmentnumber}}</div>
       </div>
     </div>
     <div class="row" fxFlex fxLayout="column" fxLayoutAlign="center center">

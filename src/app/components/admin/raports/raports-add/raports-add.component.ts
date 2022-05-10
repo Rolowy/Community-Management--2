@@ -13,6 +13,8 @@ export class RaportsAddComponent implements OnInit {
   users: any;
   apartments: any;
 
+  
+
   form: FormGroup = this.fb.group({
     number: new FormControl('', [Validators.required]),
     user: new FormControl('', [Validators.required]),
@@ -21,6 +23,7 @@ export class RaportsAddComponent implements OnInit {
     enddate: new FormControl('', [Validators.required]),
     createdAt: new FormControl(new Date),
     otherStatus: this.fb.array([]),
+    premises: new FormControl(false),
     sum: new FormControl(''),
   })
 

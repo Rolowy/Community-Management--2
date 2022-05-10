@@ -36,7 +36,7 @@
               <mat-select (selectionChange)="buildingSelected($event)" formControlName="apartment"
                 placeholder="Wybierz mieszkanie" required>
                 <mat-option *ngFor="let apartment of apartments | async" [value]="apartment">{{apartment.street}}
-                  {{apartment.buildingnumber}}/{{apartment.apartmentnumber}}</mat-option>
+                  <span *ngIf="apartment.buildingnumber">{{apartment.buildingnumber}}/</span>{{apartment.apartmentnumber}}</mat-option>
               </mat-select>
               <mat-error *ngIf="this.form.controls['apartment'].hasError('required')">Lokal jest wymagany</mat-error>
             </mat-form-field>
@@ -61,12 +61,14 @@
           </div>
 
 
+        </div>
+          <div class="col-md-12 input-group mb-3">
 
 
-
-          <div class="col-12 mt-5 mb-3">
+          <div class="col-12 mt-5 mb-3" fxFlex fxLayoutGap="20">
             <button mat-raised-button type="button" color="primary" (click)="addOtherStatus()">Dodaj pole do
               rozliczeń</button>
+            <mat-checkbox formControlName="premises">Czy uwzględnić opłatę za lokal ?</mat-checkbox>
           </div>
         </div>
         <div class="col-12">
