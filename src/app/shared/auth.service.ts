@@ -291,7 +291,7 @@ export class AuthService {
     })
   }
 
-  sendVerificationMail(user:any): void {
+  sendVerificationMail(user: any): void {
     user = this.auth.currentUser;
     if (user) {
       sendEmailVerification(user).then(() => {
@@ -307,15 +307,14 @@ export class AuthService {
 
   async login(form: any): Promise<void> {
     await signInWithEmailAndPassword(this.auth, form.email, form.password).then((user) => {
-      if(!user.user.emailVerified)
-      {
+      if (!user.user.emailVerified) {
         this.logout();
         this.viewMessageError('Twoje konto nie jest aktywne');
       }
-      else{
-      this.router.navigate(['dashboard']);
-      this.message.info('Aplikacja została zaprojektowana jako praca inżynierska. Autorem pracy jest Łukasz Kamiński', {nzDuration: 10000})
-      setTimeout(() => { this.message.info('Podziękowania dla mojego promotora Dr Jacka Marchwickiego za pomoc w realizacji tego projektu z Uniwersytetu Warmińsko-Mazurskiego.', {nzDuration: 10000})}, 12000);
+      else {
+        this.router.navigate(['dashboard']);
+        this.message.info('Aplikacja została zaprojektowana jako praca inżynierska. Autorem pracy jest Łukasz Kamiński', { nzDuration: 10000 })
+        setTimeout(() => { this.message.info('Podziękowania dla mojego promotora Dr Jacka Marchwickiego za pomoc w realizacji tego projektu z Uniwersytetu Warmińsko-Mazurskiego.', { nzDuration: 10000 }) }, 12000);
       }
     }).catch(error => {
       this.viewMessageError('Nie udało się zalogować.');
@@ -359,27 +358,6 @@ export class AuthService {
       })
     }
   }
-
-  // changePassword2(oldPassword: string, newPassword: string) {
-  //   const auth = getAuth();
-  //   const user = auth.currentUser;
-
-  //   if (user) {
-  //     let credential = EmailAuthProvider.credential(
-  //       this.userInfo.value.email,
-  //       oldPassword
-  //     );
-
-  //     reauthenticateWithCredential(auth.currentUser, credential)
-  //       .then(result => {
-  //         updatePassword(user, newPassword).then(() => {
-  //           return this.viewMessageSuccess('Zmieniono hasło pomyślnie');
-  //         }).catch(error => {
-  //           return this.viewMessageError('Wystąpił błąd, prosimy o ponowne zalogowanie się.')
-  //         })
-  //       })
-  //   }
-  // }
 
   async resetPassword(email: string) {
     await sendPasswordResetEmail(this.auth, email).then(() => {

@@ -29,27 +29,42 @@ export class PremisesComponent implements OnInit {
   displayedColumns: string[] = ['street', 'ownername', 'ownerlastname', 'buildingnumber', 'apartmentnumber', 'area', 'rate', 'postcode', 'edit'];
   dataSource = new MatTableDataSource();
 
-  
-  @ViewChild(MatSort, {static:true}) sort!: MatSort;
-  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
+
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthService, public afs: Firestore) {
-    this.getDocuments('apartments');
+    // this.getDocuments('apartments');
   }
 
-  getDocuments(col:string) {
-    const querySnapshot = collection(this.afs, col);
-    onSnapshot(querySnapshot, (querySnap) => {
-    this.dataSource.data = querySnap.docs.map(el => {
-        const data = el.data() as Apartment;
-        data.uid = el.id;
-        return data
-      })
-  })
-  }
+  // getDocuments(col:string) {
+  //   const querySnapshot = collection(this.afs, col);
+  //   onSnapshot(querySnapshot, (querySnap) => {
+  //   let table = ['']
+  //   this.dataSource.data = table;
+  //   querySnap.docs.map(el => {
+  //       const data = el.data() as Apartment;
+  //       data.uid = el.id;
+  //       data.nameuser = data.owner.name;
+  //       data.lastnameuser = data.owner.lastname;
+  //       table.push(data);
+  //       // return data
+  //     })
+  // })
+  // }
 
 
   ngOnInit(): void {
+    const querySnapshot = collection(this.afs, 'apartments');
+    onSnapshot(querySnapshot, (querySnap) => {
+      this.dataSource.data = querySnap.docs.map(el => {
+        const data = el.data() as Apartment;
+        data.nameuser = data.owner.name;
+        data.lastnameuser = data.owner.lastname;
+        data.uid = el.id;
+        return data
+      })
+    })
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }

@@ -18,12 +18,12 @@
   
           <ng-container matColumnDef="ownername">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Imię </th>
-            <td mat-cell *matCellDef="let element"> {{element.owner.name}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.nameuser}} </td>
           </ng-container>
           
           <ng-container matColumnDef="ownerlastname">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwisko </th>
-            <td mat-cell *matCellDef="let element"> {{element.owner.lastname}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.lastnameuser}} </td>
           </ng-container>
           
           <ng-container matColumnDef="street">

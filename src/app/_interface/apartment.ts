@@ -1,4 +1,6 @@
 export interface Apartment {
+    nameuser?:string;
+    lastnameuser?:string;
     uid?:string;
     owner:any;
     apartmentnumber:string;
