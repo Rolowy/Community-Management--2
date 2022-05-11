@@ -315,7 +315,7 @@ export class AuthService {
       else{
       this.router.navigate(['dashboard']);
       this.message.info('Aplikacja została zaprojektowana jako praca inżynierska. Autorem pracy jest Łukasz Kamiński', {nzDuration: 10000})
-      setTimeout(() => { this.message.info('Podziękowania dla mojego promotora Dr Jacka Marchwickiego za pomoc w realizacji tego projektu z Uniwesytetu Warmińsko-Mazurskiego.', {nzDuration: 10000})}, 12000);
+      setTimeout(() => { this.message.info('Podziękowania dla mojego promotora Dr Jacka Marchwickiego za pomoc w realizacji tego projektu z Uniwersytetu Warmińsko-Mazurskiego.', {nzDuration: 10000})}, 12000);
       }
     }).catch(error => {
       this.viewMessageError('Nie udało się zalogować.');
