@@ -43,6 +43,8 @@ export class RaportsComponent implements OnInit {
       })
     })
   }
+  
+
 
   redirectToDelete(raportData: Raports) {
     this.dialog.open(RaportsDeleteComponent, {

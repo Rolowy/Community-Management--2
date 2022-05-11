@@ -4,6 +4,12 @@ import { AuthService } from 'src/app/shared/auth.service';
 
 export interface DialogData {
   uid: string;
+  index: number;
+  name:string;
+  lastname:string;
+  status: string;
+  amount: string;
+  date: any;
 }
 
 @Component({

@@ -47,11 +47,11 @@ mat-card-title {
 }
 
 .example-card {
+  margin: 50px auto;
   height: 100%;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-content: center;
   justify-content: center;
-  margin: 0 auto;
 }

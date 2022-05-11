@@ -1,5 +1,11 @@
 <h1 mat-dialog-title>Czy jesteś pewny ?</h1>
-<div mat-dialog-content>Czy na pewno usunąć tą płatność ?</div>
+<div mat-dialog-content>
+  <p>Czy na pewno chcesz usunąć tą płatność ?</p>
+  <p>Płatność dotyczy użytkownika: {{data.name}} {{data.lastname}}</p>
+  <p>Wartość: {{data.amount}} zł</p>
+  <p>Status: {{data.status}}</p>
+  <p>Zaksięgowano: {{data.date.seconds*1000 | date: 'dd/MM/YYYY'}}</p>
+</div>
 <div mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]="true">Oh nie!</button>
   <button mat-raised-button color="primary" (click)="onConfirm()" [mat-dialog-close]="true">Tak, proszę</button>

@@ -20,12 +20,12 @@
         </ng-container>
 
         <ng-container matColumnDef="owner">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Użytkownik</th>
+          <th mat-header-cell *matHeaderCellDef> Użytkownik</th>
           <td mat-cell *matCellDef="let element">{{element.fullname}}</td>
         </ng-container>
 
         <ng-container matColumnDef="apartment">
-          <th mat-header-cell *matHeaderCellDef> Lokal</th>
+          <th mat-header-cell *matHeaderCellDef > Lokal</th>
           <td mat-cell *matCellDef="let element"> {{element.apartment.street}}
             <span *ngIf="element.apartment.buildingnumber">{{element.apartment.buildingnumber}}/</span>{{element.apartment.apartmentnumber}}</td>
         </ng-container>

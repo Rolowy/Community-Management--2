@@ -1,7 +1,7 @@
-<h1 mat-dialog-title>Czy jesteś pewny ?</h1>
+<h1 mat-dialog-title>Czy jesteś pewny że chcesz usunąć ten lokal?</h1>
 <div mat-dialog-content>
   <p>Ulica: {{data.street}}</p>
-  <p>Numer Budynku: {{data.buildingnumber}}</p>
+  <p *ngIf="data.buildingnumber">Numer Budynku: {{data.buildingnumber}}</p>
   <p>Numer Mieszkania: {{data.apartmentnumber}}</p>
 </div>
 <div mat-dialog-actions align="end">

@@ -17,7 +17,8 @@ import { AdvertComponent } from './components/advert/advert.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent }, //W przypadku wykonania pierwszej rejestracji dopisujemy dwa slesze przed początkiem nawiasu w tym wierszu
+//  { path: 'register', component: RegisterComponent } O to przykład
   { path: 'raports', component: RaportsComponent, canActivate: [GuardGuard, ModeratorGuard] },
   { path: 'addraport', component: RaportsAddComponent, canActivate: [GuardGuard, ModeratorGuard] },
   { path: 'payments', component: PaymentsComponent, canActivate: [GuardGuard, ModeratorGuard] },

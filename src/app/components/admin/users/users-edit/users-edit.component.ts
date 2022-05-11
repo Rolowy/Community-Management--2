@@ -14,7 +14,7 @@ export class UsersEditComponent implements OnInit {
   pack: User;
 
   postcode = new FormControl('', Validators.required)
-  phone = new FormControl('')
+  phone = new FormControl('', Validators.required)
   bankaccount = new FormControl('', Validators.required)
 
   form: FormGroup = this.fb.group({
