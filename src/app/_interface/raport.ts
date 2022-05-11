@@ -1,5 +1,8 @@
 export interface Raports {
-    fullname?:string;
+    nameuser?:string;
+    lastnameuser?:string;
+    street?:string;
+    
     uid: string;
     name: string;
     number: string;

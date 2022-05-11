@@ -52,6 +52,13 @@ export class PaymentsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  ngAfterViewInit(): void {
+    if (this.paginator) {
+      this.paginator._intl.itemsPerPageLabel = "Liczba Stron";
+      this.paginator._intl.getRangeLabel = this.authService.getRangeDisplayText;
+    }
+  }
+
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }

@@ -55,8 +55,4 @@ export class AdvertComponent implements OnInit {
     });
     
   }
-
-  showAdvert(value:Adverts):void {
-    
-  }
 }

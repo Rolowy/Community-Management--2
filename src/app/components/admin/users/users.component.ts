@@ -33,23 +33,10 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  getRangeDisplayText = (page: number, pageSize: number, length: number) => {
-    const initialText = `Wyświetlonych użytkowników`;
-    if (length == 0 || pageSize == 0) {
-      return `${initialText} 0 z ${length}`;
-    }
-    length = Math.max(length, 0);
-    const startIndex = page * pageSize;
-    const endIndex = startIndex < length
-      ? Math.min(startIndex + pageSize, length)
-      : startIndex + pageSize;
-    return `${initialText} ${endIndex} z ${length}`;
-  };
-
   ngAfterViewInit(): void {
     if (this.paginator) {
       this.paginator._intl.itemsPerPageLabel = "Liczba Stron";
-      this.paginator._intl.getRangeLabel = this.getRangeDisplayText;
+      this.paginator._intl.getRangeLabel = this.authService.getRangeDisplayText;
     }
   }
 
@@ -59,6 +46,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
       this.dataSource.data = querySnap.docs.map(el => {
         const data = el.data() as User;
         data.uid = el.id;
+        data.moderator;
         return data
       })
     })

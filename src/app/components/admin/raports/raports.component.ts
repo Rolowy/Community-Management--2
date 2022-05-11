@@ -18,7 +18,7 @@ import { RaportsDeleteComponent } from './raports-delete/raports-delete.componen
   styleUrls: ['./raports.component.scss']
 })
 export class RaportsComponent implements OnInit {
-  displayedColumns: string[] = ['number', 'owner', 'apartment', 'createdAt', 'scope', 'edit'];
+  displayedColumns: string[] = ['number', 'user.name', 'user.lastname', 'apartment.street', 'createdAt', 'scope', 'edit'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -28,31 +28,41 @@ export class RaportsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDocuments('raports');
+    this.dataSource.sortingDataAccessor = this.authService.pathDataTable;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
+  ngAfterViewInit(): void {
+    if (this.paginator) {
+      this.paginator._intl.itemsPerPageLabel = "Liczba Stron";
+      this.paginator._intl.getRangeLabel = this.authService.getRangeDisplayText;
+    }
+  }
+
+
+  
   getDocuments(col: string) {
     const querySnapshot = collection(this.afs, col);
     onSnapshot(querySnapshot, (querySnap) => {
       this.dataSource.data = querySnap.docs.map(el => {
         const data = el.data() as Raports;
-        data.fullname = data.user.name;
+        data.nameuser = data.user.name;
+        data.lastnameuser = data.user.lastname;
+        data.street = data.apartment.street + data.apartment.buildingnumber;
         data.uid = el.id;
         return data
       })
     })
   }
   
-
-
   redirectToDelete(raportData: Raports) {
     this.dialog.open(RaportsDeleteComponent, {
       data: raportData,
     })
   }
 
-  public doFilter = (value: string) => {
+  doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 }

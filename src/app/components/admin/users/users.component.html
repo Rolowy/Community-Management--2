@@ -61,7 +61,7 @@
           </ng-container>
 
           <ng-container matColumnDef="admin">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Moderator </th>
+            <th mat-header-cell *matHeaderCellDef> Moderator </th>
             <td mat-cell *matCellDef="let element"><span *ngIf="element.moderator; else noadmin">Tak</span></td>
             <ng-template #noadmin>Nie</ng-template>
           </ng-container>
@@ -103,7 +103,8 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           <tr class="mat-row" *matNoDataRow>
             <td class="mat-cell text-center" [attr.colspan]="displayedColumns.length">
-              Nie ma zarejestrowanych użytkowników
+              <span *ngIf="box.value.length > 0 else NODATA">Nie odnaleziono danych</span>
+              <ng-template #NODATA>zostały jeszcze opublikowane żadne rozliczenia</ng-template> 
             </td>
           </tr>
 

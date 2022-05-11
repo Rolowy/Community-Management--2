@@ -23,7 +23,7 @@ import { UserRaportsViewComponent } from '../user-raports-view/user-raports-view
 export class UserRaportsComponent implements OnInit, AfterViewInit {
   uid: string;
 
-  displayedColumns: string[] = ['position', 'fullname', 'createdAt', 'scope', 'edit'];
+  displayedColumns: string[] = ['number', 'user.name', 'user.lastname', 'createdAt', 'scope', 'edit'];
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -31,52 +31,43 @@ export class UserRaportsComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthService, public afs: Firestore) {
     this.uid = this.authService.userID;
-    this.getDocuments('raports');
   }
 
+  ngOnInit(): void {
+    this.getDocuments('raports');
+    this.dataSource.sortingDataAccessor = this.authService.pathDataTable;
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  ngAfterViewInit(): void {
+    if (this.paginator) {
+      this.paginator._intl.itemsPerPageLabel = "Liczba Stron";
+      this.paginator._intl.getRangeLabel = this.authService.getRangeDisplayText;
+    }
+  }
+
+
+  
   async getDocuments(col: string) {
     this.uid = await this.authService.userID;
     const querySnapshot = query(collection(this.afs, col), where("user.uid", "==", this.uid));
     onSnapshot(querySnapshot, (querySnap) => {
       this.dataSource.data = querySnap.docs.map(el => {
         const data = el.data() as Raports;
+        data.nameuser = data.user.name;
+        data.lastnameuser = data.user.lastname;
         data.uid = el.id;
         return data
       })
     })
   }
 
-  ngOnInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-  }
-
-  getRangeDisplayText = (page: number, pageSize: number, length: number) => {
-    const initialText = `Wyświetlonych płatności`;
-    if (length == 0 || pageSize == 0) {
-      return `${initialText} 0 z ${length}`;
-    }
-    length = Math.max(length, 0);
-    const startIndex = page * pageSize;
-    const endIndex = startIndex < length
-      ? Math.min(startIndex + pageSize, length)
-      : startIndex + pageSize;
-    return `${initialText} ${endIndex} z ${length}`;
-  };
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    if (this.paginator) {
-      this.paginator._intl.itemsPerPageLabel = "Liczba Stron";
-      this.paginator._intl.getRangeLabel = this.getRangeDisplayText;
-    }
-  }
-
-  public doFilter = (value: string) => {
+  doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
-  public showDetail = (el: any) => {
+  showDetail = (el: any) => {
     const dialogRef = this.dialog.open(UserRaportsViewComponent, {
       width: '80%',
       data: el,
@@ -84,7 +75,7 @@ export class UserRaportsComponent implements OnInit, AfterViewInit {
   }
 
 
-  public Converter(value: string) {
+  Converter(value: string) {
     return value.replace(/ą/g, 'a').replace(/Ą/g, 'A').replace(/ć/g, 'c').replace(/Ć/g, 'C').replace(/ę/g, 'e').replace(/Ę/g, 'E').replace(/ł/g, 'l').replace(/Ł/g, 'L').replace(/ń/g, 'n').replace(/Ń/g, 'N').replace(/ó/g, 'o').replace(/Ó/g, 'O').replace(/ś/g, 's').replace(/Ś/g, 'S').replace(/ż/g, 'z').replace(/Ż/g, 'Z').replace(/ź/g, 'z').replace(/Ź/g, 'Z');
   }
 }

@@ -26,88 +26,61 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./premises.component.scss']
 })
 export class PremisesComponent implements OnInit {
-  displayedColumns: string[] = ['street', 'ownername', 'ownerlastname', 'buildingnumber', 'apartmentnumber', 'area', 'rate', 'postcode', 'edit'];
+  displayedColumns: string[] = ['street', 'owner.name', 'owner.lastname', 'buildingnumber', 'apartmentnumber', 'area', 'rate', 'postcode', 'edit'];
   dataSource = new MatTableDataSource();
-
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(private router: Router, public dialog: MatDialog, public authService: AuthService, public afs: Firestore) {
-    // this.getDocuments('apartments');
   }
 
-  // getDocuments(col:string) {
-  //   const querySnapshot = collection(this.afs, col);
-  //   onSnapshot(querySnapshot, (querySnap) => {
-  //   let table = ['']
-  //   this.dataSource.data = table;
-  //   querySnap.docs.map(el => {
-  //       const data = el.data() as Apartment;
-  //       data.uid = el.id;
-  //       data.nameuser = data.owner.name;
-  //       data.lastnameuser = data.owner.lastname;
-  //       table.push(data);
-  //       // return data
-  //     })
-  // })
-  // }
-
-
   ngOnInit(): void {
-    const querySnapshot = collection(this.afs, 'apartments');
-    onSnapshot(querySnapshot, (querySnap) => {
-      this.dataSource.data = querySnap.docs.map(el => {
-        const data = el.data() as Apartment;
-        data.nameuser = data.owner.name;
-        data.lastnameuser = data.owner.lastname;
-        data.uid = el.id;
-        return data
-      })
-    })
+    this.getDocuments('apartments');
+    this.dataSource.sortingDataAccessor = this.authService.pathDataTable;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
-  getRangeDisplayText = (page: number, pageSize: number, length: number) => {
-    const initialText = `Wyświetlonych lokali`;
-    if (length == 0 || pageSize == 0) {
-      return `${initialText} 0 z ${length}`;
-    }
-    length = Math.max(length, 0);
-    const startIndex = page * pageSize;
-    const endIndex = startIndex < length
-      ? Math.min(startIndex + pageSize, length)
-      : startIndex + pageSize;
-    return `${initialText} ${endIndex} na ${length}`;
-  };
+  getDocuments(col: string) {
+    const querySnapshot = collection(this.afs, col);
+    onSnapshot(querySnapshot, (querySnap) => {
+      this.dataSource.data = querySnap.docs.map(el => {
+        const data = el.data() as Apartment;
+        data.uid = el.id;
+        data.nameuser = data.owner.name;
+        data.lastnameuser = data.owner.lastname;
+        return data
+      })
+    })
+  }
 
   ngAfterViewInit(): void {
     if (this.paginator) {
       this.paginator._intl.itemsPerPageLabel = "Liczba Stron";
-      this.paginator._intl.getRangeLabel = this.getRangeDisplayText;
+      this.paginator._intl.getRangeLabel = this.authService.getRangeDisplayText;
     }
   }
 
-  public doFilter = (value: string) => {
+  doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
 
-  public redirectToEdit = (el: Apartment) => {
+  redirectToEdit = (el: Apartment) => {
     const dialogRef = this.dialog.open(PremisesEditComponent, {
       width: '500px;',
       data: el,
     });
   }
 
-  public addApartment() {
+  addApartment() {
     const dialogRef = this.dialog.open(PremisesAddComponent, {
       width: '500px;',
     });
   }
 
-  public redirectToDelete = (el: Apartment) => {
+  redirectToDelete = (el: Apartment) => {
     const dialogRef = this.dialog.open(PremisesDeleteComponent, {
       width: '800px;',
       data: el,

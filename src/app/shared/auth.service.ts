@@ -359,6 +359,26 @@ export class AuthService {
     }
   }
 
+  pathDataTable(item: any, path: string): any {
+    return path.split('.')
+      .reduce((bin: any, key: string) => {
+        return bin ? bin[key] : undefined;
+      }, item);
+  }
+
+  public getRangeDisplayText = (page: number, pageSize: number, length: number) => {
+    const initialText = `Wyświetlonych pozycji`;
+    if (length == 0 || pageSize == 0) {
+      return `${initialText} 0 z ${length}`;
+    }
+    length = Math.max(length, 0);
+    const startIndex = page * pageSize;
+    const endIndex = startIndex < length
+      ? Math.min(startIndex + pageSize, length)
+      : startIndex + pageSize;
+    return `${initialText} ${endIndex} na ${length}`;
+  };
+
   async resetPassword(email: string) {
     await sendPasswordResetEmail(this.auth, email).then(() => {
       this.viewMessageSuccess('Procedura resetowania hasła została wysłana na email');
@@ -368,3 +388,5 @@ export class AuthService {
     })
   }
 }
+
+
